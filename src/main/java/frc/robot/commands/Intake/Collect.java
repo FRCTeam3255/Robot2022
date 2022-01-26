@@ -4,25 +4,37 @@
 
 package frc.robot.commands.Intake;
 
+import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.Intake;
 
 public class Collect extends CommandBase {
+  Intake intake;
+
   /** Creates a new Collect. */
-  public Collect() {
+  public Collect(Intake sub_intake) {
     // Use addRequirements() here to declare subsystem dependencies.
+    intake = sub_intake;
+    addRequirements(intake);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    intake.setIntakeMotorSpeed(0.8); // 0.8 = 80%
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    intake.setIntakeMotorSpeed(0);
+  }
 
   // Returns true when the command should end.
   @Override
