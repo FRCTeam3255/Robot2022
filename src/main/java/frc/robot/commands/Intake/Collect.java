@@ -7,6 +7,7 @@ package frc.robot.commands.Intake;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.RobotPreferences;
 import frc.robot.subsystems.Intake;
 
 public class Collect extends CommandBase {
@@ -27,7 +28,7 @@ public class Collect extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.setIntakeMotorSpeed(0.8); // 0.8 = 80%
+    intake.setIntakeMotorSpeed(RobotPreferences.Intake.collectSpeed);
   }
 
   // Called once the command ends or is interrupted.
