@@ -3,25 +3,33 @@ package frc.robot;
 import com.frcteam3255.preferences.SN_DoublePreference;
 
 public final class RobotPreferences {
-    public final class Drivetrain {
+    public static final class DrivetrainPrefs {
     }
 
-    public final class Hood {
+    public static final class HoodPrefs {
     }
 
-    public final class Turret {
+    public static final class ShooterPrefs {
+        public static final SN_DoublePreference shooterMotorSpeed = new SN_DoublePreference("shooterMotorSpeed",
+                1);
+        public static final SN_DoublePreference shooterMotorTargetVelocity = new SN_DoublePreference(
+                "shooterMotorTargetVelocity", 5000.0);
     }
 
-    public final class Transfer {
+    public static final class TurretPrefs {
     }
 
-    public final static class Intake {
-        public final static SN_DoublePreference collectSpeed = new SN_DoublePreference("collectSpeed", 0.80);
+    public static final class TransferPrefs {
     }
 
-    public final class Vision {
+    public static final class IntakePrefs {
+      public final static SN_DoublePreference collectSpeed = new SN_DoublePreference("collectSpeed", 0.80);
     }
 
-    public final class Climber {
+    public static final class VisionPrefs {
+    }
+
+    public static final class ClimberPrefs {
+        public static final SN_DoublePreference climberMotorSpeed = new SN_DoublePreference("climberMotorSpeed", 0.5);
     }
 }

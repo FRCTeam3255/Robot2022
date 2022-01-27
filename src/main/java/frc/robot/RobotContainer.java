@@ -9,11 +9,10 @@ import com.frcteam3255.joystick.SN_DualActionStick;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Drivetrain.*;
 import frc.robot.commands.Intake.*;
+import frc.robot.commands.Shooter.*;
 import frc.robot.subsystems.*;
-import frc.robot.subsystems.ExampleSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -32,6 +31,7 @@ public class RobotContainer {
   // Subsystems
   private final Drivetrain sub_drivetrain = new Drivetrain();
   private final Intake sub_intake = new Intake();
+  private final Shooter sub_shooter = new Shooter();
 
   // Drivetrain Commands
   private final Drive com_drive = new Drive(sub_drivetrain);
@@ -41,7 +41,7 @@ public class RobotContainer {
   // Turret Commands
 
   // Shooter Commands
-
+  private final ShootCargo com_shoot_cargo = new ShootCargo(sub_shooter);
   // Transfer Commands
 
   // Intake Commands
@@ -51,11 +51,6 @@ public class RobotContainer {
   // Vision Commands
 
   // Climber Commands
-
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -90,6 +85,7 @@ public class RobotContainer {
     // Button 10
     // Button 11
     // Button 12
+    DriverStick.btn_RTrig.whileHeld(com_shoot_cargo);
   }
 
   /**
@@ -97,8 +93,9 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
+
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return null;
   }
 }
