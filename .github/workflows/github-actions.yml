@@ -32,3 +32,7 @@ jobs:
     # Runs a single command using the runners shell
     - name: Compile and run tests on robot code
       run: ./gradlew build
+
+    # Runs a single command using the runners shell
+    - name: Simulate robot code
+      run: timeout 10s ./gradlew simulateJava
