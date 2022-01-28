@@ -5,16 +5,17 @@
 package frc.robot.commands.Transfer;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-// import frc.robot.subsystems.Transfer;  
+import frc.robot.RobotPreferences;
+import frc.robot.subsystems.Transfer;
 
-public class Transfer extends CommandBase {
+public class TransferCargo extends CommandBase {
   Transfer transfer;
 
   /** Creates a new Transfer. */
-  public Transfer(Transfer sub_transfer) {
+  public TransferCargo(Transfer sub_transfer) {
     // Use addRequirements() here to declare subsystem dependencies.
 
-    // addRequirements(Transfer sub_transfer);
+    addRequirements(sub_transfer);
   }
 
   // Called when the command is initially scheduled.
@@ -25,6 +26,7 @@ public class Transfer extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    transfer.setTransferMotorSpeed(RobotPreferences.TransferPrefs.transferMotorSpeed.getValue());
   }
 
   // Called once the command ends or is interrupted.
