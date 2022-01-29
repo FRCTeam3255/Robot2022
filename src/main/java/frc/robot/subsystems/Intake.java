@@ -51,18 +51,17 @@ public class Intake extends SubsystemBase {
     return intakeMotor.getSelectedSensorPosition();
   }
 
-  public String getSolenoidPosition() {
+  public boolean getSolenoidPosition() {
     Value intakeSolenoidStatus = intakeSolenoid.get();
+    boolean isIntakeDeployed = false;
 
     if (intakeSolenoidStatus == DoubleSolenoid.Value.kForward) {
-      return ("Forward");
-    } else if (intakeSolenoidStatus == DoubleSolenoid.Value.kReverse) {
-      return ("Reverse");
-    } else if (intakeSolenoidStatus == DoubleSolenoid.Value.kOff) {
-      return ("Off");
+      isIntakeDeployed = true;
     } else {
-      return ("something broke lol");
+      isIntakeDeployed = false;
     }
+
+    return isIntakeDeployed;
 
   }
 
@@ -75,6 +74,6 @@ public class Intake extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Intake Motor", getIntakeMotorCount());
-    SmartDashboard.putString("Intake Solenoid", getSolenoidPosition());
+    SmartDashboard.putBoolean("Intake Solenoid", getSolenoidPosition());
   }
 }
