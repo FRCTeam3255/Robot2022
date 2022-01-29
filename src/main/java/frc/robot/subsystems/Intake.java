@@ -55,6 +55,11 @@ public class Intake extends SubsystemBase {
     return intakeSolenoid.get();
   }
 
+  // solenoid do solenoid thing!!
+  public void deploySolenoid() {
+    intakeSolenoid.set(Value.kForward);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
