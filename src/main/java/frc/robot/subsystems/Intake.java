@@ -67,7 +67,7 @@ public class Intake extends SubsystemBase {
   }
 
   // solenoid do solenoid thing!!
-  public void deploySolenoid() {
+  public void deployIntake() {
     intakeSolenoid.set(Value.kForward);
   }
 
