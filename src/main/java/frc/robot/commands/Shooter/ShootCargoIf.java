@@ -32,7 +32,7 @@ public class ShootCargoIf extends CommandBase {
   @Override
   public void execute() {
     if (shooter.getShooterVelocity() >= RobotPreferences.ShooterPrefs.shooterMotorTargetVelocity.getValue()) {
-      // START TRANSFER, waiting for transfer subsystem to be uploded
+      // transfer.setTransferMotorSpeed(RobotPreferences.TransferPrefs.transferMotorSpeed);
     }
     ;
   }
@@ -40,6 +40,7 @@ public class ShootCargoIf extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    transfer.setTransferMotorSpeed(0);
   }
 
   // Returns true when the command should end.
