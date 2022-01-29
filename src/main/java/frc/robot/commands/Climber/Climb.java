@@ -27,7 +27,7 @@ public class Climb extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double speed = RobotContainer.coDriverStick.getArcadeMove();
+    double speed = RobotContainer.coDriverStick.getLeftStickY();
 
     climber.setClimberSpeed(speed);
   }

@@ -70,7 +70,6 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     sub_drivetrain.setDefaultCommand(com_drive);
-    sub_climber.setDefaultCommand(com_climb);
   }
 
   /**
@@ -88,7 +87,8 @@ public class RobotContainer {
     coDriverStick.POV_North.whenPressed(com_angle_hood_up);
     coDriverStick.POV_South.whenPressed(com_angle_hood_down);
 
-    // coDriverStick.btn_LStick.whileHeld(com_climb);
+    // btn_LStick can become btn_RStick for dominant hand
+    coDriverStick.btn_LStick.whileHeld(com_climb);
   }
 
   /**
