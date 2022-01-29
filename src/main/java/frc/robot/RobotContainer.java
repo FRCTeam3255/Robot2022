@@ -15,6 +15,7 @@ import frc.robot.commands.Drivetrain.*;
 import frc.robot.commands.Hood.*;
 import frc.robot.commands.Intake.*;
 import frc.robot.commands.Shooter.*;
+import frc.robot.commands.Climber.*;
 import frc.robot.subsystems.*;
 
 /**
@@ -37,6 +38,7 @@ public class RobotContainer {
   private final Hood sub_hood = new Hood();
   private final Intake sub_intake = new Intake();
   private final Shooter sub_shooter = new Shooter();
+  private final Climber sub_climber = new Climber();
 
   // Drivetrain Commands
   private final Drive com_drive = new Drive(sub_drivetrain);
@@ -52,12 +54,15 @@ public class RobotContainer {
   // Transfer Commands
 
   // Intake Commands
-
   private final Collect com_collect = new Collect(sub_intake);
   private final RetractIntake com_retract_intake = new RetractIntake(sub_intake);
+  private final DeployIntake com_deploy_intake = new DeployIntake(sub_intake);
+  
   // Vision Commands
 
   // Climber Commands
+
+  private final Climb com_climb = new Climb(sub_climber);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -81,8 +86,12 @@ public class RobotContainer {
     DriverStick.btn_LTrig.whileHeld(com_collect);
 
     coDriverStick.btn_Y.whenPressed(com_retract_intake);
+    coDriverStick.btn_X.whenPressed(com_deploy_intake);
     coDriverStick.POV_North.whenPressed(com_angle_hood_up);
     coDriverStick.POV_South.whenPressed(com_angle_hood_down);
+
+    // btn_LStick can become btn_RStick for dominant hand
+    coDriverStick.btn_LStick.whileHeld(com_climb);
   }
 
   /**
