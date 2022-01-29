@@ -15,6 +15,7 @@ import frc.robot.commands.Drivetrain.*;
 import frc.robot.commands.Hood.*;
 import frc.robot.commands.Intake.*;
 import frc.robot.commands.Shooter.*;
+import frc.robot.commands.Climber.*;
 import frc.robot.subsystems.*;
 
 /**
@@ -37,6 +38,7 @@ public class RobotContainer {
   private final Hood sub_hood = new Hood();
   private final Intake sub_intake = new Intake();
   private final Shooter sub_shooter = new Shooter();
+  private final Climber sub_climber = new Climber();
 
   // Drivetrain Commands
   private final Drive com_drive = new Drive(sub_drivetrain);
@@ -59,6 +61,8 @@ public class RobotContainer {
 
   // Climber Commands
 
+  private final Climb com_climb = new Climb(sub_climber);
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -66,6 +70,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     sub_drivetrain.setDefaultCommand(com_drive);
+    sub_climber.setDefaultCommand(com_climb);
   }
 
   /**
@@ -79,9 +84,11 @@ public class RobotContainer {
   private void configureButtonBindings() {
     DriverStick.btn_RTrig.whileHeld(com_shoot_cargo);
     DriverStick.btn_LTrig.whileHeld(com_collect);
-    
+
     coDriverStick.POV_North.whenPressed(com_angle_hood_up);
     coDriverStick.POV_South.whenPressed(com_angle_hood_down);
+
+    // coDriverStick.btn_LStick.whileHeld(com_climb);
   }
 
   /**
