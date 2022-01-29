@@ -7,12 +7,12 @@ package frc.robot.commands.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
-public class RetractSolenoid extends CommandBase {
+public class RetractIntake extends CommandBase {
 
   Intake intake;
 
-  /** Creates a new RetractSolenoid. */
-  public RetractSolenoid(Intake sub_intake) {
+  /** Creates a new RetractIntake. */
+  public RetractIntake(Intake sub_intake) {
     // Use addRequirements() here to declare subsystem dependencies.
     intake = sub_intake;
     addRequirements(intake);
@@ -26,7 +26,7 @@ public class RetractSolenoid extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.retractSolenoid();
+    intake.retractIntake();
   }
 
   // Called once the command ends or is interrupted.

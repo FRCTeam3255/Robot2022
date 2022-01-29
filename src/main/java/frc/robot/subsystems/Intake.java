@@ -55,7 +55,7 @@ public class Intake extends SubsystemBase {
     return intakeSolenoid.get();
   }
 
-  public void retractSolenoid() {
+  public void retractIntake() {
     intakeSolenoid.set(Value.kReverse);
   }
 
