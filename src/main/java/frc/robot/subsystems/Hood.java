@@ -23,6 +23,7 @@ public class Hood extends SubsystemBase {
 
   public Hood() {
     hoodMotor = new TalonSRX(RobotMap.HoodMap.HOOD_MOTOR_CAN);
+    hoodMotor.config_kP(0, 1);
     hoodLimitSwitch = new DigitalInput(RobotMap.HoodMap.HOOD_LIMIT_SWITCH_DIO);
     configure();
   }
