@@ -4,33 +4,24 @@
 
 package frc.robot.commands.Hood;
 
-import com.frcteam3255.preferences.SN_DoublePreference;
-
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
-import frc.robot.RobotContainer;
-import frc.robot.RobotMap;
-import frc.robot.RobotPreferences;
 import frc.robot.subsystems.Hood;
 
-public class NudgeHood extends CommandBase {
+public class SteepenHood extends CommandBase {
 
   Hood hood;
-  private SN_DoublePreference degrees;
 
-  /** Creates a new AngleHood. */
-  public NudgeHood(Hood sub_hood, SN_DoublePreference angleHoodDirection) {
+  /** Creates a new SteepenHood. */
+  public SteepenHood(Hood sub_hood) {
     // Use addRequirements() here to declare subsystem dependencies.
     hood = sub_hood;
-    degrees = angleHoodDirection;
     addRequirements(hood);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    hood.moveHoodToDegree(degrees.getValue());
+    hood.steepenHood();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
