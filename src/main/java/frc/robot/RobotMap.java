@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 public final class RobotMap {
     public final class DrivetrainMap {
         public static final int LEFT_LEAD_MOTOR_CAN = 0;
-        public static final int RIGHT_LEAD_MOTOR_CAN = 0;
+        public static final int RIGHT_LEAD_MOTOR_CAN = 1;
         public static final int LEFT_FOLLOW_MOTOR_CAN = 2;
         public static final int RIGHT_FOLLOW_MOTOR_CAN = 3;
     }
@@ -43,7 +43,7 @@ public final class RobotMap {
         public static final int TOP_BELT_MOTOR_CAN = 30;
         public static final int BOTTOM_BELT_MOTOR_CAN = 31;
         public static final int TRANSFER_TOP_LIMIT_SWITCH_DIO = 1;
-        public static final int TRANSFER_BOTTOM_LIMIT_SWITCH_DIO = 2;
+        public static final int TRANSFER_BOTTOM_LIMIT_SWITCH_DIO = 40;
 
     }
 
