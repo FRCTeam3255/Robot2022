@@ -2,21 +2,21 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Climber;
+package frc.robot.commands.Turret;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-import frc.robot.RobotPreferences;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Turret;
 
-public class Climb extends CommandBase {
-  Climber climber;
+public class AutomaticRotate extends CommandBase {
+  Turret turret;
 
-  /** Creates a new Climb. */
-  public Climb(Climber sub_climber) {
+  /** Creates a new AutomaticRotate. */
+  public AutomaticRotate(Turret sub_turret) {
     // Use addRequirements() here to declare subsystem dependencies.
-    climber = sub_climber;
-    addRequirements(climber);
+
+    turret = sub_turret;
+
+    addRequirements(sub_turret);
   }
 
   // Called when the command is initially scheduled.
@@ -27,15 +27,12 @@ public class Climb extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double speed = RobotContainer.coDriverStick.getLeftStickY();
-
-    climber.setClimberSpeed(speed);
+    // There is no Automatic Tracker
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    climber.setClimberSpeed(0);
   }
 
   // Returns true when the command should end.
