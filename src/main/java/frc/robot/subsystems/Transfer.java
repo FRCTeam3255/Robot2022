@@ -63,14 +63,14 @@ public class Transfer extends SubsystemBase {
       topBeltMotor.set(ControlMode.PercentOutput, speed);
     }
 
-    if (isBottomBallCollected() == true) {
+    if (isBottomBallCollected() && isTopBallCollected() == true) {
       bottomBeltMotor.set(ControlMode.PercentOutput, 0);
+      entranceBeltMotor.set(ControlMode.PercentOutput, 0);
 
-    } else if (isBottomBallCollected() == false) {
+    } else if (isBottomBallCollected() && isTopBallCollected() == false) {
       bottomBeltMotor.set(ControlMode.PercentOutput, speed);
+      entranceBeltMotor.set(ControlMode.PercentOutput, speed);
     }
-
-    entranceBeltMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public boolean isTopBallCollected() {
