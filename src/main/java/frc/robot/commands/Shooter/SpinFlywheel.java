@@ -5,22 +5,18 @@
 package frc.robot.commands.Shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 import frc.robot.RobotPreferences;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Transfer;
 
-public class ShootCargoIf extends CommandBase {
+public class SpinFlywheel extends CommandBase {
   Shooter shooter;
-  Transfer transfer;
 
-  /** Creates a new ShootCargoIf. */
-  public ShootCargoIf(Shooter sub_shooter, Transfer sub_transfer) {
+  /** Creates a new ShootCargo. */
+  public SpinFlywheel(Shooter sub_shooter) {
     // Use addRequirements() here to declare subsystem dependencies.
-
     shooter = sub_shooter;
-    transfer = sub_transfer;
-
-    addRequirements(shooter, transfer);
+    addRequirements(shooter);
   }
 
   // Called when the command is initially scheduled.
@@ -31,16 +27,13 @@ public class ShootCargoIf extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (shooter.getShooterVelocity() >= RobotPreferences.ShooterPrefs.shooterMotorTargetVelocity.getValue()) {
-      // transfer.setTransferMotorSpeed(RobotPreferences.TransferPrefs.transferMotorSpeed);
-    }
-    ;
+    shooter.setShooterSpeed(RobotPreferences.ShooterPrefs.shooterMotorSpeed.getValue());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    transfer.setTransferMotorSpeed(0);
+    shooter.setShooterSpeed(0);
   }
 
   // Returns true when the command should end.

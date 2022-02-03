@@ -19,12 +19,10 @@ import frc.robot.subsystems.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
- * Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in
- * the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of
- * the robot (including
- * subsystems, commands, and button mappings) should be declared here.
+ * Command-based is a "declarative" paradigm, very little robot logic should
+ * actually be handled in the {@link Robot} periodic methods (other than the
+ * scheduler calls). Instead, the structure of the robot (including subsystems,
+ * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
 
@@ -37,6 +35,7 @@ public class RobotContainer {
   private final Hood sub_hood = new Hood();
   private final Intake sub_intake = new Intake();
   private final Shooter sub_shooter = new Shooter();
+  private final Transfer sub_transfer = new Transfer();
 
   // Drivetrain Commands
   private final Drive com_drive = new Drive(sub_drivetrain);
@@ -48,7 +47,7 @@ public class RobotContainer {
   // Turret Commands
 
   // Shooter Commands
-  private final ShootCargo com_shoot_cargo = new ShootCargo(sub_shooter);
+  private final ShootCargo com_shoot_cargo = new ShootCargo(sub_shooter, sub_transfer);
   // Transfer Commands
 
   // Intake Commands
@@ -70,16 +69,14 @@ public class RobotContainer {
 
   /**
    * Use this method to define your button->command mappings. Buttons can be
-   * created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
-   * it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   * created by instantiating a {@link GenericHID} or one of its subclasses
+   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
+   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
     DriverStick.btn_RTrig.whileHeld(com_shoot_cargo);
     DriverStick.btn_LTrig.whileHeld(com_collect);
-    
+
     coDriverStick.POV_North.whenPressed(com_angle_hood_up);
     coDriverStick.POV_South.whenPressed(com_angle_hood_down);
   }

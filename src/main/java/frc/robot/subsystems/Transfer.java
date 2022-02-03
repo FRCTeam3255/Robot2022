@@ -48,11 +48,17 @@ public class Transfer extends SubsystemBase {
     return bottomBeltMotor.getSelectedSensorPosition();
   }
 
-  public void setTransferMotorSpeed(double transfermotor_speed) {
+  public void setBottomTransferMotorSpeed(double transfermotor_speed) {
+    double speed = transfermotor_speed;
+
+    bottomBeltMotor.set(ControlMode.PercentOutput, speed);
+
+  }
+
+  public void setTopTransferMotorSpeed(double transfermotor_speed) {
     double speed = transfermotor_speed;
 
     topBeltMotor.set(ControlMode.PercentOutput, speed);
-    bottomBeltMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public boolean isBallCollected() {
