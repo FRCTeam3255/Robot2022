@@ -29,7 +29,7 @@ public class Hood extends SubsystemBase {
     // configure is not needed since this is a solenoid
   }
 
-  // check if solenoid is extended (PROBably rENAME IT)
+  // check if solenoid is extended
   public boolean isHoodSteep() {
     Value hoodSolenoidStatus = hoodSolenoid.get();
     boolean isHoodSteep = false;
