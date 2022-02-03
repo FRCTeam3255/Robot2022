@@ -29,10 +29,10 @@ public class Transfer extends SubsystemBase {
 
   public Transfer() {
     topBeltMotor = new TalonSRX(RobotMap.TransferMap.TOP_BELT_MOTOR_CAN);
-    bottomBeltMotor = new TalonSRX(RobotMap.TransferMap.BOTTOM_BELT_MOTOR_CAN);
+    bottomBeltMotor = new TalonSRX(RobotMap.TransferMap.BOTTOM_BELT_ENTRANCE_MOTOR_CAN);
     midBeltMotor = new TalonSRX(RobotMap.TransferMap.MIDDLE_BELT_MOTOR_CAN);
-    transferLimitSwitch = new DigitalInput(RobotMap.TransferMap.TRANSFER_LIMIT_SWITCH_DIO);
-    transferLimitSwitchTwo = new DigitalInput(RobotMap.TransferMap.TRANSFER_LIMIT_SWITCH_TWO_DIO);
+    transferLimitSwitch = new DigitalInput(RobotMap.TransferMap.TRANSFER_TOP_LIMIT_SWITCH_DIO);
+    transferLimitSwitchTwo = new DigitalInput(RobotMap.TransferMap.TRANSFER_BOTTOM_LIMIT_SWITCH_DIO);
   }
 
   public void configure() {
