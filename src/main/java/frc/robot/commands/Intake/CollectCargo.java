@@ -9,15 +9,19 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.RobotPreferences;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Transfer;
 
-public class Collect extends CommandBase {
+public class CollectCargo extends CommandBase {
   Intake intake;
+  Transfer transfer;
 
   /** Creates a new Collect. */
-  public Collect(Intake sub_intake) {
+  public CollectCargo(Intake sub_intake, Transfer sub_transfer) {
     // Use addRequirements() here to declare subsystem dependencies.
     intake = sub_intake;
-    addRequirements(intake);
+    transfer = sub_transfer;
+
+    addRequirements(intake, transfer);
   }
 
   // Called when the command is initially scheduled.
@@ -29,12 +33,14 @@ public class Collect extends CommandBase {
   @Override
   public void execute() {
     intake.setIntakeMotorSpeed(RobotPreferences.IntakePrefs.collectSpeed.getValue());
+    transfer.setTransferMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     intake.setIntakeMotorSpeed(0);
+    transfer.setTransferMotorSpeed(0);
   }
 
   // Returns true when the command should end.
