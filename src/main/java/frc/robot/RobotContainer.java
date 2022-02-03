@@ -10,7 +10,9 @@ import com.frcteam3255.joystick.SN_Extreme3DStick;
 import frc.robot.RobotPreferences;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.Drivetrain.*;
 import frc.robot.commands.Hood.*;
 import frc.robot.commands.Intake.*;
@@ -45,18 +47,19 @@ public class RobotContainer {
   private final Drive com_drive = new Drive(sub_drivetrain);
 
   // Hood Commands
-  private final NudgeHood com_angle_hood_up = new NudgeHood(sub_hood, RobotPreferences.HoodPrefs.angleHoodDirectionUp);
-  private final NudgeHood com_angle_hood_down = new NudgeHood(sub_hood,
-      RobotPreferences.HoodPrefs.angleHoodDirectionDown);
+  private final ShallowHood com_shallow_hood = new ShallowHood(sub_hood);
+  private final SteepenHood com_steepen_hood = new SteepenHood(sub_hood);
+
   // Turret Commands
 
   // Shooter Commands
-  private final ShootCargo com_shoot_cargo = new ShootCargo(sub_shooter);
+  private final ShootCargo com_shootCargo = new ShootCargo(sub_shooter);
   // Transfer Commands
 
   // Intake Commands
-
   private final CollectCargo com_collect = new CollectCargo(sub_intake, sub_transfer);
+  private final RetractIntake com_retractIntake = new RetractIntake(sub_intake);
+  private final DeployIntake com_deployIntake = new DeployIntake(sub_intake);
 
   // Vision Commands
 
@@ -70,6 +73,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    configureDashboardButtons();
     sub_drivetrain.setDefaultCommand(com_drive);
   }
 
@@ -82,14 +86,24 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    DriverStick.btn_RTrig.whileHeld(com_shoot_cargo);
+    DriverStick.btn_RTrig.whileHeld(com_shootCargo);
     DriverStick.btn_LTrig.whileHeld(com_collect);
 
-    coDriverStick.POV_North.whenPressed(com_angle_hood_up);
-    coDriverStick.POV_South.whenPressed(com_angle_hood_down);
+    coDriverStick.btn_Y.whenPressed(com_retractIntake);
+    coDriverStick.btn_X.whenPressed(com_deployIntake);
+
+    coDriverStick.btn_A.whenPressed(com_steepen_hood);
+    coDriverStick.btn_B.whenPressed(com_shallow_hood);
 
     // btn_LStick can become btn_RStick for dominant hand
     coDriverStick.btn_LStick.whileHeld(com_climb);
+  }
+
+  /**
+   * Use this method to define your dashboard buttons
+   */
+  private void configureDashboardButtons() {
+
   }
 
   /**
