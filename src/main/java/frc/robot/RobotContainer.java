@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.Drivetrain.*;
 import frc.robot.commands.Hood.*;
+import frc.robot.commands.Turret.*;
 import frc.robot.commands.Intake.*;
 import frc.robot.commands.Shooter.*;
 import frc.robot.commands.Climber.*;
@@ -36,6 +37,7 @@ public class RobotContainer {
   // Subsystems
   private final Drivetrain sub_drivetrain = new Drivetrain();
   private final Hood sub_hood = new Hood();
+  private final Turret sub_turret = new Turret();
   private final Intake sub_intake = new Intake();
   private final Shooter sub_shooter = new Shooter();
   private final Climber sub_climber = new Climber();
@@ -47,7 +49,9 @@ public class RobotContainer {
   private final NudgeHood com_angleHoodUp = new NudgeHood(sub_hood, RobotPreferences.HoodPrefs.angleHoodDirectionUp);
   private final NudgeHood com_angleHoodDown = new NudgeHood(sub_hood,
       RobotPreferences.HoodPrefs.angleHoodDirectionDown);
+
   // Turret Commands
+  private final AutomaticRotate com_automaticRotate = new AutomaticRotate(sub_turret);
 
   // Shooter Commands
   private final ShootCargo com_shootCargo = new ShootCargo(sub_shooter);
@@ -57,7 +61,7 @@ public class RobotContainer {
   private final Collect com_collect = new Collect(sub_intake);
   private final RetractIntake com_retractIntake = new RetractIntake(sub_intake);
   private final DeployIntake com_deployIntake = new DeployIntake(sub_intake);
-  
+
   // Vision Commands
 
   // Climber Commands
@@ -89,6 +93,7 @@ public class RobotContainer {
     coDriverStick.btn_X.whenPressed(com_deployIntake);
     coDriverStick.POV_North.whenPressed(com_angleHoodUp);
     coDriverStick.POV_South.whenPressed(com_angleHoodDown);
+    coDriverStick.POV_East.whenPressed(com_automaticRotate);
 
     // btn_LStick can become btn_RStick for dominant hand
     coDriverStick.btn_LStick.whileHeld(com_climb);
