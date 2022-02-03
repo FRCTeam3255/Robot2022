@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
+import frc.robot.RobotMap.IntakeMap;
 
 public class Transfer extends SubsystemBase {
   /**
@@ -53,24 +54,19 @@ public class Transfer extends SubsystemBase {
     return bottomBeltMotor.getSelectedSensorPosition();
   }
 
-  public void setTransferMotorSpeed(double transfermotor_speed) {
-    double speed = transfermotor_speed;
+  public void setTopBeltMotorSpeed(double a_speed) {
+    double speed = a_speed;
+    topBeltMotor.set(ControlMode.PercentOutput, speed);
+  }
 
-    if (isTopBallCollected() == true) {
-      topBeltMotor.set(ControlMode.PercentOutput, 0);
+  public void setBottomBeltMotorSpeed(double a_speed) {
+    double speed = a_speed;
+    topBeltMotor.set(ControlMode.PercentOutput, speed);
+  }
 
-    } else if (isTopBallCollected() == false) {
-      topBeltMotor.set(ControlMode.PercentOutput, speed);
-    }
-
-    if (isBottomBallCollected() && isTopBallCollected() == true) {
-      bottomBeltMotor.set(ControlMode.PercentOutput, 0);
-      entranceBeltMotor.set(ControlMode.PercentOutput, 0);
-
-    } else if (isBottomBallCollected() && isTopBallCollected() == false) {
-      bottomBeltMotor.set(ControlMode.PercentOutput, speed);
-      entranceBeltMotor.set(ControlMode.PercentOutput, speed);
-    }
+  public void setEntranceBeltMotorSpeed(double a_speed) {
+    double speed = a_speed;
+    topBeltMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public boolean isTopBallCollected() {

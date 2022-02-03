@@ -32,15 +32,33 @@ public class CollectCargo extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.setIntakeMotorSpeed(RobotPreferences.IntakePrefs.collectSpeed.getValue());
-    transfer.setTransferMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
+
+    // Top Belt Motors
+    if (transfer.isTopBallCollected() == true) {
+      transfer.setTopBeltMotorSpeed(0);
+
+    } else if (transfer.isTopBallCollected() == false) {
+      transfer.setTopBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
+    }
+
+    // Bottom Belt Motors
+    if (transfer.isBottomBallCollected() && transfer.isTopBallCollected() == true) {
+      transfer.setBottomBeltMotorSpeed(0);
+      transfer.setEntranceBeltMotorSpeed(0);
+
+    } else if (transfer.isBottomBallCollected() && transfer.isTopBallCollected() == false) {
+      transfer.setBottomBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
+      transfer.setEntranceBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     intake.setIntakeMotorSpeed(0);
-    transfer.setTransferMotorSpeed(0);
+    transfer.setTopBeltMotorSpeed(0);
+    transfer.setBottomBeltMotorSpeed(0);
+    transfer.setEntranceBeltMotorSpeed(0);
   }
 
   // Returns true when the command should end.
