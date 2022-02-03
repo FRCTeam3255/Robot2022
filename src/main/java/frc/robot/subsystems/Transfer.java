@@ -19,7 +19,7 @@ public class Transfer extends SubsystemBase {
    */
 
   private TalonSRX topBeltMotor;
-  private TalonSRX bottomBeltMotor;;
+  private TalonSRX bottomBeltMotor;
   private DigitalInput isBallTopTransferLimitSwitch;
   private DigitalInput isBallBottomTransferLimitSwitch;
   private TalonSRX entranceBeltMotor;
