@@ -16,11 +16,11 @@ public class Climber extends SubsystemBase {
 
   /** Creates a new Climber. */
   private TalonFX climbMotor;
-  private DigitalInput climberSafetySwitch;
+  private DigitalInput climberBottomSafetySwitch;
 
   public Climber() {
 
-    climberSafetySwitch = new DigitalInput(RobotMap.ClimberMap.SAFETY_MAG_SWITCH_DIO);
+    climberBottomSafetySwitch = new DigitalInput(RobotMap.ClimberMap.SAFETY_MAG_SWITCH_DIO);
     climbMotor = new TalonFX(RobotMap.ClimberMap.CLIMBER_MOTOR_CAN);
     configure();
 
@@ -43,24 +43,24 @@ public class Climber extends SubsystemBase {
   public void setClimberSpeed(double a_speed) {
     double speed = a_speed;
 
-    if (isClimberTooLow() == false) {
+    if (isClimberAtBottom() == false) {
       climbMotor.set(ControlMode.PercentOutput, 0);
 
-    } else if (isClimberTooLow() == true) {
+    } else if (isClimberAtBottom() == true) {
       climbMotor.set(ControlMode.PercentOutput, speed);
     }
 
   }
 
   // TODO: change when location of mag switch is (ex: isClimberRaised)
-  public boolean isClimberTooLow() {
-    return climberSafetySwitch.get();
+  public boolean isClimberAtBottom() {
+    return climberBottomSafetySwitch.get();
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Climber Motor", getClimberEncoderCount());
-    SmartDashboard.putBoolean("Climber Safety Switch", isClimberTooLow());
+    SmartDashboard.putBoolean("Climber Safety Switch", isClimberAtBottom());
   }
 }
