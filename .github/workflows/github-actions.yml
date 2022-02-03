@@ -35,4 +35,4 @@ jobs:
 
     # Runs a single command using the runners shell
     - name: Simulate robot code
-      run: timeout 10s ./gradlew simulateJava
+      run: timeout --preserve-status 10s ./gradlew simulateJava
