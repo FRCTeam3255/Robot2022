@@ -29,7 +29,7 @@ public class ManualRotate extends CommandBase {
   public void execute() {
     double rotate = RobotContainer.coDriverStick.getArcadeRotate();
 
-    turret.turretRotation(rotate);
+    turret.setTurretSpeed(rotate);
   }
 
   // Called once the command ends or is interrupted.

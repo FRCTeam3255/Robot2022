@@ -51,7 +51,7 @@ public class RobotContainer {
       RobotPreferences.HoodPrefs.angleHoodDirectionDown);
 
   // Turret Commands
-  private final AutomaticRotate com_automaticRotate = new AutomaticRotate(sub_turret);
+  private final ManualRotate com_manualRotate = new ManualRotate(sub_turret);
 
   // Shooter Commands
   private final ShootCargo com_shootCargo = new ShootCargo(sub_shooter);
@@ -93,7 +93,7 @@ public class RobotContainer {
     coDriverStick.btn_X.whenPressed(com_deployIntake);
     coDriverStick.POV_North.whenPressed(com_angleHoodUp);
     coDriverStick.POV_South.whenPressed(com_angleHoodDown);
-    coDriverStick.POV_East.whenPressed(com_automaticRotate);
+    coDriverStick.POV_West.whileHeld(com_manualRotate);
 
     // btn_LStick can become btn_RStick for dominant hand
     coDriverStick.btn_LStick.whileHeld(com_climb);

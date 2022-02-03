@@ -38,7 +38,7 @@ public class Turret extends SubsystemBase {
     return turretMotor.getSelectedSensorPosition();
   }
 
-  public void turretRotation(double a_rotate) {
+  public void setTurretSpeed(double a_rotate) {
     double rotate = a_rotate;
 
     turretMotor.set(ControlMode.PercentOutput, rotate);
