@@ -30,9 +30,8 @@ public final class RobotMap {
     }
 
     public final class HoodMap {
-        public static final int HOOD_MOTOR_CAN = 10;
-        public static final int HOOD_LIMIT_SWITCH_DIO = 3;
-        public static final int HOOD_SAFETY_FORWARD = 270;
+        public static final int HOOD_SOLENOID_PCM_A = 2;
+        public static final int HOOD_SOLENOID_PCM_B = 3;
     }
 
     public final class TurretMap {
@@ -42,10 +41,9 @@ public final class RobotMap {
     public final class TransferMap {
 
         public static final int TOP_BELT_MOTOR_CAN = 30;
-        public static final int BOTTOM_BELT_ENTRANCE_MOTOR_CAN = 31;
-        public static final int MIDDLE_BELT_MOTOR_CAN = 32;
-        public static final int IS_BALL_TOP_TRANSFER_LIMIT_SWITCH_DIO = 0;
-        public static final int IS_BALL_BOTTOM_TRANSFER_LIMIT_SWITCH_DIO = 1;
+        public static final int BOTTOM_BELT_MOTOR_CAN = 31;
+        public static final int TRANSFER_TOP_LIMIT_SWITCH_DIO = 1;
+        public static final int TRANSFER_BOTTOM_LIMIT_SWITCH_DIO = 2;
 
     }
 
