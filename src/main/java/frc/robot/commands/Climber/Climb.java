@@ -37,7 +37,7 @@ public class Climb extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     climber.setClimberSpeed(0);
-    climber.deployClimberLock();
+    climber.lockClimber();
   }
 
   // Returns true when the command should end.
