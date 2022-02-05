@@ -28,7 +28,7 @@ public class Transfer extends SubsystemBase {
   public Transfer() {
     topBeltMotor = new TalonFX(RobotMap.TransferMap.TOP_BELT_MOTOR_CAN);
     bottomBeltMotor = new TalonFX(RobotMap.TransferMap.BOTTOM_BELT_MOTOR_CAN);
-    entranceBeltMotor = new TalonFX(RobotMap.TransferMap.MIDDLE_BELT_MOTOR_CAN);
+    entranceBeltMotor = new TalonFX(RobotMap.TransferMap.ENTRANCE_BELT_MOTOR_CAN);
     transferTopLimitSwitch = new DigitalInput(RobotMap.TransferMap.TRANSFER_TOP_LIMIT_SWITCH_DIO);
     transferBottomLimitSwitch = new DigitalInput(RobotMap.TransferMap.TRANSFER_BOTTOM_LIMIT_SWITCH_DIO);
   }
@@ -45,6 +45,7 @@ public class Transfer extends SubsystemBase {
 
   public double getBottomBeltMotorEncoderCount() {
     return bottomBeltMotor.getSelectedSensorPosition();
+
   }
 
   public void setTopBeltMotorSpeed(double a_speed) {
@@ -54,12 +55,12 @@ public class Transfer extends SubsystemBase {
 
   public void setBottomBeltMotorSpeed(double a_speed) {
     double speed = a_speed;
-    topBeltMotor.set(ControlMode.PercentOutput, speed);
+    bottomBeltMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void setEntranceBeltMotorSpeed(double a_speed) {
     double speed = a_speed;
-    topBeltMotor.set(ControlMode.PercentOutput, speed);
+    entranceBeltMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public boolean isTopBallCollected() {
