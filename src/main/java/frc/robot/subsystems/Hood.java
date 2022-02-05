@@ -20,6 +20,8 @@ import frc.robot.RobotPreferences;
 public class Hood extends SubsystemBase {
 
   private DoubleSolenoid hoodSolenoid;
+  private DoubleSolenoid.Value shallowHoodValue = Value.kReverse;
+  private DoubleSolenoid.Value steepHoodValue = Value.kForward;
 
   /** Creates a new Hood. */
 
@@ -42,14 +44,16 @@ public class Hood extends SubsystemBase {
 
     return isHoodSteep;
   }
+
   // solenoid commands
 
   public void steepenHood() {
-    hoodSolenoid.set(Value.kForward);
+    hoodSolenoid.set(steepHoodValue);
+
   }
 
   public void shallowHood() {
-    hoodSolenoid.set(Value.kReverse);
+    hoodSolenoid.set(shallowHoodValue);
   }
 
   @Override
