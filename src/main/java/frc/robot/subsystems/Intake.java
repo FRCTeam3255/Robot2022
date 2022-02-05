@@ -64,7 +64,7 @@ public class Intake extends SubsystemBase {
     return intakeMotor.getSelectedSensorPosition();
   }
 
-  public boolean getIsIntakeDeployed() {
+  public boolean isIntakeDeployed() {
     Value intakeSolenoidStatus = intakeSolenoid.get();
     boolean isIntakeDeployed = false;
 
@@ -156,7 +156,7 @@ public class Intake extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Intake Motor", getIntakeMotorCount());
-    SmartDashboard.putBoolean("Intake Solenoid", getIsIntakeDeployed());
+    SmartDashboard.putBoolean("Intake Solenoid", isIntakeDeployed());
 
     SmartDashboard.putNumber("Color Sensor Blue", getBlue());
     SmartDashboard.putNumber("Color Sensor Red", getRed());
