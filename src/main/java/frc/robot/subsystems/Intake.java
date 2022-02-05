@@ -30,8 +30,8 @@ public class Intake extends SubsystemBase {
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
 
   // Create the Variables for Deployed and Retracted
-  public DoubleSolenoid.Value intakeDeployed = Value.kForward;
-  public DoubleSolenoid.Value intakeRetracted = Value.kReverse;
+  public DoubleSolenoid.Value intakeDeploy = Value.kForward;
+  public DoubleSolenoid.Value intakeRetract = Value.kReverse;
 
   // Link to Robot Map
   public Intake() {
@@ -68,7 +68,7 @@ public class Intake extends SubsystemBase {
     Value intakeSolenoidStatus = intakeSolenoid.get();
     boolean isIntakeDeployed = false;
 
-    if (intakeSolenoidStatus == intakeDeployed) {
+    if (intakeSolenoidStatus == intakeDeploy) {
       isIntakeDeployed = true;
     } else {
       isIntakeDeployed = false;
@@ -80,11 +80,11 @@ public class Intake extends SubsystemBase {
 
   // solenoid do solenoid thing!!
   public void deployIntake() {
-    intakeSolenoid.set(intakeDeployed);
+    intakeSolenoid.set(intakeDeploy);
   }
 
   public void retractIntake() {
-    intakeSolenoid.set(intakeRetracted);
+    intakeSolenoid.set(intakeRetract);
   }
 
   // color sensor do color sensor things
