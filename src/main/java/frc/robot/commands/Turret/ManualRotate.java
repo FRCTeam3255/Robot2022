@@ -28,16 +28,6 @@ public class ManualRotate extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if ((turret.getTurretMotorEncoderCount()
-        * RobotPreferences.TurretPrefs.turretMotorEncoderAngleMultiplier.getValue() < 359
-        && RobotContainer.coDriverStick.getRightStickX() > 0)
-        || (turret.getTurretMotorEncoderCount()
-            * RobotPreferences.TurretPrefs.turretMotorEncoderAngleMultiplier.getValue() > 1
-            && RobotContainer.coDriverStick.getRightStickX() < 0)) {
-      double rotate = RobotContainer.coDriverStick.getRightStickX();
-
-      turret.setTurretSpeed(rotate);
-    }
 
   }
 
