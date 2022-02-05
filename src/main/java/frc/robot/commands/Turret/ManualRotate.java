@@ -7,6 +7,7 @@ package frc.robot.commands.Turret;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
+import frc.robot.RobotPreferences;
 import frc.robot.subsystems.Turret;
 
 public class ManualRotate extends CommandBase {
@@ -27,9 +28,17 @@ public class ManualRotate extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double rotate = RobotContainer.coDriverStick.getRightStickX();
+    if ((turret.getTurretMotorEncoderCount()
+        * RobotPreferences.TurretPrefs.turretMotorEncoderAngleMultiplier.getValue() < 359
+        && RobotContainer.coDriverStick.getRightStickX() > 0)
+        || (turret.getTurretMotorEncoderCount()
+            * RobotPreferences.TurretPrefs.turretMotorEncoderAngleMultiplier.getValue() > 1
+            && RobotContainer.coDriverStick.getRightStickX() < 0)) {
+      double rotate = RobotContainer.coDriverStick.getRightStickX();
 
-    turret.setTurretSpeed(rotate);
+      turret.setTurretSpeed(rotate);
+    }
+
   }
 
   // Called once the command ends or is interrupted.

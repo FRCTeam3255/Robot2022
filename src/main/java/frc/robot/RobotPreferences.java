@@ -25,6 +25,8 @@ public final class RobotPreferences {
   }
 
   public static final class TurretPrefs {
+    public static final SN_DoublePreference turretMotorEncoderAngleMultiplier = new SN_DoublePreference(
+        "turretMotorEncoderAngleMultipler", 90);
   }
 
   public static final class TransferPrefs {
