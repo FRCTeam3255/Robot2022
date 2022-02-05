@@ -34,6 +34,9 @@ public class CollectCargo extends CommandBase {
   @Override
   public void execute() {
 
+    // Reject ball command
+    intake.rejectBall();
+
     // Top Belt Motors
     if (transfer.isTopBallCollected() == true) {
       transfer.setTopBeltMotorSpeed(0);

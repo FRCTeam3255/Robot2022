@@ -150,6 +150,12 @@ public class Intake extends SubsystemBase {
     return (isBallBlue() && isAllianceBlue()) || (isBallRed() && isAllianceRed());
   }
 
+  public void rejectBall() {
+    if (ballColorMatchesAlliance() == false) {
+      setIntakeMotorSpeed(RobotPreferences.IntakePrefs.rejectSpeed.getValue());
+    }
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
