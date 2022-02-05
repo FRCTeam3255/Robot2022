@@ -4,36 +4,30 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.frcteam3255.preferences.SN_DoublePreference;
-
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
-import frc.robot.RobotPreferences;
 
 public class Hood extends SubsystemBase {
 
-  private DoubleSolenoid hoodSolenoid;
-  private DoubleSolenoid.Value shallowHoodValue = Value.kReverse;
-  private DoubleSolenoid.Value steepHoodValue = Value.kForward;
+  private DoubleSolenoid toggleHoodSolenoid;
+  private DoubleSolenoid.Value shallowReverseHoodValue = Value.kReverse;
+  private DoubleSolenoid.Value steepForwardHoodValue = Value.kForward;
 
   /** Creates a new Hood. */
 
   public Hood() {
-    hoodSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.HoodMap.HOOD_SOLENOID_PCM_A,
-        RobotMap.HoodMap.HOOD_SOLENOID_PCM_B);
+    toggleHoodSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.HoodMap.HOOD_SOLENOID_STEEP_PCM_A,
+        RobotMap.HoodMap.HOOD_SOLENOID_SHALLOW_PCM_B);
     // configure is not needed since this is a solenoid
   }
 
   // check if solenoid is extended
   public boolean isHoodSteep() {
-    Value hoodSolenoidStatus = hoodSolenoid.get();
+    Value hoodSolenoidStatus = toggleHoodSolenoid.get();
     boolean isHoodSteep = false;
 
     if (hoodSolenoidStatus == DoubleSolenoid.Value.kForward) {
@@ -48,12 +42,12 @@ public class Hood extends SubsystemBase {
   // solenoid commands
 
   public void steepenHood() {
-    hoodSolenoid.set(steepHoodValue);
+    toggleHoodSolenoid.set(steepForwardHoodValue);
 
   }
 
   public void shallowHood() {
-    hoodSolenoid.set(shallowHoodValue);
+    toggleHoodSolenoid.set(shallowReverseHoodValue);
   }
 
   @Override
