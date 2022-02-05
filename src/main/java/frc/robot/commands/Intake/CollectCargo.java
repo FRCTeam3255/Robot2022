@@ -35,26 +35,30 @@ public class CollectCargo extends CommandBase {
   public void execute() {
 
     // Reject ball command
-    intake.rejectBall();
+    if (intake.ballColorMatchesAlliance() == false) {
+      intake.setIntakeMotorSpeed(RobotPreferences.IntakePrefs.rejectSpeed.getValue());
+    } else {
 
-    // Top Belt Motors
-    if (transfer.isTopBallCollected() == true) {
-      transfer.setTopBeltMotorSpeed(0);
+      // Motor Controlling
+      // Top Belt Motors
+      if (transfer.isTopBallCollected() == true) {
+        transfer.setTopBeltMotorSpeed(0);
 
-    } else if (transfer.isTopBallCollected() == false) {
-      transfer.setTopBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
-    }
+      } else if (transfer.isTopBallCollected() == false) {
+        transfer.setTopBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
+      }
 
-    // Bottom Belt Motors
-    if (transfer.isBottomBallCollected() && transfer.isTopBallCollected() == true) {
-      transfer.setBottomBeltMotorSpeed(0);
-      transfer.setEntranceBeltMotorSpeed(0);
-      intake.setIntakeMotorSpeed(0);
+      // Bottom Belt Motors
+      if (transfer.isBottomBallCollected() && transfer.isTopBallCollected() == true) {
+        transfer.setBottomBeltMotorSpeed(0);
+        transfer.setEntranceBeltMotorSpeed(0);
+        intake.setIntakeMotorSpeed(0);
 
-    } else if (transfer.isBottomBallCollected() && transfer.isTopBallCollected() == false) {
-      transfer.setBottomBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
-      transfer.setEntranceBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
-      intake.setIntakeMotorSpeed(RobotPreferences.IntakePrefs.collectSpeed.getValue());
+      } else if (transfer.isBottomBallCollected() && transfer.isTopBallCollected() == false) {
+        transfer.setBottomBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
+        transfer.setEntranceBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
+        intake.setIntakeMotorSpeed(RobotPreferences.IntakePrefs.collectSpeed.getValue());
+      }
     }
   }
 
