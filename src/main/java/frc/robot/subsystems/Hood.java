@@ -13,21 +13,22 @@ import frc.robot.RobotMap;
 
 public class Hood extends SubsystemBase {
 
-  private DoubleSolenoid toggleHoodSolenoid;
-  private DoubleSolenoid.Value shallowReverseHoodValue = Value.kReverse;
-  private DoubleSolenoid.Value steepForwardHoodValue = Value.kForward;
+  private DoubleSolenoid hoodSolenoidSteepOrShallow;
+  private DoubleSolenoid.Value shallowLowerHoodAndHoodValue = Value.kReverse;
+  private DoubleSolenoid.Value steepRaiseHoodAndHoodValue = Value.kForward;
 
   /** Creates a new Hood. */
 
   public Hood() {
-    toggleHoodSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.HoodMap.HOOD_SOLENOID_STEEP_PCM_A,
+    hoodSolenoidSteepOrShallow = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,
+        RobotMap.HoodMap.HOOD_SOLENOID_STEEP_PCM_A,
         RobotMap.HoodMap.HOOD_SOLENOID_SHALLOW_PCM_B);
     // configure is not needed since this is a solenoid
   }
 
   // check if solenoid is extended
   public boolean isHoodSteep() {
-    Value hoodSolenoidStatus = toggleHoodSolenoid.get();
+    Value hoodSolenoidStatus = hoodSolenoidSteepOrShallow.get();
     boolean isHoodSteep = false;
 
     if (hoodSolenoidStatus == DoubleSolenoid.Value.kForward) {
@@ -42,12 +43,12 @@ public class Hood extends SubsystemBase {
   // solenoid commands
 
   public void steepenHood() {
-    toggleHoodSolenoid.set(steepForwardHoodValue);
+    hoodSolenoidSteepOrShallow.set(steepRaiseHoodAndHoodValue);
 
   }
 
   public void shallowHood() {
-    toggleHoodSolenoid.set(shallowReverseHoodValue);
+    hoodSolenoidSteepOrShallow.set(shallowLowerHoodAndHoodValue);
   }
 
   @Override
