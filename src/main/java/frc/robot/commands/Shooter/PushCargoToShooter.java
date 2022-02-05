@@ -9,18 +9,18 @@ import frc.robot.RobotPreferences;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Transfer;
 
-public class ShootCargo extends CommandBase {
+public class PushCargoToShooter extends CommandBase {
   Shooter shooter;
   Transfer transfer;
 
   /** Creates a new ShootCargoIf. */
-  public ShootCargo(Shooter sub_shooter, Transfer sub_transfer) {
+  public PushCargoToShooter(Shooter sub_shooter, Transfer sub_transfer) {
     // Use addRequirements() here to declare subsystem dependencies.
 
     shooter = sub_shooter;
     transfer = sub_transfer;
 
-    addRequirements(shooter, transfer);
+    addRequirements(transfer);
   }
 
   // Called when the command is initially scheduled.
@@ -47,7 +47,6 @@ public class ShootCargo extends CommandBase {
   public void end(boolean interrupted) {
     transfer.setTopBeltMotorSpeed(0);
     transfer.setBottomBeltMotorSpeed(0);
-    shooter.setShooterSpeed(0);
   }
 
   // Returns true when the command should end.

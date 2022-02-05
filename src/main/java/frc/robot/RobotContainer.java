@@ -54,7 +54,7 @@ public class RobotContainer {
   private final ManualRotate com_manualRotate = new ManualRotate(sub_turret);
 
   // Shooter Commands
-  private final ShootCargo com_shootCargo = new ShootCargo(sub_shooter, sub_transfer);
+  private final PushCargoToShooter com_shootCargo = new PushCargoToShooter(sub_shooter, sub_transfer);
   // Transfer Commands
 
   // Intake Commands
