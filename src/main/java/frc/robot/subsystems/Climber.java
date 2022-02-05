@@ -36,6 +36,7 @@ public class Climber extends SubsystemBase {
   }
 
   public void resetClimberEncoderCount() {
+    climbMotor.configForwardSoftLimitThreshold(RobotPreferences.ClimberPrefs.climberMaxEncoderCount.getValue(), 0);
     climbMotor.setSelectedSensorPosition(0);
 
   }
