@@ -49,12 +49,12 @@ public class CollectCargo extends CommandBase {
       }
 
       // Bottom Belt Motors
-      if (transfer.isBottomBallCollected() && transfer.isTopBallCollected() == true) {
+      if (transfer.isBottomBallCollected() == true && transfer.isTopBallCollected() == true) {
         transfer.setBottomBeltMotorSpeed(0);
         transfer.setEntranceBeltMotorSpeed(0);
         intake.setIntakeMotorSpeed(0);
 
-      } else if (transfer.isBottomBallCollected() && transfer.isTopBallCollected() == false) {
+      } else {
         transfer.setBottomBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
         transfer.setEntranceBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
         intake.setIntakeMotorSpeed(RobotPreferences.IntakePrefs.collectSpeed.getValue());
