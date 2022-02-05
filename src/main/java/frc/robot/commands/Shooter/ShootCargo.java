@@ -33,11 +33,11 @@ public class ShootCargo extends CommandBase {
   public void execute() {
     if (shooter.getShooterVelocity() >= RobotPreferences.ShooterPrefs.shooterMotorTargetVelocity.getValue()) {
       // transfer.setTransferMotorSpeed(RobotPreferences.TransferPrefs.transferMotorSpeed);
-      transfer.setBottomTransferMotorSpeed(RobotPreferences.TransferPrefs.moveTransferSpeed);
-      transfer.setTopTransferMotorSpeed(RobotPreferences.TransferPrefs.moveTransferSpeed);
+      transfer.setBottomBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
+      transfer.setTopBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
     } else {
-      transfer.setBottomTransferMotorSpeed(0);
-      transfer.setTopTransferMotorSpeed(0);
+      transfer.setBottomBeltMotorSpeed(0);
+      transfer.setTopBeltMotorSpeed(0);
     }
 
   }
@@ -45,8 +45,8 @@ public class ShootCargo extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    transfer.setTopTransferMotorSpeed(0);
-    transfer.setBottomTransferMotorSpeed(0);
+    transfer.setTopBeltMotorSpeed(0);
+    transfer.setBottomBeltMotorSpeed(0);
     shooter.setShooterSpeed(0);
   }
 
