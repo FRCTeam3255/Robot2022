@@ -8,19 +8,10 @@ public final class RobotPreferences {
   }
 
   public static final class HoodPrefs {
-    public static final SN_DoublePreference hoodCountsPerDegree = new SN_DoublePreference(
-        "hoodCountsPerDegree",
-        40);
-    public static final SN_DoublePreference angleHoodDirectionUp = new SN_DoublePreference(
-        "angleHoodDirectionUp",
-        -2);
-    public static final SN_DoublePreference angleHoodDirectionDown = new SN_DoublePreference(
-        "angleHoodDirectionDown", 2);
   }
 
   public static final class ShooterPrefs {
-    public static final SN_DoublePreference shooterMotorSpeed = new SN_DoublePreference("shooterMotorSpeed",
-        1);
+    public static final SN_DoublePreference shooterMotorSpeed = new SN_DoublePreference("shooterMotorSpeed", 1);
     public static final SN_DoublePreference shooterMotorTargetVelocity = new SN_DoublePreference(
         "shooterMotorTargetVelocity", 5000.0);
   }
