@@ -2,35 +2,26 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Hood;
+package frc.robot.commands.Intake;
 
-import com.frcteam3255.preferences.SN_DoublePreference;
-
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
-import frc.robot.RobotContainer;
-import frc.robot.RobotMap;
-import frc.robot.RobotPreferences;
-import frc.robot.subsystems.Hood;
+import frc.robot.subsystems.Intake;
 
-public class NudgeHood extends CommandBase {
+public class DeployIntake extends CommandBase {
 
-  Hood hood;
-  private SN_DoublePreference degrees;
+  Intake intake;
 
-  /** Creates a new AngleHood. */
-  public NudgeHood(Hood sub_hood, SN_DoublePreference angleHoodDirection) {
+  /** Creates a new DeployIntake. */
+  public DeployIntake(Intake sub_intake) {
     // Use addRequirements() here to declare subsystem dependencies.
-    hood = sub_hood;
-    degrees = angleHoodDirection;
-    addRequirements(hood);
+    intake = sub_intake;
+    addRequirements(intake);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    hood.moveHoodToDegree(degrees.getValue());
+    intake.deployIntake();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -46,6 +37,6 @@ public class NudgeHood extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

@@ -5,10 +5,11 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -20,12 +21,15 @@ public class Intake extends SubsystemBase {
   // Creates the motors
   private TalonFX intakeMotor;
   private DoubleSolenoid intakeSolenoid;
+  private ColorSensorV3 intakeColorSensorV3;
+  private final I2C.Port i2cPort = I2C.Port.kOnboard;
 
   // Link to Robot Map
   public Intake() {
     intakeMotor = new TalonFX(RobotMap.IntakeMap.INTAKE_MOTOR_CAN);
     intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.IntakeMap.INTAKE_SOLENOID_PCM_A,
         RobotMap.IntakeMap.INTAKE_SOLENOID_PCM_B);
+    intakeColorSensorV3 = new ColorSensorV3(i2cPort);
 
     configure();
   }
@@ -51,13 +55,33 @@ public class Intake extends SubsystemBase {
     return intakeMotor.getSelectedSensorPosition();
   }
 
-  public Value getSolenoidPosition() {
-    return intakeSolenoid.get();
+  public boolean isIntakeDeployed() {
+    Value intakeSolenoidStatus = intakeSolenoid.get();
+    boolean isIntakeDeployed = false;
+
+    if (intakeSolenoidStatus == DoubleSolenoid.Value.kForward) {
+      isIntakeDeployed = true;
+    } else {
+      isIntakeDeployed = false;
+    }
+
+    return isIntakeDeployed;
+
+  }
+
+  // solenoid do solenoid thing!!
+  public void deployIntake() {
+    intakeSolenoid.set(Value.kForward);
+  }
+
+  public void retractIntake() {
+    intakeSolenoid.set(Value.kReverse);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Intake Motor", getIntakeMotorCount());
+    SmartDashboard.putBoolean("Intake Solenoid", isIntakeDeployed());
   }
 }

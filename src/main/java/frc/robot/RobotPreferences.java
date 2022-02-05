@@ -23,12 +23,12 @@ public final class RobotPreferences {
   }
 
   public static final class TransferPrefs {
+    public final static SN_DoublePreference transferSpeed = new SN_DoublePreference("transferSpeed", 0.80);
 
-    public static double moveTransferSpeed;
   }
 
   public static final class IntakePrefs {
-    public final static SN_DoublePreference collectSpeed = new SN_DoublePreference("collectSpeed", 0.50);
+    public final static SN_DoublePreference collectSpeed = new SN_DoublePreference("collectSpeed", 0.80);
   }
 
   public static final class VisionPrefs {
