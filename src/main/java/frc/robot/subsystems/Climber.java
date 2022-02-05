@@ -34,23 +34,23 @@ public class Climber extends SubsystemBase {
 
   public boolean isClimberLockInitiated() {
     Value climberLockStatus = climberLockPiston.get();
-    boolean isClimberLockInitiated = false;
+    boolean isClimberLocked = false;
 
     if (climberLockStatus == DoubleSolenoid.Value.kForward) {
-      isClimberLockInitiated = true;
+      isClimberLocked = true;
     } else {
-      isClimberLockInitiated = false;
+      isClimberLocked = false;
     }
 
-    return isClimberLockInitiated;
+    return isClimberLocked;
   }
 
   // solenoid commands
-  public void deployClimberLock() {
+  public void lockClimber() {
     climberLockPiston.set(Value.kForward);
   }
 
-  public void retractClimberLock() {
+  public void unlockClimber() {
     climberLockPiston.set(Value.kReverse);
   }
 
