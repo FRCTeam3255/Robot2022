@@ -24,8 +24,8 @@ public class Climber extends SubsystemBase {
   private DoubleSolenoid climberLockPiston;
 
   // Solenoid Variables
-  private DoubleSolenoid.Value lockDeployed = Value.kForward;
-  private DoubleSolenoid.Value lockRetracted = Value.kReverse;
+  private DoubleSolenoid.Value lockDeploy = Value.kForward;
+  private DoubleSolenoid.Value lockRetract = Value.kReverse;
 
   public Climber() {
 
@@ -41,7 +41,7 @@ public class Climber extends SubsystemBase {
     Value climberLockStatus = climberLockPiston.get();
     boolean isClimberLocked = false;
 
-    if (climberLockStatus == lockDeployed) {
+    if (climberLockStatus == lockDeploy) {
       isClimberLocked = true;
     } else {
       isClimberLocked = false;
@@ -52,11 +52,11 @@ public class Climber extends SubsystemBase {
 
   // solenoid commands
   public void lockClimber() {
-    climberLockPiston.set(lockDeployed);
+    climberLockPiston.set(lockDeploy);
   }
 
   public void unlockClimber() {
-    climberLockPiston.set(lockRetracted);
+    climberLockPiston.set(lockRetract);
   }
 
   private void configure() {
