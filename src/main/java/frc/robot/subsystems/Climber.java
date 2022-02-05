@@ -8,6 +8,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
@@ -17,13 +20,38 @@ public class Climber extends SubsystemBase {
   /** Creates a new Climber. */
   private TalonFX climbMotor;
   private DigitalInput climberBottomSafetySwitch;
+  private DoubleSolenoid climberLockPiston;
 
   public Climber() {
 
     climberBottomSafetySwitch = new DigitalInput(RobotMap.ClimberMap.SAFETY_MAG_SWITCH_DIO);
     climbMotor = new TalonFX(RobotMap.ClimberMap.CLIMBER_MOTOR_CAN);
+    climberLockPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.ClimberMap.CLIMBER_LOCK_PISTON_A,
+        RobotMap.ClimberMap.CLIMBER_LOCK_PISTON_B);
     configure();
 
+  }
+
+  public boolean isClimberLockInitiated() {
+    Value climberLockStatus = climberLockPiston.get();
+    boolean isClimberLockInitiated = false;
+
+    if (climberLockStatus == DoubleSolenoid.Value.kForward) {
+      isClimberLockInitiated = true;
+    } else {
+      isClimberLockInitiated = false;
+    }
+
+    return isClimberLockInitiated;
+  }
+
+  // solenoid commands
+  public void deployClimberLock() {
+    climberLockPiston.set(Value.kForward);
+  }
+
+  public void retractClimberLock() {
+    climberLockPiston.set(Value.kReverse);
   }
 
   private void configure() {
@@ -61,6 +89,7 @@ public class Climber extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Climber Motor", getClimberEncoderCount());
-    SmartDashboard.putBoolean("Climber At Bottom?", isClimberAtBottom());
+    SmartDashboard.putBoolean("Is Climber At Bottom", isClimberAtBottom());
+    SmartDashboard.putBoolean("Is Climber Locked", isClimberLockInitiated());
   }
 }
