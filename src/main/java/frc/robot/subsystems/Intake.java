@@ -7,13 +7,16 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
+import frc.robot.RobotPreferences;
 
 public class Intake extends SubsystemBase {
 
@@ -21,11 +24,17 @@ public class Intake extends SubsystemBase {
   private TalonFX intakeMotor;
   private DoubleSolenoid intakeSolenoid;
 
+  // Creates the color sensor (and relivant ports)
+  ColorSensorV3 colorSensor;
+  private final I2C.Port i2cPort = I2C.Port.kOnboard;
+
   // Link to Robot Map
   public Intake() {
     intakeMotor = new TalonFX(RobotMap.IntakeMap.INTAKE_MOTOR_CAN);
     intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.IntakeMap.INTAKE_SOLENOID_PCM_A,
         RobotMap.IntakeMap.INTAKE_SOLENOID_PCM_B);
+
+    colorSensor = new ColorSensorV3(i2cPort);
 
     configure();
   }
@@ -72,6 +81,45 @@ public class Intake extends SubsystemBase {
 
   public void retractIntake() {
     intakeSolenoid.set(Value.kReverse);
+  }
+
+  public static enum ballColor {
+    red, blue, none
+  };
+
+  public int getColorSensorBlue() {
+    return colorSensor.getBlue();
+  }
+
+  public int getColorSensorRed() {
+    return colorSensor.getRed();
+  }
+
+  public int getColorSensorProximity() {
+    return colorSensor.getProximity();
+  }
+
+  public ballColor getBallColor() {
+    if (getColorSensorProximity() > RobotPreferences.IntakePrefs.colorSensorMinProximity.getValue()) {
+      if (getColorSensorRed() > getColorSensorBlue()) {
+        return ballColor.red;
+      } else {
+        return ballColor.blue;
+      }
+    } else {
+      return ballColor.none;
+    }
+  }
+
+  public String ballColorToString() {
+    ballColor bc = getBallColor();
+    if (bc == ballColor.red) {
+      return "red";
+    } else if (bc == ballColor.blue) {
+      return "blue";
+    } else {
+      return "none";
+    }
   }
 
   @Override
