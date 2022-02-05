@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.function.DoubleToLongFunction;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.ColorSensorV3;
@@ -26,6 +28,10 @@ public class Intake extends SubsystemBase {
   private DoubleSolenoid intakeSolenoid;
   private ColorSensorV3 intakeColorSensorV3;
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
+
+  // Create the Variables for Deployed and Retracted
+  public DoubleSolenoid.Value intakeDeployed = Value.kForward;
+  public DoubleSolenoid.Value intakeRetracted = Value.kReverse;
 
   // Link to Robot Map
   public Intake() {
@@ -53,16 +59,16 @@ public class Intake extends SubsystemBase {
     intakeMotor.set(ControlMode.PercentOutput, speed);
   }
 
-  // Get positons
+  // Get positions
   public double getIntakeMotorCount() {
     return intakeMotor.getSelectedSensorPosition();
   }
 
-  public boolean isIntakeDeployed() {
+  public boolean getIsIntakeDeployed() {
     Value intakeSolenoidStatus = intakeSolenoid.get();
     boolean isIntakeDeployed = false;
 
-    if (intakeSolenoidStatus == DoubleSolenoid.Value.kForward) {
+    if (intakeSolenoidStatus == intakeDeployed) {
       isIntakeDeployed = true;
     } else {
       isIntakeDeployed = false;
@@ -74,14 +80,14 @@ public class Intake extends SubsystemBase {
 
   // solenoid do solenoid thing!!
   public void deployIntake() {
-    intakeSolenoid.set(Value.kForward);
+    intakeSolenoid.set(intakeDeployed);
   }
 
   public void retractIntake() {
-    intakeSolenoid.set(Value.kReverse);
+    intakeSolenoid.set(intakeRetracted);
   }
 
-  // color sesnror do colro senror thingss
+  // color sensor do color sensor things
   public int getRed() {
     return intakeColorSensorV3.getRed();
   }
@@ -118,7 +124,7 @@ public class Intake extends SubsystemBase {
     } else if (getBallColor() == ballColor.none) {
       return "none";
     } else {
-      return "huh";
+      return "BALL WENT KABOOM!!!!!!";
     }
   }
 
@@ -150,7 +156,7 @@ public class Intake extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Intake Motor", getIntakeMotorCount());
-    SmartDashboard.putBoolean("Intake Solenoid", isIntakeDeployed());
+    SmartDashboard.putBoolean("Intake Solenoid", getIsIntakeDeployed());
 
     SmartDashboard.putNumber("Color Sensor Blue", getBlue());
     SmartDashboard.putNumber("Color Sensor Red", getRed());
