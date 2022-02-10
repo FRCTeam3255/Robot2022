@@ -5,9 +5,6 @@
 package frc.robot;
 
 import com.frcteam3255.joystick.SN_DualActionStick;
-import com.frcteam3255.joystick.SN_Extreme3DStick;
-
-import frc.robot.RobotPreferences;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,12 +20,10 @@ import frc.robot.subsystems.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
- * Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in
- * the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of
- * the robot (including
- * subsystems, commands, and button mappings) should be declared here.
+ * Command-based is a "declarative" paradigm, very little robot logic should
+ * actually be handled in the {@link Robot} periodic methods (other than the
+ * scheduler calls). Instead, the structure of the robot (including subsystems,
+ * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
 
@@ -53,10 +48,11 @@ public class RobotContainer {
   private final SteepenHood com_steepen_hood = new SteepenHood(sub_hood);
 
   // Turret Commands
-  private final ManualRotate com_manualRotate = new ManualRotate(sub_turret);
+  private final ManualRotateTurret com_manualRotateTurret = new ManualRotateTurret(sub_turret);
 
   // Shooter Commands
-  private final ShootCargo com_shootCargo = new ShootCargo(sub_shooter);
+  private final PushCargoToShooter com_shootCargo = new PushCargoToShooter(sub_shooter, sub_transfer);
+  private final SpinFlywheel com_spinFlywheel = new SpinFlywheel(sub_shooter);
   // Transfer Commands
 
   // Intake Commands
@@ -82,19 +78,18 @@ public class RobotContainer {
 
   /**
    * Use this method to define your button->command mappings. Buttons can be
-   * created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
-   * it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   * created by instantiating a {@link GenericHID} or one of its subclasses
+   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
+   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
     DriverStick.btn_RTrig.whileHeld(com_shootCargo);
+    DriverStick.btn_RTrig.whileHeld(com_spinFlywheel);
     DriverStick.btn_LTrig.whileHeld(com_collect);
 
     coDriverStick.btn_Y.whenPressed(com_retractIntake);
     coDriverStick.btn_X.whenPressed(com_deployIntake);
-    coDriverStick.POV_West.whileHeld(com_manualRotate);
+    coDriverStick.POV_West.whileHeld(com_manualRotateTurret);
 
     coDriverStick.btn_A.whenPressed(com_steepen_hood);
     coDriverStick.btn_B.whenPressed(com_shallow_hood);
@@ -107,6 +102,16 @@ public class RobotContainer {
    * Use this method to define your dashboard buttons
    */
   private void configureDashboardButtons() {
+    SmartDashboard.putData("Reset Climber Encoders",
+        new InstantCommand(sub_climber::resetClimberEncoderCount, sub_climber));
+    SmartDashboard.putData("Reset Drivetrain Encoders",
+        new InstantCommand(sub_drivetrain::resetDrivetrainEncodersCount, sub_drivetrain));
+    SmartDashboard.putData("Reset Intake Encoders",
+        new InstantCommand(sub_intake::resetIntakeEncoderCount, sub_intake));
+    SmartDashboard.putData("Reset Turret Encoders",
+        new InstantCommand(sub_turret::resetTurretEncoderCounts, sub_turret));
+    SmartDashboard.putData("Reset Shooter Encoders",
+        new InstantCommand(sub_shooter::resetShooterEncoderCounts, sub_shooter));
 
   }
 

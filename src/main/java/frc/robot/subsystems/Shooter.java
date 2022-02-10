@@ -6,8 +6,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.frcteam3255.preferences.SN_DoublePreference;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
@@ -36,7 +34,7 @@ public class Shooter extends SubsystemBase {
   }
 
   // RESETS COUNT FOR ENCODERS
-  public void resetEncoderCounts() {
+  public void resetShooterEncoderCounts() {
     leftMotor.setSelectedSensorPosition(0);
     rightMotor.setSelectedSensorPosition(0);
   }
@@ -55,6 +53,7 @@ public class Shooter extends SubsystemBase {
 
     leftMotor.set(ControlMode.PercentOutput, speed);
     rightMotor.set(ControlMode.PercentOutput, speed);
+
   }
 
   public double getShooterVelocity() {

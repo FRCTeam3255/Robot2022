@@ -1,25 +1,17 @@
 package frc.robot;
 
 import com.frcteam3255.preferences.SN_DoublePreference;
+import com.frcteam3255.preferences.SN_IntPreference;
 
 public final class RobotPreferences {
   public static final class DrivetrainPrefs {
   }
 
   public static final class HoodPrefs {
-    public static final SN_DoublePreference hoodCountsPerDegree = new SN_DoublePreference(
-        "hoodCountsPerDegree",
-        40);
-    public static final SN_DoublePreference angleHoodDirectionUp = new SN_DoublePreference(
-        "angleHoodDirectionUp",
-        -2);
-    public static final SN_DoublePreference angleHoodDirectionDown = new SN_DoublePreference(
-        "angleHoodDirectionDown", 2);
   }
 
   public static final class ShooterPrefs {
-    public static final SN_DoublePreference shooterMotorSpeed = new SN_DoublePreference("shooterMotorSpeed",
-        1);
+    public static final SN_DoublePreference shooterMotorSpeed = new SN_DoublePreference("shooterMotorSpeed", 1);
     public static final SN_DoublePreference shooterMotorTargetVelocity = new SN_DoublePreference(
         "shooterMotorTargetVelocity", 5000.0);
   }
@@ -40,6 +32,9 @@ public final class RobotPreferences {
 
   public static final class IntakePrefs {
     public final static SN_DoublePreference collectSpeed = new SN_DoublePreference("collectSpeed", 0.80);
+    public final static SN_DoublePreference rejectSpeed = new SN_DoublePreference("rejectSpeed", -0.80);
+    public final static SN_IntPreference colorSensorMinProximity = new SN_IntPreference("colorSensorMinProximity",
+        1000);
   }
 
   public static final class VisionPrefs {
@@ -47,5 +42,7 @@ public final class RobotPreferences {
 
   public static final class ClimberPrefs {
     public static final SN_DoublePreference climberMotorSpeed = new SN_DoublePreference("climberMotorSpeed", 0.5);
+    public static final SN_DoublePreference climberMaxEncoderCount = new SN_DoublePreference("climberMaxEncoderCount",
+        200000);
   }
 }
