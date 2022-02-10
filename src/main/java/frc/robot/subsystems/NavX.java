@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -15,7 +16,12 @@ public class NavX extends SubsystemBase {
 
   /** Creates a new NavX. */
   public NavX() {
-    navx = new AHRS();
+    try {
+      navx = new AHRS();
+    } catch (RuntimeException e) {
+      // if this is causing error, navx is probably not plugged in
+      DriverStation.reportError("Error instantiating NavX: " + e.getMessage(), true);
+    }
   }
 
   public void resetHeading() {
