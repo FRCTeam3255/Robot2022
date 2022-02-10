@@ -17,6 +17,12 @@ public final class RobotPreferences {
   }
 
   public static final class TurretPrefs {
+    public static final SN_DoublePreference turretMotorEncoderAngleMultiplier = new SN_DoublePreference(
+        "turretMotorEncoderAngleMultipler", 90);
+
+    public static final SN_DoublePreference turretMaxEncoderCount = new SN_DoublePreference("turretMaxEncoderCount", 0);
+
+    public static final SN_DoublePreference turretMinEncoderCount = new SN_DoublePreference("turretMinEncoderCount", 0);
   }
 
   public static final class TransferPrefs {
@@ -37,6 +43,6 @@ public final class RobotPreferences {
   public static final class ClimberPrefs {
     public static final SN_DoublePreference climberMotorSpeed = new SN_DoublePreference("climberMotorSpeed", 0.5);
     public static final SN_DoublePreference climberMaxEncoderCount = new SN_DoublePreference("climberMaxEncoderCount",
-        0);
+        200000);
   }
 }
