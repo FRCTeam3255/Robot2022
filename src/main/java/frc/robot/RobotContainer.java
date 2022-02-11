@@ -39,7 +39,7 @@ public class RobotContainer {
   private final Shooter sub_shooter = new Shooter();
   private final Climber sub_climber = new Climber();
   private final Transfer sub_transfer = new Transfer();
-  private final NavX sub_navX = new NavX();
+  public static final NavX sub_navX = new NavX();
 
   // Drivetrain Commands
   private final Drive com_drive = new Drive(sub_drivetrain);
