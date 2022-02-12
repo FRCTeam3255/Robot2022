@@ -40,7 +40,7 @@ public class Hood extends SubsystemBase {
     return isHoodSteep;
   }
 
-  // solenoid commands
+  // solenoid methods
   // Sets hood angle to the given value
 
   public void steepenHood() {
