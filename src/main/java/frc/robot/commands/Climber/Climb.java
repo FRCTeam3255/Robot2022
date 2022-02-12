@@ -21,7 +21,7 @@ public class Climb extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // Climber Break disengages when we press the button assigned to the climber
+    // Climber brake disengages when we press the button assigned to the climber
     climber.unlockClimber();
   }
 
