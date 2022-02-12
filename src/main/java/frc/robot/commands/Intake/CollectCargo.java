@@ -25,17 +25,15 @@ public class CollectCargo extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    // Deploy the intake
+    intake.deployIntake();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
     // Reject ball command
     if (intake.ballColorMatchesAlliance() == false) {
-      // Deploy the intake
-      intake.deployIntake();
-
       // Reverse Motors
       intake.setIntakeMotorSpeed(RobotPreferences.IntakePrefs.rejectSpeed.getValue());
     } else {
@@ -46,22 +44,21 @@ public class CollectCargo extends CommandBase {
         transfer.setTopBeltMotorSpeed(0);
 
       } else if (transfer.isTopBallCollected() == false) {
-        // Deploy the intake
-        intake.deployIntake();
-
         // Make the Top Belt Move
         transfer.setTopBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
       }
 
       // Bottom Belt Motors
       if (transfer.isBottomBallCollected() == true && transfer.isTopBallCollected() == true) {
-        // Don't Move (Don't Deploy)
+        // Retract the intake
+        intake.retractIntake();
+
         transfer.setBottomBeltMotorSpeed(0);
         transfer.setEntranceBeltMotorSpeed(0);
         intake.setIntakeMotorSpeed(0);
 
       } else {
-        // Deploy the intake
+        // Deploy the intake if it isn't already deployed
         intake.deployIntake();
 
         // Set all bottom motors to Move
@@ -70,10 +67,6 @@ public class CollectCargo extends CommandBase {
         intake.setIntakeMotorSpeed(RobotPreferences.IntakePrefs.collectSpeed.getValue());
       }
     }
-
-    // Retract the intake
-    intake.retractIntake();
-
   }
 
   // Called once the command ends or is interrupted.
@@ -83,6 +76,8 @@ public class CollectCargo extends CommandBase {
     transfer.setTopBeltMotorSpeed(0);
     transfer.setBottomBeltMotorSpeed(0);
     transfer.setEntranceBeltMotorSpeed(0);
+    // Retract Intake
+    intake.retractIntake();
   }
 
   // Returns true when the command should end.
