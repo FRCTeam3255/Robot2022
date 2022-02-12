@@ -31,8 +31,18 @@ public class CollectCargo extends CommandBase {
   @Override
   public void execute() {
 
+    // Deploy the intake if it is not already deployed
+    if (intake.isIntakeDeployed() == false) {
+      intake.deployIntake();
+    }
+
     // Reject ball command
     if (intake.ballColorMatchesAlliance() == false) {
+      // Deploy the intake if it is not already deployed
+      if (intake.isIntakeDeployed() == false) {
+        intake.deployIntake();
+      }
+      // Reverse Motors
       intake.setIntakeMotorSpeed(RobotPreferences.IntakePrefs.rejectSpeed.getValue());
     } else {
 
@@ -42,21 +52,38 @@ public class CollectCargo extends CommandBase {
         transfer.setTopBeltMotorSpeed(0);
 
       } else if (transfer.isTopBallCollected() == false) {
+        // Deploy the intake if it is not already deployed
+        if (intake.isIntakeDeployed() == false) {
+          intake.deployIntake();
+        }
+        // Make the Top Belt Move
         transfer.setTopBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
       }
 
       // Bottom Belt Motors
       if (transfer.isBottomBallCollected() == true && transfer.isTopBallCollected() == true) {
+        // Don't Move (Don't Deploy)
         transfer.setBottomBeltMotorSpeed(0);
         transfer.setEntranceBeltMotorSpeed(0);
         intake.setIntakeMotorSpeed(0);
 
       } else {
+        // Deploy the intake if it is not already deployed
+        if (intake.isIntakeDeployed() == false) {
+          intake.deployIntake();
+        }
+        // Set all bottom motors to Move
         transfer.setBottomBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
         transfer.setEntranceBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
         intake.setIntakeMotorSpeed(RobotPreferences.IntakePrefs.collectSpeed.getValue());
       }
     }
+
+    // Retract the intake if it is not already retracted
+    if (intake.isIntakeDeployed() == true) {
+      intake.retractIntake();
+    }
+
   }
 
   // Called once the command ends or is interrupted.
