@@ -10,6 +10,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Transfer;
 
 public class PushCargoToShooter extends CommandBase {
+
   Shooter shooter;
   Transfer transfer;
 
