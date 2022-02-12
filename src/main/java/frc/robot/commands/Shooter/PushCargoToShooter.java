@@ -32,7 +32,7 @@ public class PushCargoToShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // If the Shooter speed is greater than or equal to the Targeted velocity than
+    // If the Shooter speed is greater than or equal to the Targeted velocity then
     // Transfer BeltMotors speed up
     if (shooter.getShooterVelocity() >= RobotPreferences.ShooterPrefs.shooterMotorTargetVelocity.getValue()) {
       // transfer.setTransferMotorSpeed(RobotPreferences.TransferPrefs.transferMotorSpeed);
