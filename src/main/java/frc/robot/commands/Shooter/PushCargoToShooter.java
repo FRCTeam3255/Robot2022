@@ -39,7 +39,7 @@ public class PushCargoToShooter extends CommandBase {
       transfer.setBottomBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
       transfer.setTopBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
 
-      // If the Shooter speed is less than the targeted velocity than Transfer
+      // If the Shooter speed is less than the targeted velocity then Transfer
       // beltMotors Stop
     } else {
       transfer.setBottomBeltMotorSpeed(0);
