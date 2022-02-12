@@ -28,7 +28,7 @@ public class Climb extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // CLimber Speed is set depending joystick input
+    // Climber Speed is set depending joystick input
     double speed = RobotContainer.coDriverStick.getLeftStickY();
 
     climber.setClimberSpeed(speed);
