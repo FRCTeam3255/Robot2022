@@ -5,18 +5,17 @@
 package frc.robot.commands.Turret;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.Turret;
 
-public class AutomaticRotate extends CommandBase {
+public class MoveTurret extends CommandBase {
   Turret turret;
 
-  /** Creates a new AutomaticRotate. */
-  public AutomaticRotate(Turret sub_turret) {
+  /** Creates a new MoveTurret. */
+  public MoveTurret(Turret a_turret) {
+    turret = a_turret;
     // Use addRequirements() here to declare subsystem dependencies.
-
-    turret = sub_turret;
-
-    addRequirements(sub_turret);
+    addRequirements(turret);
   }
 
   // Called when the command is initially scheduled.
@@ -27,7 +26,7 @@ public class AutomaticRotate extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // There is no Automatic Tracker
+    turret.setTurretSpeed(RobotContainer.coDriverStick.getRightStickX());
   }
 
   // Called once the command ends or is interrupted.

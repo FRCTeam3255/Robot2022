@@ -4,15 +4,47 @@
 
 package frc.robot.subsystems;
 
+import com.frcteam3255.components.SN_Limelight;
+import com.frcteam3255.components.SN_Limelight.LEDMode;
+
+import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Vision extends SubsystemBase {
+
+  public SN_Limelight limelight;
+
+  // timer exists because it would flash on and off cause periodic
+  private int timer;
+
   /** Creates a new Vision. */
   public Vision() {
+    limelight = new SN_Limelight();
+  }
+
+  public void toggleLEDs() {
+    if (limelight.getLEDMode() == LEDMode.off) {
+      limelight.setLEDMode(LEDMode.on);
+    } else {
+      limelight.setLEDMode(LEDMode.off);
+    }
+    timer = 0;
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("limelight has target", limelight.hasTarget());
+    SmartDashboard.putNumber("limelight x error", limelight.getOffsetX());
+    SmartDashboard.putNumber("limelight y error", limelight.getOffsetY());
+    SmartDashboard.putNumber("limelight target area", limelight.getTargetArea());
+
+    if (RobotController.getUserButton()) {
+      if (timer > 25) {
+        toggleLEDs();
+      }
+    }
+    timer++;
   }
 }

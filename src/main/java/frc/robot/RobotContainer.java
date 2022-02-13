@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.frcteam3255.joystick.SN_DualActionStick;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -39,17 +40,17 @@ public class RobotContainer {
   private final Shooter sub_shooter = new Shooter();
   private final Climber sub_climber = new Climber();
   private final Transfer sub_transfer = new Transfer();
-  public static final NavX sub_navX = new NavX();
+  private final NavX sub_navX = new NavX();
 
   // Drivetrain Commands
   private final Drive com_drive = new Drive(sub_drivetrain);
 
   // Hood Commands
-  private final ShallowHood com_shallow_hood = new ShallowHood(sub_hood);
-  private final SteepenHood com_steepen_hood = new SteepenHood(sub_hood);
+  private final ShallowHood com_shallowHood = new ShallowHood(sub_hood);
+  private final SteepenHood com_steepenHood = new SteepenHood(sub_hood);
 
   // Turret Commands
-  private final ManualRotateTurret com_manualRotateTurret = new ManualRotateTurret(sub_turret);
+  private final MoveTurret com_moveTurret = new MoveTurret(sub_turret);
 
   // Shooter Commands
   private final PushCargoToShooter com_pushCargoToShooter = new PushCargoToShooter(sub_shooter, sub_transfer);
@@ -90,13 +91,15 @@ public class RobotContainer {
     coDriverStick.btn_LTrig.whileHeld(com_collect);
     coDriverStick.btn_Y.whenPressed(com_retractIntake);
     coDriverStick.btn_X.whenPressed(com_deployIntake);
-    coDriverStick.POV_West.whileHeld(com_manualRotateTurret);
 
-    coDriverStick.btn_A.whenPressed(com_steepen_hood);
-    coDriverStick.btn_B.whenPressed(com_shallow_hood);
+    coDriverStick.btn_A.whenPressed(com_steepenHood);
+    coDriverStick.btn_B.whenPressed(com_shallowHood);
+
+    coDriverStick.btn_LBump.whileHeld(com_moveTurret);
 
     // btn_LStick can become btn_RStick for dominant hand
     coDriverStick.btn_LStick.whileHeld(com_climb);
+
   }
 
   /**

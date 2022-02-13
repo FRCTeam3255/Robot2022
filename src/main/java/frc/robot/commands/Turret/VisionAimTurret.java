@@ -4,38 +4,49 @@
 
 package frc.robot.commands.Turret;
 
+import com.frcteam3255.components.SN_Limelight.LEDMode;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotPreferences;
 import frc.robot.subsystems.Turret;
-import frc.robot.RobotContainer;
+import frc.robot.subsystems.Vision;
 
-public class ManualRotateTurret extends CommandBase {
+public class VisionAimTurret extends CommandBase {
+
   Turret turret;
+  Vision vision;
 
-  /** Creates a new ManualRotate. */
-  public ManualRotateTurret(Turret sub_turret) {
+  double target;
+
+  /** Creates a new VisionAimTurret. */
+  public VisionAimTurret(Turret a_turret, Vision a_vision) {
+    turret = a_turret;
+    vision = a_vision;
     // Use addRequirements() here to declare subsystem dependencies.
-    turret = sub_turret;
-    addRequirements(sub_turret);
+    addRequirements(turret);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    vision.limelight.setLEDMode(LEDMode.on);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Direction that turret rotates depends on codriverstick rightstick input
-    double rotate = RobotContainer.coDriverStick.getRightStickX();
+    target = vision.limelight.getOffsetX() + turret.getTurretAngle();
 
-    turret.setTurretSpeed(rotate);
+    if (target > RobotPreferences.TurretPrefs.turretMaxAllowableError.getValue()) {
+      turret.setTurretAngle(target);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     turret.setTurretSpeed(0);
+    vision.limelight.setLEDMode(LEDMode.off);
   }
 
   // Returns true when the command should end.
