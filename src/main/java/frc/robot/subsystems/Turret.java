@@ -8,6 +8,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,15 +19,15 @@ import frc.robot.RobotMap;
 public class Turret extends SubsystemBase {
   /** Creates a new Turret. */
 
-  private TalonFX turretMotor;
-  private TalonFXConfiguration config;
+  private TalonSRX turretMotor;
+  private TalonSRXConfiguration config;
 
   // LINKS TO ROBOT MAP
   public Turret() {
     // Creates Turret Variables
-    turretMotor = new TalonFX(RobotMap.TurretMap.TURRET_MOTOR_CAN);
+    turretMotor = new TalonSRX(RobotMap.TurretMap.TURRET_MOTOR_CAN);
 
-    configure();
+    // configure();
   }
 
   // Sets Turret Variable Factory Defaults
@@ -34,8 +36,10 @@ public class Turret extends SubsystemBase {
     turretMotor.configFactoryDefault();
 
     // then we set the config settings
-    config.slot0.allowableClosedloopError = RobotPreferences.TurretPrefs.turretMaxAllowableError.getValue();
-    config.slot0.closedLoopPeakOutput = RobotPreferences.TurretPrefs.turretClosedLoopPeakOutput.getValue();
+    // config.slot0.allowableClosedloopError =
+    // RobotPreferences.TurretPrefs.turretMaxAllowableError.getValue();
+    // config.slot0.closedLoopPeakOutput =
+    // RobotPreferences.TurretPrefs.turretClosedLoopPeakOutput.getValue();
     config.slot0.kF = RobotPreferences.TurretPrefs.turretF.getValue();
     config.slot0.kP = RobotPreferences.TurretPrefs.turretP.getValue();
     config.slot0.kI = RobotPreferences.TurretPrefs.turretI.getValue();

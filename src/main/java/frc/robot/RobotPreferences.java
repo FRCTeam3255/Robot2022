@@ -59,6 +59,8 @@ public final class RobotPreferences {
     public static final SN_DoublePreference turretP = new SN_DoublePreference("turretP", 1);
     public static final SN_DoublePreference turretI = new SN_DoublePreference("turretI", 0);
     public static final SN_DoublePreference turretD = new SN_DoublePreference("turretD", 0);
+
+    public static final SN_IntPreference turretLoopsToFinish = new SN_IntPreference("turretLoopsToFinish", 25);
   }
 
   public static final class TransferPrefs {
