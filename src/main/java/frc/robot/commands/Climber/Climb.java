@@ -6,7 +6,6 @@ package frc.robot.commands.Climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.RobotPreferences;
 import frc.robot.subsystems.Climber;
 
 public class Climb extends CommandBase {
@@ -22,11 +21,14 @@ public class Climb extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    // Climber brake disengages when we press the button assigned to the climber
+    climber.unlockClimber();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // Climber Speed is set depending joystick input
     double speed = RobotContainer.coDriverStick.getLeftStickY();
 
     climber.setClimberSpeed(speed);
@@ -35,7 +37,9 @@ public class Climb extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    // Stops Climber when joystick button is released and applies brake
     climber.setClimberSpeed(0);
+    climber.lockClimber();
   }
 
   // Returns true when the command should end.

@@ -5,15 +5,14 @@
 package frc.robot.commands.Turret;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Turret;
+import frc.robot.RobotContainer;
 
-public class ManualRotate extends CommandBase {
+public class ManualRotateTurret extends CommandBase {
   Turret turret;
 
   /** Creates a new ManualRotate. */
-  public ManualRotate(Turret sub_turret) {
+  public ManualRotateTurret(Turret sub_turret) {
     // Use addRequirements() here to declare subsystem dependencies.
     turret = sub_turret;
     addRequirements(sub_turret);
@@ -27,6 +26,7 @@ public class ManualRotate extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // Direction that turret rotates depends on codriverstick rightstick input
     double rotate = RobotContainer.coDriverStick.getRightStickX();
 
     turret.setTurretSpeed(rotate);
@@ -35,6 +35,7 @@ public class ManualRotate extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    turret.setTurretSpeed(0);
   }
 
   // Returns true when the command should end.

@@ -5,16 +5,16 @@
 package frc.robot.commands.Shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
 import frc.robot.RobotPreferences;
 import frc.robot.subsystems.Shooter;
 
-public class ShootCargo extends CommandBase {
+public class SpinFlywheel extends CommandBase {
+  // Creates Shooter Variables
   Shooter shooter;
 
   /** Creates a new ShootCargo. */
-  public ShootCargo(Shooter sub_shooter) {
-    // Use addRequirements() here to declare subsystem dependencies.
+  public SpinFlywheel(Shooter sub_shooter) {
+    // Initializes shooter variables
     shooter = sub_shooter;
     addRequirements(shooter);
   }
