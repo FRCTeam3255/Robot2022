@@ -43,6 +43,8 @@ public class Shooter extends SubsystemBase {
     leadMotor.configAllSettings(config);
     followMotor.configAllSettings(config);
 
+    followMotor.follow(leadMotor);
+
     leadMotor.setInverted(false);
     followMotor.setInverted(InvertType.OpposeMaster);
 
@@ -53,6 +55,7 @@ public class Shooter extends SubsystemBase {
   // RESETS COUNT FOR ENCODERS
   public void resetShooterEncoderCounts() {
     leadMotor.setSelectedSensorPosition(0);
+    followMotor.setSelectedSensorPosition(0);
   }
 
   // Gets and returns shooter's encoder counts
