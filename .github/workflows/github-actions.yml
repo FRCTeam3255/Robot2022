@@ -30,8 +30,8 @@ jobs:
       run: chmod +x gradlew
 
     # Runs a single command using the runners shell
-    - name: Compile and run tests on robot code
-      run: ./gradlew build
+    # - name: Compile and run tests on robot code
+    #   run: ./gradlew build
 
     # Runs a single command using the runners shell
     - name: Simulate robot code
