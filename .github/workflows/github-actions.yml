@@ -36,15 +36,15 @@ jobs:
     # Runs a single command using the runners shell
     - name: Simulate robot code
       run: |
-        set +e
         (
+          set +e
           timeout --preserve-status 10s ./gradlew simulateJava
         )
         if [ $? -eq 143 ]; then
           echo 'Simulation SUCCESS!'
-          echo ::set-output name=exit_status::success
+          exit 0
         else
           echo 'Simulation FAILED!'
-          echo ::set-output name=exit_status::failure
+          exit 3255
         fi
       
