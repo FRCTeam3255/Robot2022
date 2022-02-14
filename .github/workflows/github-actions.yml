@@ -47,33 +47,3 @@ jobs:
           echo 'Simulation FAILED!'
           exit 1
         fi
-   
-    # Runs a single command using the runners shell
-    - name: Simulate robot code 2
-      run: |
-        (
-          timeout --preserve-status 10s ./gradlew simulateJava || true
-        )
-        if [ $? -eq 143 ]; then
-          echo 'Simulation SUCCESS!'
-          exit 0
-        else
-          echo 'Simulation FAILED!'
-          exit 1
-        fi
-      
-      # Runs a single command using the runners shell
-    - name: Simulate robot code 3
-      run: |
-        set +e
-        (
-          timeout --preserve-status 10s ./gradlew simulateJava
-          set -e
-        )
-        if [ $? -eq 143 ]; then
-          echo 'Simulation SUCCESS!'
-          exit 0
-        else
-          echo 'Simulation FAILED!'
-          exit 1
-        fi
