@@ -45,6 +45,6 @@ jobs:
           exit 0
         else
           echo 'Simulation FAILED!'
-          exit 3255
+          exit 1
         fi
       
