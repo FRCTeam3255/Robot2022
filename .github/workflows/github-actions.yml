@@ -40,6 +40,7 @@ jobs:
         (
           timeout --preserve-status 10s ./gradlew simulateJava
         )
+        set -e
         if [ $? -eq 143 ]; then
           echo 'Simulation SUCCESS!'
           exit 0
