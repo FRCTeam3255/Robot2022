@@ -18,6 +18,8 @@ public class SetHoldTurretPosition extends CommandBase {
   SN_DoublePreference degreesPref;
   boolean usedPref;
 
+  double yawToHold;
+
   /** Creates a new SetHoldTurretPosition. */
   public SetHoldTurretPosition(Turret a_turret, NavX a_navx, double a_degrees) {
     turret = a_turret;
@@ -25,6 +27,7 @@ public class SetHoldTurretPosition extends CommandBase {
     degrees = a_degrees;
 
     usedPref = false;
+    degreesPref = new SN_DoublePreference("unusedPreference", 0);
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(turret);
   }
@@ -50,7 +53,7 @@ public class SetHoldTurretPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    turret.setTurretAngle(turret.getTurretAngle() - (navx.navx.getYaw() + degrees));
+    turret.setTurretAngle(-navx.navx.getYaw() - degrees);
   }
 
   // Called once the command ends or is interrupted.

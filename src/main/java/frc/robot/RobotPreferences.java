@@ -46,13 +46,13 @@ public final class RobotPreferences {
         -180);
     public static final SN_DoublePreference turretMaxAngleEncoder = new SN_DoublePreference("turretMaxEncoderCount",
         7560);
-    public static final SN_DoublePreference turretMinEncoderCount = new SN_DoublePreference("turretMinEncoderCount",
+    public static final SN_DoublePreference turretMinAngleEncoder = new SN_DoublePreference("turretMinEncoderCount",
         -7560);
     // TODO: find this value (mathematically then emperically)
     public static final SN_DoublePreference turretEncoderCountsPerDegree = new SN_DoublePreference(
-        "turretEncoderCountsPerDegree", 42);
+        "turretEncoderCountsPerDegree", 84);
     public static final SN_DoublePreference turretMaxAllowableError = new SN_DoublePreference("turretMaxAllowableError",
-        42);
+        84);
     public static final SN_DoublePreference turretClosedLoopPeakOutput = new SN_DoublePreference(
         "turretClosedLoopPeakOutput", 1);
     public static final SN_DoublePreference turretF = new SN_DoublePreference("turretF", 0);
@@ -61,6 +61,8 @@ public final class RobotPreferences {
     public static final SN_DoublePreference turretD = new SN_DoublePreference("turretD", 0);
 
     public static final SN_IntPreference turretLoopsToFinish = new SN_IntPreference("turretLoopsToFinish", 25);
+
+    public static final SN_DoublePreference turretTestPos = new SN_DoublePreference("turretTestPos", 45);
   }
 
   public static final class TransferPrefs {

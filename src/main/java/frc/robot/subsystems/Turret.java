@@ -26,8 +26,9 @@ public class Turret extends SubsystemBase {
   public Turret() {
     // Creates Turret Variables
     turretMotor = new TalonSRX(RobotMap.TurretMap.TURRET_MOTOR_CAN);
+    config = new TalonSRXConfiguration();
 
-    // configure();
+    configure();
   }
 
   // Sets Turret Variable Factory Defaults
@@ -36,10 +37,8 @@ public class Turret extends SubsystemBase {
     turretMotor.configFactoryDefault();
 
     // then we set the config settings
-    // config.slot0.allowableClosedloopError =
-    // RobotPreferences.TurretPrefs.turretMaxAllowableError.getValue();
-    // config.slot0.closedLoopPeakOutput =
-    // RobotPreferences.TurretPrefs.turretClosedLoopPeakOutput.getValue();
+    config.slot0.allowableClosedloopError = RobotPreferences.TurretPrefs.turretMaxAllowableError.getValue();
+    config.slot0.closedLoopPeakOutput = RobotPreferences.TurretPrefs.turretClosedLoopPeakOutput.getValue();
     config.slot0.kF = RobotPreferences.TurretPrefs.turretF.getValue();
     config.slot0.kP = RobotPreferences.TurretPrefs.turretP.getValue();
     config.slot0.kI = RobotPreferences.TurretPrefs.turretI.getValue();
@@ -53,7 +52,7 @@ public class Turret extends SubsystemBase {
 
     // soft limit
     turretMotor.configForwardSoftLimitThreshold(RobotPreferences.TurretPrefs.turretMaxAngleEncoder.getValue());
-    turretMotor.configReverseSoftLimitThreshold(RobotPreferences.TurretPrefs.turretMinAngleDegrees.getValue());
+    turretMotor.configReverseSoftLimitThreshold(RobotPreferences.TurretPrefs.turretMinAngleEncoder.getValue());
     turretMotor.configForwardSoftLimitEnable(true);
     turretMotor.configReverseSoftLimitEnable(true);
 

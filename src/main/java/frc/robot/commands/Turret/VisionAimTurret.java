@@ -37,7 +37,7 @@ public class VisionAimTurret extends CommandBase {
   public void execute() {
     target = vision.limelight.getOffsetX() + turret.getTurretAngle();
 
-    if (target > RobotPreferences.TurretPrefs.turretMaxAllowableError.getValue()) {
+    if (vision.limelight.hasTarget()) {
       turret.setTurretAngle(target);
     }
   }

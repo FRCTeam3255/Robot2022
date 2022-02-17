@@ -33,48 +33,48 @@ public class RobotContainer {
   public static final SN_DualActionStick coDriverStick = new SN_DualActionStick(RobotMap.ControllerMap.CODRIVER_STICK);
 
   // Subsystems
-  // private final Drivetrain sub_drivetrain = new Drivetrain();
-  // private final Hood sub_hood = new Hood();
+  private final Drivetrain sub_drivetrain = new Drivetrain();
+  private final Hood sub_hood = new Hood();
   private final Turret sub_turret = new Turret();
-  // private final Intake sub_intake = new Intake();
-  // private final Shooter sub_shooter = new Shooter();
-  // private final Climber sub_climber = new Climber();
-  // private final Transfer sub_transfer = new Transfer();
+  private final Intake sub_intake = new Intake();
+  private final Shooter sub_shooter = new Shooter();
+  private final Climber sub_climber = new Climber();
+  private final Transfer sub_transfer = new Transfer();
   private final NavX sub_navX = new NavX();
   private final Vision sub_vision = new Vision();
 
   // Drivetrain Commands
-  // private final Drive com_drive = new Drive(sub_drivetrain);
+  private final Drive com_drive = new Drive(sub_drivetrain);
 
   // // Hood Commands
-  // private final ShallowHood com_shallowHood = new ShallowHood(sub_hood);
-  // private final SteepenHood com_steepenHood = new SteepenHood(sub_hood);
+  private final ShallowHood com_shallowHood = new ShallowHood(sub_hood);
+  private final SteepenHood com_steepenHood = new SteepenHood(sub_hood);
 
   // Turret Commands
   private final MoveTurret com_moveTurret = new MoveTurret(sub_turret);
   private final SetTurretPosition com_setTurretCenter = new SetTurretPosition(sub_turret, 0);
   private final SetHoldTurretPosition com_holdTurretCenter = new SetHoldTurretPosition(sub_turret, sub_navX, 0);
+  private final SetHoldTurretPosition com_holdTurretTest = new SetHoldTurretPosition(sub_turret, sub_navX,
+      RobotPreferences.TurretPrefs.turretTestPos.getValue());
   private final VisionAimTurret com_visionAimTurret = new VisionAimTurret(sub_turret, sub_vision);
   private final VisionNavXAimTurret com_visionHoldAimTurret = new VisionNavXAimTurret(sub_turret, sub_vision, sub_navX);
 
   // Shooter Commands
-  // private final PushCargoToShooter com_pushCargoToShooter = new
-  // PushCargoToShooter(sub_shooter, sub_transfer);
-  // private final SpinFlywheel com_spinFlywheel = new SpinFlywheel(sub_shooter);
+  private final PushCargoToShooter com_pushCargoToShooter = new PushCargoToShooter(sub_shooter, sub_transfer);
+  private final SpinFlywheel com_spinFlywheel = new SpinFlywheel(sub_shooter);
   // // Transfer Commands
 
   // // Intake Commands
-  // private final CollectCargo com_collect = new CollectCargo(sub_intake,
-  // sub_transfer);
-  // private final RetractIntake com_retractIntake = new
-  // RetractIntake(sub_intake);
-  // private final DeployIntake com_deployIntake = new DeployIntake(sub_intake);
+  private final CollectCargo com_collect = new CollectCargo(sub_intake,
+      sub_transfer);
+  private final RetractIntake com_retractIntake = new RetractIntake(sub_intake);
+  private final DeployIntake com_deployIntake = new DeployIntake(sub_intake);
 
   // // Vision Commands
 
   // // Climber Commands
 
-  // private final Climb com_climb = new Climb(sub_climber);
+  private final Climb com_climb = new Climb(sub_climber);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -97,7 +97,7 @@ public class RobotContainer {
     // coDriverStick.btn_RTrig.whileHeld(com_spinFlywheel);
 
     coDriverStick.btn_A.whileHeld(com_setTurretCenter);
-    coDriverStick.btn_B.whileHeld(com_holdTurretCenter);
+    coDriverStick.btn_B.whileHeld(com_holdTurretTest);
     coDriverStick.btn_X.whileHeld(com_visionAimTurret);
     coDriverStick.btn_Y.whileHeld(com_visionHoldAimTurret);
     coDriverStick.btn_LBump.whileHeld(com_moveTurret);
