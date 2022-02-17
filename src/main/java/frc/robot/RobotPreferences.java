@@ -7,6 +7,25 @@ public final class RobotPreferences {
   public static final class DrivetrainPrefs {
     public static final SN_DoublePreference arcadeSpeed = new SN_DoublePreference("arcadeSpeed", 1);
     public static final SN_DoublePreference arcadeTurn = new SN_DoublePreference("arcadeTurn", 1);
+
+    public static final SN_DoublePreference driveF = new SN_DoublePreference("driveF", 0);
+    public static final SN_DoublePreference driveP = new SN_DoublePreference("driveP", 1);
+    public static final SN_DoublePreference driveI = new SN_DoublePreference("driveI", 0);
+    public static final SN_DoublePreference driveD = new SN_DoublePreference("driveD", 0);
+    public static final SN_DoublePreference driveAllowableCLError = new SN_DoublePreference("driveAllowableCLError",
+        1000);
+    public static final SN_DoublePreference driveCLPeakOutput = new SN_DoublePreference("driveCLPeakOutput", 1);
+
+    // drivetrain gear ratio: 10:60 aka motor rotates once, wheel rotates 1/6
+    public static final SN_IntPreference driveEncoderCountsPerWheelRotation = new SN_IntPreference(
+        "driveEncoderCountsPerWheelRotation", 12288);
+    // 4 inch wheel * pi = inches per rotation: 12.56637
+    public static final SN_IntPreference driveEncoderCountsPerInch = new SN_IntPreference(
+        "driveEncoderCountsPerInch", 978);
+    public static final SN_IntPreference driveEncoderCountsPerFoot = new SN_IntPreference(
+        "driveEncoderCountsPerFoot", 11734);
+    public static final SN_IntPreference driveEncoderCountsPerMeter = new SN_IntPreference(
+        "driveEncoderCountsPerMeter", 38499);
   }
 
   public static final class HoodPrefs {
