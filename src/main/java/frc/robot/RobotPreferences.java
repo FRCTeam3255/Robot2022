@@ -17,15 +17,12 @@ public final class RobotPreferences {
     public static final SN_DoublePreference driveCLPeakOutput = new SN_DoublePreference("driveCLPeakOutput", 1);
 
     // drivetrain gear ratio: 10:60 aka motor rotates once, wheel rotates 1/6
-    public static final SN_IntPreference driveEncoderCountsPerWheelRotation = new SN_IntPreference(
-        "driveEncoderCountsPerWheelRotation", 12288);
-    // 4 inch wheel * pi = inches per rotation: 12.56637
-    public static final SN_IntPreference driveEncoderCountsPerInch = new SN_IntPreference(
-        "driveEncoderCountsPerInch", 978);
+    // 2048 counts per motor rotation, * 6 is 12288 counts per wheel rotation
+    // 4 inch wheel * pi = inches per rot: 12.56637
+    // 12288 counts per rot / 12.56637 inches per rot = 978 counts per inch
+    // 978 counts per inch * 12 = 11734 counts per foot
     public static final SN_IntPreference driveEncoderCountsPerFoot = new SN_IntPreference(
         "driveEncoderCountsPerFoot", 11734);
-    public static final SN_IntPreference driveEncoderCountsPerMeter = new SN_IntPreference(
-        "driveEncoderCountsPerMeter", 38499);
   }
 
   public static final class HoodPrefs {
