@@ -22,7 +22,7 @@ package frc.robot;
 public final class RobotMap {
     public final class DrivetrainMap {
         public static final int LEFT_LEAD_MOTOR_CAN = 10;
-        public static final int RIGHT_LEAD_MOTOR_CAN = 99;
+        public static final int RIGHT_LEAD_MOTOR_CAN = 11;
         public static final int LEFT_FOLLOW_MOTOR_CAN = 12;
         public static final int RIGHT_FOLLOW_MOTOR_CAN = 13;
     }
@@ -33,7 +33,7 @@ public final class RobotMap {
     }
 
     public final class TurretMap {
-        public static final int TURRET_MOTOR_CAN = 11;
+        public static final int TURRET_MOTOR_CAN = 20;
     }
 
     public final class TransferMap {
