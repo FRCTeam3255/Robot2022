@@ -51,8 +51,10 @@ public class Turret extends SubsystemBase {
     // then we set more stuff that wasn't in the config
 
     // soft limit
-    turretMotor.configForwardSoftLimitThreshold(RobotPreferences.TurretPrefs.turretMaxAngleEncoder.getValue());
-    turretMotor.configReverseSoftLimitThreshold(RobotPreferences.TurretPrefs.turretMinAngleEncoder.getValue());
+    turretMotor.configForwardSoftLimitThreshold(RobotPreferences.TurretPrefs.turretMaxAngleDegrees.getValue()
+        * RobotPreferences.TurretPrefs.turretEncoderCountsPerDegree.getValue());
+    turretMotor.configReverseSoftLimitThreshold(RobotPreferences.TurretPrefs.turretMinAngleDegrees.getValue()
+        * RobotPreferences.TurretPrefs.turretEncoderCountsPerDegree.getValue());
     turretMotor.configForwardSoftLimitEnable(true);
     turretMotor.configReverseSoftLimitEnable(true);
 
