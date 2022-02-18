@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.NavX;
 import frc.robot.subsystems.Turret;
 
-public class SetHoldTurretPosition extends CommandBase {
+public class HoldTurretPosition extends CommandBase {
 
   Turret turret;
   NavX navx;
@@ -21,7 +21,7 @@ public class SetHoldTurretPosition extends CommandBase {
   double yawToHold;
 
   /** Creates a new SetHoldTurretPosition. */
-  public SetHoldTurretPosition(Turret a_turret, NavX a_navx, double a_degrees) {
+  public HoldTurretPosition(Turret a_turret, NavX a_navx, double a_degrees) {
     turret = a_turret;
     navx = a_navx;
     degrees = a_degrees;
@@ -32,7 +32,7 @@ public class SetHoldTurretPosition extends CommandBase {
     addRequirements(turret);
   }
 
-  public SetHoldTurretPosition(Turret a_turret, NavX a_navx, SN_DoublePreference a_degrees) {
+  public HoldTurretPosition(Turret a_turret, NavX a_navx, SN_DoublePreference a_degrees) {
     turret = a_turret;
     navx = a_navx;
     degreesPref = a_degrees;
