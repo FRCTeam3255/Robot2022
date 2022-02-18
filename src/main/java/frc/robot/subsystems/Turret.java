@@ -19,14 +19,14 @@ import frc.robot.RobotMap;
 public class Turret extends SubsystemBase {
   /** Creates a new Turret. */
 
-  private TalonSRX turretMotor;
-  private TalonSRXConfiguration config;
+  private TalonFX turretMotor;
+  private TalonFXConfiguration config;
 
   // LINKS TO ROBOT MAP
   public Turret() {
     // Creates Turret Variables
-    turretMotor = new TalonSRX(RobotMap.TurretMap.TURRET_MOTOR_CAN);
-    config = new TalonSRXConfiguration();
+    turretMotor = new TalonFX(RobotMap.TurretMap.TURRET_MOTOR_CAN);
+    config = new TalonFXConfiguration();
 
     configure();
   }
