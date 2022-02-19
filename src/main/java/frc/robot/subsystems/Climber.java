@@ -22,6 +22,7 @@ public class Climber extends SubsystemBase {
   private TalonFX climbMotor;
   private DigitalInput climberBottomSafetySwitch;
   private DoubleSolenoid climberLockPiston;
+  private DoubleSolenoid climberPivotPiston;
 
   // Solenoid Variables
   private DoubleSolenoid.Value lockDeploy = Value.kForward;
@@ -34,7 +35,8 @@ public class Climber extends SubsystemBase {
     climberLockPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.ClimberMap.LOCK_PISTON_PCM_A,
         RobotMap.ClimberMap.LOCK_PISTON_PCM_B);
     configure();
-
+    climberPivotPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.ClimberMap.PIVOT_PISTON_PCM_A,
+        RobotMap.ClimberMap.PIVOT_PISTON_PCM_B);
   }
 
   public boolean isClimberLocked() {
@@ -57,6 +59,14 @@ public class Climber extends SubsystemBase {
 
   public void unlockClimber() {
     climberLockPiston.set(lockRetract);
+  }
+
+  public void lockClimberPivotPiston() {
+    climberPivotPiston.set(lockDeploy);
+  }
+
+  public void unlockClimberPivotPiston() {
+    climberPivotPiston.set(lockRetract);
   }
 
   private void configure() {
@@ -90,6 +100,11 @@ public class Climber extends SubsystemBase {
     }
 
   }
+
+  public void setClimberMotorPosition() {
+        climbMotor.set(ControlMode.Position, getClimberEncoderCount())
+
+    }
 
   // TODO: change when location of mag switch is (ex: isClimberRaised)
   public boolean isClimberAtBottom() {

@@ -66,6 +66,7 @@ public class RobotContainer {
   // Climber Commands
 
   private final Climb com_climb = new Climb(sub_climber);
+  private final Climb2ndRung com_Climb2ndRung = new Climb2ndRung(sub_climber);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -97,6 +98,9 @@ public class RobotContainer {
 
     // btn_LStick can become btn_RStick for dominant hand
     coDriverStick.btn_LStick.whileHeld(com_climb);
+
+    // Second Climber Piston
+    coDriverStick.btn_LBump.whenPressed(com_Climb2ndRung);
   }
 
   /**
