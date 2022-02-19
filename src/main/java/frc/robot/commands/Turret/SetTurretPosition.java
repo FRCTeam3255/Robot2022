@@ -4,6 +4,8 @@
 
 package frc.robot.commands.Turret;
 
+import com.frcteam3255.preferences.SN_DoublePreference;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotPreferences;
 import frc.robot.subsystems.Turret;
@@ -11,14 +13,15 @@ import frc.robot.subsystems.Turret;
 public class SetTurretPosition extends CommandBase {
   Turret turret;
   double degrees;
+  SN_DoublePreference degreesPref;
 
   int loopsInTol;
   int loopsToFinish;
 
   /** Creates a new SetTurretPosition. */
-  public SetTurretPosition(Turret a_turret, double a_degrees) {
+  public SetTurretPosition(Turret a_turret, SN_DoublePreference a_degreesPref) {
     turret = a_turret;
-    degrees = a_degrees;
+    degreesPref = a_degreesPref;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(turret);
   }
@@ -26,6 +29,8 @@ public class SetTurretPosition extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    degrees = degreesPref.getValue();
+
     loopsInTol = 0;
     loopsToFinish = RobotPreferences.TurretPrefs.turretLoopsToFinish.getValue();
 

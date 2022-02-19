@@ -53,7 +53,8 @@ public class RobotContainer {
 
   // Turret Commands
   private final MoveTurret com_moveTurret = new MoveTurret(sub_turret);
-  private final SetTurretPosition com_setTurretCenter = new SetTurretPosition(sub_turret, 0);
+  private final SetTurretPosition com_setTurretCenter = new SetTurretPosition(sub_turret,
+      RobotPreferences.zeroDoublePref);
   private final HoldTurretPosition com_holdTurretCenter = new HoldTurretPosition(sub_turret, sub_navX,
       RobotPreferences.zeroDoublePref);
   private final HoldTurretPosition com_holdTurretPos1 = new HoldTurretPosition(sub_turret, sub_navX,
