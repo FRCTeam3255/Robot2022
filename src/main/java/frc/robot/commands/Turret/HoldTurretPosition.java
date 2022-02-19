@@ -16,7 +16,6 @@ public class HoldTurretPosition extends CommandBase {
   NavX navx;
   double degrees;
   SN_DoublePreference degreesPref;
-  boolean usedPref;
 
   double yawToHold;
 
