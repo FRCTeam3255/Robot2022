@@ -29,14 +29,15 @@ public class Climb2ndRung extends CommandBase {
     public void initialize() {
         // Climber brake disengages when we press the button assigned to the climber
         climber.unlockClimberPivotPiston();
+
+        // 2nd Climber Piston Extended Position is set and executed
+        // Check if we are going BACKWARD or FORWARD because I have NO CLUE - Alice
+        climber.pivotClimberPistonForward();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        //2nd Climber Piston Extended Position is set and executed
-        climber.
-        (ControlMode.Position, RobotPreferences.ClimberPrefs.climberPivotPosition);
     }
 
     // Called once the command ends or is interrupted.

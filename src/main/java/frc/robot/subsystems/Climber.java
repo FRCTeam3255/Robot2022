@@ -61,6 +61,7 @@ public class Climber extends SubsystemBase {
     climberLockPiston.set(lockRetract);
   }
 
+  // Unlock and Lock Pivot Piston
   public void lockClimberPivotPiston() {
     climberPivotPiston.set(lockDeploy);
   }
@@ -101,10 +102,18 @@ public class Climber extends SubsystemBase {
 
   }
 
+  // make funny things like motors and solenoids actually go
   public void setClimberMotorPosition() {
-        climbMotor.set(ControlMode.Position, getClimberEncoderCount())
+    climbMotor.set(ControlMode.Position, getClimberEncoderCount());
+  }
 
-    }
+  public void pivotClimberPistonForward() {
+    climberPivotPiston.set(lockDeploy);
+  }
+
+  public void unpivotClimberPistonBackward() {
+    climberPivotPiston.set(lockRetract);
+  }
 
   // TODO: change when location of mag switch is (ex: isClimberRaised)
   public boolean isClimberAtBottom() {
