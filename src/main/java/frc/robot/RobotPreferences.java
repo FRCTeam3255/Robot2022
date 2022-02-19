@@ -5,22 +5,23 @@ import com.frcteam3255.preferences.SN_IntPreference;
 
 public final class RobotPreferences {
 
-  /**
-   * when mechanical builds stuff, it's almost always (and should be) designed to
-   * where the motors can run at full speed. unless there is some actual real
-   * issue, we shouldn't make the motors run slower than they should. for example,
-   * in 2020, the turret was set to run half speed for no real reason. this made
-   * our bot worse than it could have been. this year, the turret is (unless this
-   * is unsafe for some reason) going to run at full speed under closed loop
-   * control
-   * 
-   * The one situation where this doesn't apply is when the motor is under open
-   * loop, user control. it may not be practical for a user to be controlling a
-   * mechanism at full speed, so it's fine to slow it down then. Usually though,
-   * mechanisms that users control will not need to have granular control, and
-   * instead should use presets (closed loop, full speed control). Eg 2020 hood,
-   * 2019 cascade, etc.
-   */
+  // when mechanical builds stuff, it's almost always (and should be) designed to
+  // where the motors can run at full speed. unless there is some actual real
+  // issue, we shouldn't make the motors run slower than they should. for example,
+  // in 2020, the turret was set to run half speed for no real reason. this made
+  // our bot worse than it could have been. this year, the turret is (unless this
+  // is unsafe for some reason) going to run at full speed under closed loop
+  // control
+
+  // The one situation where this doesn't apply is when the motor is under open
+  // loop, user control. it may not be practical for a user to be controlling a
+  // mechanism at full speed, so it's fine to slow it down then. Usually though,
+  // mechanisms that users control will not need to have granular control, and
+  // instead should use presets (closed loop, full speed control). Eg 2020 hood,
+  // 2019 cascade, etc.
+
+  public static final SN_DoublePreference zeroDoublePref = new SN_DoublePreference("zeroDoublePref", 0);
+  public static final SN_IntPreference zeroIntPref = new SN_IntPreference("zeroDoublePref", 0);
 
   public static final class DrivetrainPrefs {
     public static final SN_DoublePreference arcadeSpeed = new SN_DoublePreference("arcadeSpeed", 1);

@@ -62,17 +62,17 @@ public class RobotContainer {
   // Shooter Commands
   private final PushCargoToShooter com_pushCargoToShooter = new PushCargoToShooter(sub_shooter, sub_transfer);
   private final SpinFlywheel com_spinFlywheel = new SpinFlywheel(sub_shooter);
-  // // Transfer Commands
+  // Transfer Commands
 
-  // // Intake Commands
+  // Intake Commands
   private final CollectCargo com_collect = new CollectCargo(sub_intake,
       sub_transfer);
   private final RetractIntake com_retractIntake = new RetractIntake(sub_intake);
   private final DeployIntake com_deployIntake = new DeployIntake(sub_intake);
 
-  // // Vision Commands
+  // Vision Commands
 
-  // // Climber Commands
+  // Climber Commands
 
   private final Climb com_climb = new Climb(sub_climber);
 
@@ -83,7 +83,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     configureDashboardButtons();
-    // sub_drivetrain.setDefaultCommand(com_drive);
+    sub_drivetrain.setDefaultCommand(com_drive);
   }
 
   /**

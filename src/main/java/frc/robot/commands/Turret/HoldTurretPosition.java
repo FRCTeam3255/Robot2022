@@ -7,6 +7,7 @@ package frc.robot.commands.Turret;
 import com.frcteam3255.preferences.SN_DoublePreference;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotPreferences;
 import frc.robot.subsystems.NavX;
 import frc.robot.subsystems.Turret;
 
@@ -27,7 +28,7 @@ public class HoldTurretPosition extends CommandBase {
     degrees = a_degrees;
 
     usedPref = false;
-    degreesPref = new SN_DoublePreference("unusedPreference", 0);
+    degreesPref = RobotPreferences.zeroDoublePref;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(turret);
   }
