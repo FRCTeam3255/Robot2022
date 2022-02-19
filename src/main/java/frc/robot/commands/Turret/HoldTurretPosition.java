@@ -21,24 +21,11 @@ public class HoldTurretPosition extends CommandBase {
 
   double yawToHold;
 
-  /** Creates a new SetHoldTurretPosition. */
-  public HoldTurretPosition(Turret a_turret, NavX a_navx, double a_degrees) {
-    turret = a_turret;
-    navx = a_navx;
-    degrees = a_degrees;
-
-    usedPref = false;
-    degreesPref = RobotPreferences.zeroDoublePref;
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(turret);
-  }
-
   public HoldTurretPosition(Turret a_turret, NavX a_navx, SN_DoublePreference a_degrees) {
     turret = a_turret;
     navx = a_navx;
     degreesPref = a_degrees;
 
-    usedPref = true;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(turret);
   }
@@ -46,9 +33,7 @@ public class HoldTurretPosition extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (usedPref) {
-      degrees = degreesPref.getValue();
-    }
+    degrees = degreesPref.getValue();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

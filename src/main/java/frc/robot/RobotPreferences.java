@@ -2,6 +2,8 @@ package frc.robot;
 
 import com.frcteam3255.preferences.SN_DoublePreference;
 import com.frcteam3255.preferences.SN_IntPreference;
+import com.frcteam3255.preferences.SN_ZeroDoublePreference;
+import com.frcteam3255.preferences.SN_ZeroIntPreference;
 
 public final class RobotPreferences {
 
@@ -20,8 +22,8 @@ public final class RobotPreferences {
   // instead should use presets (closed loop, full speed control). Eg 2020 hood,
   // 2019 cascade, etc.
 
-  public static final SN_DoublePreference zeroDoublePref = new SN_DoublePreference("zeroDoublePref", 0);
-  public static final SN_IntPreference zeroIntPref = new SN_IntPreference("zeroDoublePref", 0);
+  public static final SN_ZeroIntPreference zeroIntPref = new SN_ZeroIntPreference();
+  public static final SN_ZeroDoublePreference zeroDoublePref = new SN_ZeroDoublePreference();
 
   public static final class DrivetrainPrefs {
     public static final SN_DoublePreference arcadeSpeed = new SN_DoublePreference("arcadeSpeed", 1);
