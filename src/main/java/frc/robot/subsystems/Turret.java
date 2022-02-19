@@ -37,7 +37,7 @@ public class Turret extends SubsystemBase {
     turretMotor.configFactoryDefault();
 
     // then we set the config settings
-    config.slot0.allowableClosedloopError = RobotPreferences.TurretPrefs.turretMaxAllowableError.getValue();
+    config.slot0.allowableClosedloopError = RobotPreferences.TurretPrefs.turretMaxAllowableErrorDegrees.getValue();
     config.slot0.closedLoopPeakOutput = RobotPreferences.TurretPrefs.turretClosedLoopPeakOutput.getValue();
     config.slot0.kF = RobotPreferences.TurretPrefs.turretF.getValue();
     config.slot0.kP = RobotPreferences.TurretPrefs.turretP.getValue();
@@ -52,9 +52,9 @@ public class Turret extends SubsystemBase {
 
     // soft limit
     turretMotor.configForwardSoftLimitThreshold(RobotPreferences.TurretPrefs.turretMaxAngleDegrees.getValue()
-        * RobotPreferences.TurretPrefs.turretEncoderCountsPerDegree.getValue());
+        * RobotPreferences.TurretPrefs.turretEncoderCountsPerDegrees.getValue());
     turretMotor.configReverseSoftLimitThreshold(RobotPreferences.TurretPrefs.turretMinAngleDegrees.getValue()
-        * RobotPreferences.TurretPrefs.turretEncoderCountsPerDegree.getValue());
+        * RobotPreferences.TurretPrefs.turretEncoderCountsPerDegrees.getValue());
     turretMotor.configForwardSoftLimitEnable(true);
     turretMotor.configReverseSoftLimitEnable(true);
 
@@ -82,19 +82,19 @@ public class Turret extends SubsystemBase {
 
   // gets the turret angle in degrees
   public double getTurretAngle() {
-    return getTurretMotorEncoderCounts() / RobotPreferences.TurretPrefs.turretEncoderCountsPerDegree.getValue();
+    return getTurretMotorEncoderCounts() / RobotPreferences.TurretPrefs.turretEncoderCountsPerDegrees.getValue();
   }
 
   // sets the turret angle in degrees
   public void setTurretAngle(double a_degrees) {
-    double position = a_degrees * RobotPreferences.TurretPrefs.turretEncoderCountsPerDegree.getValue();
+    double position = a_degrees * RobotPreferences.TurretPrefs.turretEncoderCountsPerDegrees.getValue();
     turretMotor.set(ControlMode.Position, position);
   }
 
   // gets the difference between where the motor wants to be, and where it is, in
   // encoder counts
   public double getTurretClosedLoopErrorDegrees() {
-    return turretMotor.getClosedLoopError() * RobotPreferences.TurretPrefs.turretEncoderCountsPerDegree.getValue();
+    return turretMotor.getClosedLoopError() * RobotPreferences.TurretPrefs.turretEncoderCountsPerDegrees.getValue();
   }
 
   @Override

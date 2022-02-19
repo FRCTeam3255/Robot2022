@@ -50,10 +50,10 @@ public final class RobotPreferences {
     public static final SN_DoublePreference turretMinAngleDegrees = new SN_DoublePreference("turretMinAngleDegrees",
         -180);
     // TODO: find this value (mathematically then emperically)
-    public static final SN_DoublePreference turretEncoderCountsPerDegree = new SN_DoublePreference(
-        "turretEncoderCountsPerDegree", 84);
-    public static final SN_DoublePreference turretMaxAllowableErrorDegree = new SN_DoublePreference(
-        "turretMaxAllowableError",
+    public static final SN_DoublePreference turretEncoderCountsPerDegrees = new SN_DoublePreference(
+        "turretEncoderCountsPerDegrees", 84);
+    public static final SN_DoublePreference turretMaxAllowableErrorDegrees = new SN_DoublePreference(
+        "turretMaxAllowableErrorDegrees",
         1);
     public static final SN_DoublePreference turretClosedLoopPeakOutput = new SN_DoublePreference(
         "turretClosedLoopPeakOutput", 1);

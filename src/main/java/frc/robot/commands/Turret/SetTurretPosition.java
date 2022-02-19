@@ -35,7 +35,8 @@ public class SetTurretPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (Math.abs(turret.getTurretClosedLoopError()) < RobotPreferences.TurretPrefs.turretMaxAllowableError.getValue()) {
+    if (Math.abs(turret.getTurretClosedLoopErrorDegrees()) < RobotPreferences.TurretPrefs.turretMaxAllowableErrorDegrees
+        .getValue()) {
       loopsInTol++;
     } else {
       loopsInTol = 0;
