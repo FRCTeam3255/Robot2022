@@ -93,8 +93,8 @@ public class Turret extends SubsystemBase {
 
   // gets the difference between where the motor wants to be, and where it is, in
   // encoder counts
-  public double getTurretClosedLoopError() {
-    return turretMotor.getClosedLoopError();
+  public double getTurretClosedLoopErrorDegrees() {
+    return turretMotor.getClosedLoopError() * RobotPreferences.TurretPrefs.turretEncoderCountsPerDegree.getValue();
   }
 
   @Override
@@ -102,6 +102,6 @@ public class Turret extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Turret Encoder", getTurretMotorEncoderCounts());
     SmartDashboard.putNumber("Turret Angle", getTurretAngle());
-    SmartDashboard.putNumber("Turret Closed Loop Error", getTurretClosedLoopError());
+    SmartDashboard.putNumber("Turret Closed Loop Error", getTurretClosedLoopErrorDegrees());
   }
 }
