@@ -99,8 +99,8 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // coDriverStick.btn_RTrig.whileHeld(com_pushCargoToShooter);
-    // coDriverStick.btn_RTrig.whileHeld(com_spinFlywheel);
+    coDriverStick.btn_RTrig.whileHeld(com_pushCargoToShooter);
+    coDriverStick.btn_RTrig.whileHeld(com_spinFlywheel);
 
     coDriverStick.btn_A.whileHeld(com_setTurretCenter);
     coDriverStick.btn_B.whileHeld(com_holdTurretPos1);
@@ -108,9 +108,9 @@ public class RobotContainer {
     coDriverStick.btn_Y.whileHeld(com_visionHoldAimTurret);
     coDriverStick.btn_LBump.whileHeld(com_moveTurret);
 
-    // coDriverStick.btn_LTrig.whileHeld(com_collect);
+    coDriverStick.btn_LTrig.whileHeld(com_collect);
 
-    // coDriverStick.btn_LStick.whileHeld(com_climb);
+    coDriverStick.btn_LStick.whileHeld(com_climb);
 
   }
 
@@ -118,17 +118,17 @@ public class RobotContainer {
    * Use this method to define your dashboard buttons
    */
   private void configureDashboardButtons() {
-    // SmartDashboard.putData("Reset Climber Encoders",
-    // new InstantCommand(sub_climber::resetClimberEncoderCount, sub_climber));
-    // SmartDashboard.putData("Reset Drivetrain Encoders",
-    // new InstantCommand(sub_drivetrain::resetDrivetrainEncodersCount,
-    // sub_drivetrain));
-    // SmartDashboard.putData("Reset Intake Encoders",
-    // new InstantCommand(sub_intake::resetIntakeEncoderCount, sub_intake));
+    SmartDashboard.putData("Reset Climber Encoders",
+        new InstantCommand(sub_climber::resetClimberEncoderCount, sub_climber));
+    SmartDashboard.putData("Reset Drivetrain Encoders",
+        new InstantCommand(sub_drivetrain::resetDrivetrainEncodersCount,
+            sub_drivetrain));
+    SmartDashboard.putData("Reset Intake Encoders",
+        new InstantCommand(sub_intake::resetIntakeEncoderCount, sub_intake));
     SmartDashboard.putData("Reset Turret Encoders",
         new InstantCommand(sub_turret::resetTurretEncoderCounts, sub_turret));
-    // SmartDashboard.putData("Reset Shooter Encoders",
-    // new InstantCommand(sub_shooter::resetShooterEncoderCounts, sub_shooter));
+    SmartDashboard.putData("Reset Shooter Encoders",
+        new InstantCommand(sub_shooter::resetShooterEncoderCounts, sub_shooter));
     SmartDashboard.putData("Reset NavX Heading",
         new InstantCommand(sub_navX::resetHeading, sub_navX));
     SmartDashboard.putData("Calibrate NavX",
