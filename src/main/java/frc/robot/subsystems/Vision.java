@@ -23,15 +23,6 @@ public class Vision extends SubsystemBase {
     limelight = new SN_Limelight();
   }
 
-  public void toggleLEDs() {
-    if (limelight.getLEDMode() == LEDMode.off) {
-      limelight.setLEDMode(LEDMode.on);
-    } else {
-      limelight.setLEDMode(LEDMode.off);
-    }
-    timer = 0;
-  }
-
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -42,7 +33,7 @@ public class Vision extends SubsystemBase {
 
     if (RobotController.getUserButton()) {
       if (timer > 25) {
-        toggleLEDs();
+        limelight.toggleLEDs();
       }
     }
     timer++;
