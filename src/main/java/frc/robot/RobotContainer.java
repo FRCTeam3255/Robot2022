@@ -30,119 +30,120 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
 
-    // Joysticks
-    public static final SN_DualActionStick DriverStick = new SN_DualActionStick(RobotMap.ControllerMap.DRIVER_STICK);
-    public static final SN_DualActionStick coDriverStick = new SN_DualActionStick(
-            RobotMap.ControllerMap.CODRIVER_STICK);
+  // Joysticks
+  public static final SN_DualActionStick DriverStick = new SN_DualActionStick(
+      RobotMap.ControllerMap.DRIVER_STICK);
+  public static final SN_DualActionStick coDriverStick = new SN_DualActionStick(
+      RobotMap.ControllerMap.CODRIVER_STICK);
 
-    // Subsystems
-    private final Drivetrain sub_drivetrain = new Drivetrain();
-    private final Hood sub_hood = new Hood();
-    private final Turret sub_turret = new Turret();
-    private final Intake sub_intake = new Intake();
-    private final Shooter sub_shooter = new Shooter();
-    private final Climber sub_climber = new Climber();
-    private final Transfer sub_transfer = new Transfer();
-    private final NavX sub_navX = new NavX();
-    private final Vision sub_vision = new Vision();
+  // Subsystems
+  private final Drivetrain sub_drivetrain = new Drivetrain();
+  private final Hood sub_hood = new Hood();
+  private final Turret sub_turret = new Turret();
+  private final Intake sub_intake = new Intake();
+  private final Shooter sub_shooter = new Shooter();
+  private final Climber sub_climber = new Climber();
+  private final Transfer sub_transfer = new Transfer();
+  private final NavX sub_navX = new NavX();
+  private final Vision sub_vision = new Vision();
 
-    // Drivetrain Commands
-    private final Drive com_drive = new Drive(sub_drivetrain);
+  // Drivetrain Commands
+  private final Drive com_drive = new Drive(sub_drivetrain);
 
-    // // Hood Commands
-    private final ShallowHood com_shallowHood = new ShallowHood(sub_hood);
-    private final SteepenHood com_steepenHood = new SteepenHood(sub_hood);
+  // // Hood Commands
+  private final ShallowHood com_shallowHood = new ShallowHood(sub_hood);
+  private final SteepenHood com_steepenHood = new SteepenHood(sub_hood);
 
-    // Turret Commands
-    private final MoveTurret com_moveTurret = new MoveTurret(sub_turret);
-    private final SetTurretPosition com_setTurretCenter = new SetTurretPosition(sub_turret, 0);
-    private final HoldTurretPosition com_holdTurretCenter = new HoldTurretPosition(sub_turret, sub_navX,
-            RobotPreferences.zeroDoublePref);
-    private final HoldTurretPosition com_holdTurretPos1 = new HoldTurretPosition(sub_turret, sub_navX,
-            RobotPreferences.TurretPrefs.turretPresetPos1);
-    private final VisionAimTurret com_visionAimTurret = new VisionAimTurret(sub_turret, sub_vision);
-    private final VisionNavXAimTurret com_visionHoldAimTurret = new VisionNavXAimTurret(sub_turret, sub_vision,
-            sub_navX);
+  // Turret Commands
+  private final MoveTurret com_moveTurret = new MoveTurret(sub_turret);
+  private final SetTurretPosition com_setTurretCenter = new SetTurretPosition(sub_turret, 0);
+  private final HoldTurretPosition com_holdTurretCenter = new HoldTurretPosition(sub_turret, sub_navX,
+      RobotPreferences.zeroDoublePref);
+  private final HoldTurretPosition com_holdTurretPos1 = new HoldTurretPosition(sub_turret, sub_navX,
+      RobotPreferences.TurretPrefs.turretPresetPos1);
+  private final VisionAimTurret com_visionAimTurret = new VisionAimTurret(sub_turret, sub_vision);
+  private final VisionNavXAimTurret com_visionHoldAimTurret = new VisionNavXAimTurret(sub_turret, sub_vision,
+      sub_navX);
 
-    // Shooter Commands
-    private final PushCargoToShooter com_pushCargoToShooter = new PushCargoToShooter(sub_shooter, sub_transfer);
-    private final SpinFlywheel com_spinFlywheel = new SpinFlywheel(sub_shooter);
-    // Transfer Commands
+  // Shooter Commands
+  private final PushCargoToShooter com_pushCargoToShooter = new PushCargoToShooter(sub_shooter, sub_transfer);
+  private final SpinFlywheel com_spinFlywheel = new SpinFlywheel(sub_shooter);
+  // Transfer Commands
 
-    // Intake Commands
-    private final CollectCargo com_collect = new CollectCargo(sub_intake,
-            sub_transfer);
-    private final RetractIntake com_retractIntake = new RetractIntake(sub_intake);
-    private final DeployIntake com_deployIntake = new DeployIntake(sub_intake);
+  // Intake Commands
+  private final CollectCargo com_collect = new CollectCargo(sub_intake,
+      sub_transfer);
+  private final RetractIntake com_retractIntake = new RetractIntake(sub_intake);
+  private final DeployIntake com_deployIntake = new DeployIntake(sub_intake);
 
-    // Vision Commands
+  // Vision Commands
 
-    // Climber Commands
+  // Climber Commands
 
-    private final Climb com_climb = new Climb(sub_climber);
+  private final Climb com_climb = new Climb(sub_climber);
 
-    /**
-     * The container for the robot. Contains subsystems, OI devices, and commands.
-     */
-    public RobotContainer() {
-        // Configure the button bindings
-        configureButtonBindings();
-        configureDashboardButtons();
-        sub_drivetrain.setDefaultCommand(com_drive);
-    }
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
+  public RobotContainer() {
+    // Configure the button bindings
+    configureButtonBindings();
+    configureDashboardButtons();
+    sub_drivetrain.setDefaultCommand(com_drive);
+  }
 
-    /**
-     * Use this method to define your button->command mappings. Buttons can be
-     * created by instantiating a {@link GenericHID} or one of its subclasses
-     * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
-     * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-     */
-    private void configureButtonBindings() {
-        // coDriverStick.btn_RTrig.whileHeld(com_pushCargoToShooter);
-        // coDriverStick.btn_RTrig.whileHeld(com_spinFlywheel);
+  /**
+   * Use this method to define your button->command mappings. Buttons can be
+   * created by instantiating a {@link GenericHID} or one of its subclasses
+   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
+   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   */
+  private void configureButtonBindings() {
+    // coDriverStick.btn_RTrig.whileHeld(com_pushCargoToShooter);
+    // coDriverStick.btn_RTrig.whileHeld(com_spinFlywheel);
 
-        coDriverStick.btn_A.whileHeld(com_setTurretCenter);
-        coDriverStick.btn_B.whileHeld(com_holdTurretPos1);
-        coDriverStick.btn_X.whileHeld(com_visionAimTurret);
-        coDriverStick.btn_Y.whileHeld(com_visionHoldAimTurret);
-        coDriverStick.btn_LBump.whileHeld(com_moveTurret);
+    coDriverStick.btn_A.whileHeld(com_setTurretCenter);
+    coDriverStick.btn_B.whileHeld(com_holdTurretPos1);
+    coDriverStick.btn_X.whileHeld(com_visionAimTurret);
+    coDriverStick.btn_Y.whileHeld(com_visionHoldAimTurret);
+    coDriverStick.btn_LBump.whileHeld(com_moveTurret);
 
-        // coDriverStick.btn_LTrig.whileHeld(com_collect);
+    // coDriverStick.btn_LTrig.whileHeld(com_collect);
 
-        // coDriverStick.btn_LStick.whileHeld(com_climb);
+    // coDriverStick.btn_LStick.whileHeld(com_climb);
 
-    }
+  }
 
-    /**
-     * Use this method to define your dashboard buttons
-     */
-    private void configureDashboardButtons() {
-        // SmartDashboard.putData("Reset Climber Encoders",
-        // new InstantCommand(sub_climber::resetClimberEncoderCount, sub_climber));
-        // SmartDashboard.putData("Reset Drivetrain Encoders",
-        // new InstantCommand(sub_drivetrain::resetDrivetrainEncodersCount,
-        // sub_drivetrain));
-        // SmartDashboard.putData("Reset Intake Encoders",
-        // new InstantCommand(sub_intake::resetIntakeEncoderCount, sub_intake));
-        SmartDashboard.putData("Reset Turret Encoders",
-                new InstantCommand(sub_turret::resetTurretEncoderCounts, sub_turret));
-        // SmartDashboard.putData("Reset Shooter Encoders",
-        // new InstantCommand(sub_shooter::resetShooterEncoderCounts, sub_shooter));
-        SmartDashboard.putData("Reset NavX Heading",
-                new InstantCommand(sub_navX::resetHeading, sub_navX));
-        SmartDashboard.putData("Calibrate NavX",
-                new InstantCommand(sub_navX::calibrate, sub_navX));
+  /**
+   * Use this method to define your dashboard buttons
+   */
+  private void configureDashboardButtons() {
+    // SmartDashboard.putData("Reset Climber Encoders",
+    // new InstantCommand(sub_climber::resetClimberEncoderCount, sub_climber));
+    // SmartDashboard.putData("Reset Drivetrain Encoders",
+    // new InstantCommand(sub_drivetrain::resetDrivetrainEncodersCount,
+    // sub_drivetrain));
+    // SmartDashboard.putData("Reset Intake Encoders",
+    // new InstantCommand(sub_intake::resetIntakeEncoderCount, sub_intake));
+    SmartDashboard.putData("Reset Turret Encoders",
+        new InstantCommand(sub_turret::resetTurretEncoderCounts, sub_turret));
+    // SmartDashboard.putData("Reset Shooter Encoders",
+    // new InstantCommand(sub_shooter::resetShooterEncoderCounts, sub_shooter));
+    SmartDashboard.putData("Reset NavX Heading",
+        new InstantCommand(sub_navX::resetHeading, sub_navX));
+    SmartDashboard.putData("Calibrate NavX",
+        new InstantCommand(sub_navX::calibrate, sub_navX));
 
-    }
+  }
 
-    /**
-     * Use this to pass the autonomous command to the main {@link Robot} class.
-     *
-     * @return the command to run in autonomous
-     */
+  /**
+   * Use this to pass the autonomous command to the main {@link Robot} class.
+   *
+   * @return the command to run in autonomous
+   */
 
-    public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        return null;
-    }
+  public Command getAutonomousCommand() {
+    // An ExampleCommand will run in autonomous
+    return null;
+  }
 }
