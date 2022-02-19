@@ -47,9 +47,17 @@ public class RobotContainer {
   // Drivetrain Commands
   private final Drive com_drive = new Drive(sub_drivetrain);
 
-  // // Hood Commands
+
+  // Hood Commands
   private final ShallowHood com_shallowHood = new ShallowHood(sub_hood);
   private final SteepenHood com_steepenHood = new SteepenHood(sub_hood);
+
+  private final DriveMotionProfile com_driveTestPath = new DriveMotionProfile(sub_drivetrain,
+      "testpath_left.csv", "testpath_right.csv");
+  private final DriveMotionProfile com_drive2020Field = new DriveMotionProfile(sub_drivetrain,
+      "full2020path_left.csv", "full2020path_right.csv");
+  private final DriveMotionProfile com_driveHanger = new DriveMotionProfile(sub_drivetrain,
+      "hanger_left.csv", "hanger_right.csv");
 
   // Turret Commands
   private final MoveTurret com_moveTurret = new MoveTurret(sub_turret);
@@ -142,6 +150,6 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return com_driveHanger;
   }
 }
