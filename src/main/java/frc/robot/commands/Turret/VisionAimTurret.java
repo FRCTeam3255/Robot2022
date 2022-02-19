@@ -7,7 +7,6 @@ package frc.robot.commands.Turret;
 import com.frcteam3255.components.SN_Limelight.LEDMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotPreferences;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
 
