@@ -58,6 +58,9 @@ public final class RobotPreferences {
     public static final SN_DoublePreference shooterP = new SN_DoublePreference("kP", 1);
     public static final SN_DoublePreference shooterI = new SN_DoublePreference("kI", 0);
     public static final SN_DoublePreference shooterD = new SN_DoublePreference("kD", 0);
+
+    public static final SN_DoublePreference shooterEncoderCountsPerWheelRotation = new SN_DoublePreference(
+        "shooterEncoderCountsPerWheelRotation", (1 / 100) / 2048);
   }
 
   public static final class TurretPrefs {

@@ -68,12 +68,39 @@ public class Shooter extends SubsystemBase {
   // Sets/Controls Shooter Motor speeds
   public void setShooterSpeed(double a_speed) {
     double speed = a_speed;
-
     leadMotor.set(ControlMode.PercentOutput, speed);
-
   }
 
-  public double getShooterVelocity() {
+  private void setShooterVelocity(double a_velocity) {
+    leadMotor.set(ControlMode.Velocity, a_velocity);
+  }
+
+  private double velocityToRPM(double a_velocity) {
+    double rpm = a_velocity; // counts per 100ms
+    rpm *= 10; // counts per 1s
+    rpm *= 60; // counts per 1m
+    rpm /= RobotPreferences.ShooterPrefs.shooterEncoderCountsPerWheelRotation.getValue(); // rotations per minute
+    return rpm;
+  }
+
+  private double RPMToVelocity(double a_rpm) {
+    double velocity = a_rpm; // rotations per 1m
+    velocity *= RobotPreferences.ShooterPrefs.shooterEncoderCountsPerWheelRotation.getValue(); // counts 1m
+    velocity /= 60; // counts per 1s
+    velocity /= 10; // counts per 100ms
+    return velocity;
+  }
+
+  public void setShooterRPM(double a_rpm) {
+    double rpm = RPMToVelocity(a_rpm);
+    setShooterVelocity(rpm);
+  }
+
+  public double getShooterRPM() {
+    return velocityToRPM(getShooterVelocity());
+  }
+
+  private double getShooterVelocity() {
     return leadMotor.getSelectedSensorVelocity();
   }
 
