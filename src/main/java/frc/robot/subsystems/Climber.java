@@ -57,6 +57,19 @@ public class Climber extends SubsystemBase {
     return isClimberLocked;
   }
 
+  public boolean isClimberPivoted() {
+    Value climberPivotStatus = climberPivotPiston.get();
+    boolean isClimberPivoted = false;
+
+    if (climberPivotStatus == lockDeploy) {
+      isClimberPivoted = true;
+    } else {
+      isClimberPivoted = false;
+    }
+
+    return isClimberPivoted;
+  }
+
   // solenoid commands
   public void lockClimber() {
     climberLockPiston.set(lockDeploy);
@@ -99,20 +112,20 @@ public class Climber extends SubsystemBase {
   }
 
   // Climbing Up/Down
-  public void setClimberMotorUpPosition() {
+  public void extendClimber() {
     climbMotor.set(ControlMode.Position, RobotPreferences.ClimberPrefs.climberUpPosition.getValue());
   }
 
-  public void setClimberMotorDownPosition() {
+  public void retractClimber() {
     climbMotor.set(ControlMode.Position, RobotPreferences.ClimberPrefs.climberDownPosition.getValue());
   }
 
   // Piston Deploy/Retract
-  public void deployClimberPistonForward() {
+  public void pivotForward() {
     climberPivotPiston.set(pivotDeploy);
   }
 
-  public void retractClimberPistonBackward() {
+  public void pivotBackward() {
     climberPivotPiston.set(pivotRetract);
   }
 
@@ -127,5 +140,6 @@ public class Climber extends SubsystemBase {
     SmartDashboard.putNumber("Climber Motor", getClimberEncoderCount());
     SmartDashboard.putBoolean("Is Climber At Bottom", isClimberAtBottom());
     SmartDashboard.putBoolean("Is Climber Locked", isClimberLocked());
+    SmartDashboard.putBoolean("Is Climber Pivoted", isClimberPivoted());
   }
 }

@@ -23,9 +23,9 @@ public class ClimbNextRung extends SequentialCommandGroup {
 
     // This does NOT lock anything which is pretty bad and a pretty sob sob moment
     // :(
-    addCommands(new InstantCommand(sub_climber::deployClimberPistonForward, sub_climber));
-    addCommands(new InstantCommand(sub_climber::setClimberMotorUpPosition, sub_climber));
-    addCommands(new InstantCommand(sub_climber::retractClimberPistonBackward, sub_climber));
-    addCommands(new InstantCommand(sub_climber::setClimberMotorDownPosition, sub_climber));
+    addCommands(new InstantCommand(sub_climber::pivotForward, sub_climber));
+    addCommands(new InstantCommand(sub_climber::extendClimber, sub_climber));
+    addCommands(new InstantCommand(sub_climber::pivotBackward, sub_climber));
+    addCommands(new InstantCommand(sub_climber::retractClimber, sub_climber));
   }
 }
