@@ -25,8 +25,13 @@ public class Climber extends SubsystemBase {
   private DoubleSolenoid climberPivotPiston;
 
   // Solenoid Variables
+  // Lock Piston
   private DoubleSolenoid.Value lockDeploy = Value.kForward;
   private DoubleSolenoid.Value lockRetract = Value.kReverse;
+
+  // Pivot Piston
+  private DoubleSolenoid.Value pivotDeploy = Value.kForward;
+  private DoubleSolenoid.Value pivotRetract = Value.kReverse;
 
   public Climber() {
 
@@ -61,15 +66,6 @@ public class Climber extends SubsystemBase {
     climberLockPiston.set(lockRetract);
   }
 
-  // Unlock and Lock Pivot Piston
-  public void lockClimberPivotPiston() {
-    climberPivotPiston.set(lockDeploy);
-  }
-
-  public void unlockClimberPivotPiston() {
-    climberPivotPiston.set(lockRetract);
-  }
-
   private void configure() {
     climbMotor.configFactoryDefault();
 
@@ -102,27 +98,22 @@ public class Climber extends SubsystemBase {
 
   }
 
-  // make funny things like motors and solenoids actually go
-  public void setClimberMotorPosition() {
-    climbMotor.set(ControlMode.Position, getClimberEncoderCount());
-  }
-
   // Climbing Up/Down
-  public void setClimberMotorUp() {
+  public void setClimberMotorUpPosition() {
     climbMotor.set(ControlMode.Position, RobotPreferences.ClimberPrefs.climberUpPosition.getValue());
   }
 
-  public void setClimberMotorDown() {
-    climbMotor.set(ControlMode.Position, RobotPreferences.ClimberPrefs.climberUpPosition.getValue());
+  public void setClimberMotorDownPosition() {
+    climbMotor.set(ControlMode.Position, RobotPreferences.ClimberPrefs.climberDownPosition.getValue());
   }
 
   // Piston Deploy/Retract
   public void deployClimberPistonForward() {
-    climberPivotPiston.set(lockDeploy);
+    climberPivotPiston.set(pivotDeploy);
   }
 
   public void retractClimberPistonBackward() {
-    climberPivotPiston.set(lockRetract);
+    climberPivotPiston.set(pivotRetract);
   }
 
   // TODO: change when location of mag switch is (ex: isClimberRaised)
