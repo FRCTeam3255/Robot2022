@@ -107,11 +107,21 @@ public class Climber extends SubsystemBase {
     climbMotor.set(ControlMode.Position, getClimberEncoderCount());
   }
 
-  public void pivotClimberPistonForward() {
+  // Climbing Up/Down
+  public void setClimberMotorUp() {
+    climbMotor.set(ControlMode.Position, RobotPreferences.ClimberPrefs.climberUpPosition.getValue());
+  }
+
+  public void setClimberMotorDown() {
+    climbMotor.set(ControlMode.Position, RobotPreferences.ClimberPrefs.climberUpPosition.getValue());
+  }
+
+  // Piston Deploy/Retract
+  public void deployClimberPistonForward() {
     climberPivotPiston.set(lockDeploy);
   }
 
-  public void unpivotClimberPistonBackward() {
+  public void retractClimberPistonBackward() {
     climberPivotPiston.set(lockRetract);
   }
 

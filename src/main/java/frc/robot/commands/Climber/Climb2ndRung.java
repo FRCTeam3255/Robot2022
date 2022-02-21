@@ -2,6 +2,8 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+//TODO: We probably don't need this file
+
 package frc.robot.commands.Climber;
 
 import javax.swing.text.Position;
@@ -31,8 +33,8 @@ public class Climb2ndRung extends CommandBase {
         climber.unlockClimberPivotPiston();
 
         // 2nd Climber Piston Extended Position is set and executed
-        // Check if we are going BACKWARD or FORWARD because I have NO CLUE - Alice
-        climber.pivotClimberPistonForward();
+
+        // climber.pivotClimberPistonForward();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
