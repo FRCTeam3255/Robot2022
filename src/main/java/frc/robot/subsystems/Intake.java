@@ -159,7 +159,7 @@ public class Intake extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Intake Motor", getIntakeMotorCount());
-    SmartDashboard.putNumber("getIntakeMotor%Output", intakeMotor.getMotorOutputPercent());
+    SmartDashboard.putNumber("getIntakeMotorOutputPercent", intakeMotor.getMotorOutputPercent());
     SmartDashboard.putBoolean("Intake Solenoid", isIntakeDeployed());
 
     SmartDashboard.putNumber("Color Sensor Blue", getBlue());
