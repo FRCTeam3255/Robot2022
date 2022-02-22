@@ -126,10 +126,10 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Drivetrain Left Encoder", getLeftEncoderCount());
     SmartDashboard.putNumber("Drivetrain Right Encoder", getRightEncoderCount());
     SmartDashboard.putBoolean("Drivetrain Motion Profile Finished", isMotionProfileFinished());
-    SmartDashboard.putNumber("getDrivetrainLeftLeadMotorSpeed", leftLeadMotor.getMotorOutputPercent());
-    SmartDashboard.putNumber("getDrivetrainRightLeadMotorSpeed", rightLeadMotor.getMotorOutputPercent());
-    SmartDashboard.putNumber("getDrivetrainLeftFollowMotorSpeed", leftFollowMotor.getMotorOutputPercent());
-    SmartDashboard.putNumber("getDrivetrainRightFollowMotorSpeed", rightFollowMotor.getMotorOutputPercent());
+    SmartDashboard.putNumber("DrivetrainLeftLeadMotorSpeed", leftLeadMotor.getMotorOutputPercent());
+    SmartDashboard.putNumber("DrivetrainRightLeadMotorSpeed", rightLeadMotor.getMotorOutputPercent());
+    SmartDashboard.putNumber("DrivetrainLeftFollowMotorSpeed", leftFollowMotor.getMotorOutputPercent());
+    SmartDashboard.putNumber("DrivetrainRightFollowMotorSpeed", rightFollowMotor.getMotorOutputPercent());
 
   }
 
