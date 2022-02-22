@@ -79,13 +79,13 @@ public class Shooter extends SubsystemBase {
     double rpm = a_velocity; // counts per 100ms
     rpm *= 10; // counts per 1s
     rpm *= 60; // counts per 1m
-    rpm /= RobotPreferences.ShooterPrefs.shooterEncoderCountsPerWheelRotation.getValue(); // rotations per minute
+    rpm /= RobotPreferences.encoderCountsPerTalonFXRotation.getValue(); // rotations per minute
     return rpm;
   }
 
   private double RPMToVelocity(double a_rpm) {
     double velocity = a_rpm; // rotations per 1m
-    velocity *= RobotPreferences.ShooterPrefs.shooterEncoderCountsPerWheelRotation.getValue(); // counts 1m
+    velocity *= RobotPreferences.encoderCountsPerTalonFXRotation.getValue(); // counts 1m
     velocity /= 60; // counts per 1s
     velocity /= 10; // counts per 100ms
     return velocity;
