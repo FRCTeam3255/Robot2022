@@ -82,5 +82,8 @@ public class Shooter extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Shooter Left Motor", getShooterEncoderCount());
     SmartDashboard.putNumber("Shooter Velocity", getShooterVelocity());
+    SmartDashboard.putNumber("get Shooter Lead Motor Speed", leadMotor.getMotorOutputPercent());
+    SmartDashboard.putNumber("get Shooter Follow Motor Speed", followMotor.getMotorOutputPercent());
+
   }
 }
