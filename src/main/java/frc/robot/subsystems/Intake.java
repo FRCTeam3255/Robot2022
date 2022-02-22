@@ -25,7 +25,7 @@ public class Intake extends SubsystemBase {
   private TalonFX intakeMotor;
   private DoubleSolenoid intakeSolenoid;
   private ColorSensorV3 intakeColorSensorV3;
-  private final I2C.Port mxpPort = I2C.Port.kOnboard;
+  private final I2C.Port i2cPort = I2C.Port.kMXP;
 
   // Create the Variables for Deployed and Retracted
   public DoubleSolenoid.Value intakeDeploy = Value.kForward;
@@ -36,7 +36,7 @@ public class Intake extends SubsystemBase {
     intakeMotor = new TalonFX(RobotMap.IntakeMap.INTAKE_MOTOR_CAN);
     intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.IntakeMap.INTAKE_SOLENOID_PCM_A,
         RobotMap.IntakeMap.INTAKE_SOLENOID_PCM_B);
-    intakeColorSensorV3 = new ColorSensorV3(mxpPort);
+    intakeColorSensorV3 = new ColorSensorV3(i2cPort);
 
     configure();
   }
