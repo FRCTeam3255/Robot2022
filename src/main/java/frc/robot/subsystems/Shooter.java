@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
+import com.frcteam3255.utils.SN_Math;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -90,42 +91,12 @@ public class Shooter extends SubsystemBase {
   }
 
   /**
-   * Converts Velocity (encoder counts per 100ms) to
-   * RPM (motor rotations per minute)
-   * 
-   * @param a_velocity Motor Encoder counts per 100ms
-   * @return Motor RPM
-   */
-  private double velocityToRPM(double a_velocity) {
-    double rpm = a_velocity; // counts per 100ms
-    rpm *= 10; // counts per 1s
-    rpm *= 60; // counts per 1m
-    rpm /= RobotPreferences.encoderCountsPerTalonFXRotation.getValue(); // rotations per minute
-    return rpm;
-  }
-
-  /**
-   * Converts RPM (motor rotations per minute) to velocity
-   * (encoder counts per 100ms)
-   * 
-   * @param a_rpm Motor RPM
-   * @return Encoder counts per 100ms
-   */
-  private double RPMToVelocity(double a_rpm) {
-    double velocity = a_rpm; // rotations per 1m
-    velocity *= RobotPreferences.encoderCountsPerTalonFXRotation.getValue(); // counts 1m
-    velocity /= 60; // counts per 1s
-    velocity /= 10; // counts per 100ms
-    return velocity;
-  }
-
-  /**
    * Sets the shooter RPM
    * 
    * @param a_rpm RPM to set motor to
    */
   public void setShooterRPM(double a_rpm) {
-    double rpm = RPMToVelocity(a_rpm);
+    double rpm = SN_Math.RPMToVelocity(a_rpm, SN_Math.TALONFX_ENCODER_PULSES_PER_COUNT);
     setShooterVelocity(rpm);
   }
 
@@ -134,7 +105,7 @@ public class Shooter extends SubsystemBase {
    * @return Shooter RPM
    */
   public double getShooterRPM() {
-    return velocityToRPM(getShooterVelocity());
+    return SN_Math.velocityToRPM(getShooterVelocity(), SN_Math.TALONFX_ENCODER_PULSES_PER_COUNT);
   }
 
   /**
