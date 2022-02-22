@@ -15,7 +15,7 @@ import frc.robot.commands.Hood.*;
 import frc.robot.commands.Turret.*;
 import frc.robot.commands.Intake.*;
 import frc.robot.commands.Shooter.*;
-import frc.robot.commands.Transfer.PushCargoToShooter;
+import frc.robot.commands.Transfer.*;
 import frc.robot.commands.Climber.*;
 import frc.robot.subsystems.*;
 
