@@ -78,9 +78,9 @@ public class Transfer extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putBoolean("Top Ball Collected", isTopBallCollected());
     SmartDashboard.putBoolean("Bottom Ball Collected", isBottomBallCollected());
-    SmartDashboard.getNumber("get Top Belt Motor Speed", topBeltMotor.getMotorOutputPercent());
-    SmartDashboard.getNumber("get Bottom Belt Motor Speed", bottomBeltMotor.getMotorOutputPercent());
-    SmartDashboard.getNumber("get Entrance Belt Motor Speed", entranceBeltMotor.getMotorOutputPercent());
+    SmartDashboard.getNumber("Top Belt Motor Speed", topBeltMotor.getMotorOutputPercent());
+    SmartDashboard.getNumber("Bottom Belt Motor Speed", bottomBeltMotor.getMotorOutputPercent());
+    SmartDashboard.getNumber("Entrance Belt Motor Speed", entranceBeltMotor.getMotorOutputPercent());
 
   }
 }
