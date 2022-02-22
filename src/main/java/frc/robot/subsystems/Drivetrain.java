@@ -42,8 +42,8 @@ public class Drivetrain extends SubsystemBase {
   // Sets Drivetrain Variable's Default Settings
   public void configure() {
 
-    config.slot0.allowableClosedloopError = RobotPreferences.DrivetrainPrefs.driveAllowableCLError.getValue();
-    config.slot0.closedLoopPeakOutput = RobotPreferences.DrivetrainPrefs.driveCLPeakOutput.getValue();
+    config.slot0.allowableClosedloopError = RobotPreferences.DrivetrainPrefs.driveAllowableClosedLoopError.getValue();
+    config.slot0.closedLoopPeakOutput = RobotPreferences.DrivetrainPrefs.driveClosedLoopPeakOutput.getValue();
     config.slot0.kF = RobotPreferences.DrivetrainPrefs.driveF.getValue();
     config.slot0.kP = RobotPreferences.DrivetrainPrefs.driveP.getValue();
     config.slot0.kI = RobotPreferences.DrivetrainPrefs.driveI.getValue();
@@ -126,5 +126,11 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Drivetrain Left Encoder", getLeftEncoderCount());
     SmartDashboard.putNumber("Drivetrain Right Encoder", getRightEncoderCount());
     SmartDashboard.putBoolean("Drivetrain Motion Profile Finished", isMotionProfileFinished());
+    SmartDashboard.putNumber("DrivetrainLeftLeadMotorSpeed", leftLeadMotor.getMotorOutputPercent());
+    SmartDashboard.putNumber("DrivetrainRightLeadMotorSpeed", rightLeadMotor.getMotorOutputPercent());
+    SmartDashboard.putNumber("DrivetrainLeftFollowMotorSpeed", leftFollowMotor.getMotorOutputPercent());
+    SmartDashboard.putNumber("DrivetrainRightFollowMotorSpeed", rightFollowMotor.getMotorOutputPercent());
+
   }
+
 }
