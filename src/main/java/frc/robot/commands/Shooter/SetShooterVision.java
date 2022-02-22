@@ -12,7 +12,7 @@ public class SetShooterVision extends CommandBase {
   Shooter shooter;
   Vision vision;
 
-  double goalVelocity;
+  double goalRPM;
 
   /** Creates a new SetShooterVision. */
   public SetShooterVision(Vision sub_vision, Shooter sub_shooter) {
@@ -31,8 +31,8 @@ public class SetShooterVision extends CommandBase {
   @Override
   public void execute() {
     // math here for finding the thing
-    goalVelocity = (vision.limelight.getOffsetY());
-    shooter.setShooterRPM(goalVelocity);
+    goalRPM = (vision.limelight.getOffsetY());
+    shooter.setShooterRPM(goalRPM);
   }
 
   // Called once the command ends or is interrupted.
