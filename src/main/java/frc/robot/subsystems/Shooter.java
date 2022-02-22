@@ -22,7 +22,9 @@ public class Shooter extends SubsystemBase {
 
   private TalonFXConfiguration config = new TalonFXConfiguration();
 
-  // LINKS TO ROBOT MAP
+  /**
+   * Creates new shooter
+   */
   public Shooter() {
     leadMotor = new TalonFX(RobotMap.ShooterMap.LEFT_MOTOR_CAN);
     followMotor = new TalonFX(RobotMap.ShooterMap.RIGHT_MOTOR_CAN);
@@ -32,7 +34,9 @@ public class Shooter extends SubsystemBase {
     configure();
   }
 
-  // Configures Shooter Motor's factory Defaults
+  /**
+   * Configures the shooter's motors
+   */
   public void configure() {
     leadMotor.configFactoryDefault();
     followMotor.configFactoryDefault();
@@ -54,13 +58,18 @@ public class Shooter extends SubsystemBase {
     followMotor.setSensorPhase(true);
   }
 
-  // RESETS COUNT FOR ENCODERS
+  /**
+   * Resets the shooter's motors' encoder counts to zero
+   */
   public void resetShooterEncoderCounts() {
     leadMotor.setSelectedSensorPosition(0);
     followMotor.setSelectedSensorPosition(0);
   }
 
-  // Gets and returns shooter's encoder counts
+  /**
+   * 
+   * @return Shooter Motor Encoder Counts
+   */
   public double getShooterEncoderCount() {
     return leadMotor.getSelectedSensorPosition();
   }
@@ -71,10 +80,22 @@ public class Shooter extends SubsystemBase {
     leadMotor.set(ControlMode.PercentOutput, speed);
   }
 
+  /**
+   * Sets the shooter velocity (encoder counts per 100ms)
+   * 
+   * @param a_velocity Encoder counts per 100ms
+   */
   private void setShooterVelocity(double a_velocity) {
     leadMotor.set(ControlMode.Velocity, a_velocity);
   }
 
+  /**
+   * Converts Velocity (encoder counts per 100ms) to
+   * RPM (motor rotations per minute)
+   * 
+   * @param a_velocity Motor Encoder counts per 100ms
+   * @return Motor RPM
+   */
   private double velocityToRPM(double a_velocity) {
     double rpm = a_velocity; // counts per 100ms
     rpm *= 10; // counts per 1s
@@ -83,6 +104,13 @@ public class Shooter extends SubsystemBase {
     return rpm;
   }
 
+  /**
+   * Converts RPM (motor rotations per minute) to velocity
+   * (encoder counts per 100ms)
+   * 
+   * @param a_rpm Motor RPM
+   * @return Encoder counts per 100ms
+   */
   private double RPMToVelocity(double a_rpm) {
     double velocity = a_rpm; // rotations per 1m
     velocity *= RobotPreferences.encoderCountsPerTalonFXRotation.getValue(); // counts 1m
@@ -91,15 +119,28 @@ public class Shooter extends SubsystemBase {
     return velocity;
   }
 
+  /**
+   * Sets the shooter RPM
+   * 
+   * @param a_rpm RPM to set motor to
+   */
   public void setShooterRPM(double a_rpm) {
     double rpm = RPMToVelocity(a_rpm);
     setShooterVelocity(rpm);
   }
 
+  /**
+   * 
+   * @return Shooter RPM
+   */
   public double getShooterRPM() {
     return velocityToRPM(getShooterVelocity());
   }
 
+  /**
+   * 
+   * @return Shooter velocity (encoder counts per 100ms)
+   */
   private double getShooterVelocity() {
     return leadMotor.getSelectedSensorVelocity();
   }
