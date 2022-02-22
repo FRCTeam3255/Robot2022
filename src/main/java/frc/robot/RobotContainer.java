@@ -28,8 +28,10 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
 
   // Joysticks
-  public static final SN_DualActionStick DriverStick = new SN_DualActionStick(RobotMap.ControllerMap.DRIVER_STICK);
-  public static final SN_DualActionStick coDriverStick = new SN_DualActionStick(RobotMap.ControllerMap.CODRIVER_STICK);
+  public static final SN_DualActionStick DriverStick = new SN_DualActionStick(
+      RobotMap.ControllerMap.DRIVER_STICK);
+  public static final SN_DualActionStick coDriverStick = new SN_DualActionStick(
+      RobotMap.ControllerMap.CODRIVER_STICK);
 
   // Subsystems
   private final Drivetrain sub_drivetrain = new Drivetrain();
@@ -39,17 +41,35 @@ public class RobotContainer {
   private final Shooter sub_shooter = new Shooter();
   private final Climber sub_climber = new Climber();
   private final Transfer sub_transfer = new Transfer();
-  public static final NavX sub_navX = new NavX();
+  private final NavX sub_navX = new NavX();
+  private final Vision sub_vision = new Vision();
 
   // Drivetrain Commands
   private final Drive com_drive = new Drive(sub_drivetrain);
 
+
   // Hood Commands
-  private final ShallowHood com_shallow_hood = new ShallowHood(sub_hood);
-  private final SteepenHood com_steepen_hood = new SteepenHood(sub_hood);
+  private final ShallowHood com_shallowHood = new ShallowHood(sub_hood);
+  private final SteepenHood com_steepenHood = new SteepenHood(sub_hood);
+
+  private final DriveMotionProfile com_driveTestPath = new DriveMotionProfile(sub_drivetrain,
+      "testpath_left.csv", "testpath_right.csv");
+  private final DriveMotionProfile com_drive2020Field = new DriveMotionProfile(sub_drivetrain,
+      "full2020path_left.csv", "full2020path_right.csv");
+  private final DriveMotionProfile com_driveHanger = new DriveMotionProfile(sub_drivetrain,
+      "hanger_left.csv", "hanger_right.csv");
 
   // Turret Commands
-  private final ManualRotateTurret com_manualRotateTurret = new ManualRotateTurret(sub_turret);
+  private final MoveTurret com_moveTurret = new MoveTurret(sub_turret);
+  private final SetTurretPosition com_setTurretCenter = new SetTurretPosition(sub_turret,
+      RobotPreferences.zeroDoublePref);
+  private final HoldTurretPosition com_holdTurretCenter = new HoldTurretPosition(sub_turret, sub_navX,
+      RobotPreferences.zeroDoublePref);
+  private final HoldTurretPosition com_holdTurretPos1 = new HoldTurretPosition(sub_turret, sub_navX,
+      RobotPreferences.TurretPrefs.turretPresetPos1);
+  private final VisionAimTurret com_visionAimTurret = new VisionAimTurret(sub_turret, sub_vision);
+  private final VisionNavXAimTurret com_visionHoldAimTurret = new VisionNavXAimTurret(sub_turret, sub_vision,
+      sub_navX);
 
   // Shooter Commands
   private final PushCargoToShooter com_pushCargoToShooter = new PushCargoToShooter(sub_shooter, sub_transfer);
@@ -57,7 +77,8 @@ public class RobotContainer {
   // Transfer Commands
 
   // Intake Commands
-  private final CollectCargo com_collect = new CollectCargo(sub_intake, sub_transfer);
+  private final CollectCargo com_collect = new CollectCargo(sub_intake,
+      sub_transfer);
   private final RetractIntake com_retractIntake = new RetractIntake(sub_intake);
   private final DeployIntake com_deployIntake = new DeployIntake(sub_intake);
 
@@ -88,18 +109,16 @@ public class RobotContainer {
     coDriverStick.btn_RTrig.whileHeld(com_pushCargoToShooter);
     coDriverStick.btn_RTrig.whileHeld(com_spinFlywheel);
 
+    coDriverStick.btn_A.whileHeld(com_setTurretCenter);
+    coDriverStick.btn_B.whileHeld(com_holdTurretPos1);
+    coDriverStick.btn_X.whileHeld(com_visionAimTurret);
+    coDriverStick.btn_Y.whileHeld(com_visionHoldAimTurret);
+    coDriverStick.btn_LBump.whileHeld(com_moveTurret);
+
     coDriverStick.btn_LTrig.whileHeld(com_collect);
-    coDriverStick.btn_Y.whenPressed(com_retractIntake);
-    coDriverStick.btn_X.whenPressed(com_deployIntake);
-    coDriverStick.POV_West.whileHeld(com_manualRotateTurret);
 
-    coDriverStick.btn_A.whenPressed(com_steepen_hood);
-    coDriverStick.btn_B.whenPressed(com_shallow_hood);
-
-    // btn_LStick can become btn_RStick for dominant hand
     coDriverStick.btn_LStick.whileHeld(com_climb);
 
-    // Second Climber Piston (Pivot Piston)
     coDriverStick.btn_LBump.whenPressed(com_ClimbNextRung);
   }
 
@@ -110,7 +129,8 @@ public class RobotContainer {
     SmartDashboard.putData("Reset Climber Encoders",
         new InstantCommand(sub_climber::resetClimberEncoderCount, sub_climber));
     SmartDashboard.putData("Reset Drivetrain Encoders",
-        new InstantCommand(sub_drivetrain::resetDrivetrainEncodersCount, sub_drivetrain));
+        new InstantCommand(sub_drivetrain::resetDrivetrainEncodersCount,
+            sub_drivetrain));
     SmartDashboard.putData("Reset Intake Encoders",
         new InstantCommand(sub_intake::resetIntakeEncoderCount, sub_intake));
     SmartDashboard.putData("Reset Turret Encoders",
@@ -132,6 +152,6 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return com_driveHanger;
   }
 }
