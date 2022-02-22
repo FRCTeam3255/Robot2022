@@ -15,6 +15,7 @@ import frc.robot.commands.Hood.*;
 import frc.robot.commands.Turret.*;
 import frc.robot.commands.Intake.*;
 import frc.robot.commands.Shooter.*;
+import frc.robot.commands.Transfer.*;
 import frc.robot.commands.Climber.*;
 import frc.robot.subsystems.*;
 
@@ -119,8 +120,9 @@ public class RobotContainer {
 
     coDriverStick.btn_LStick.whileHeld(com_climb);
 
-    coDriverStick.btn_LBump.whenPressed(com_ClimbNextRung);
+
     coDriverStick.POV_East.whenPressed(com_ResetClimber);
+    coDriverStick.btn_RBump.whenPressed(com_ClimbNextRung);
   }
 
   /**
