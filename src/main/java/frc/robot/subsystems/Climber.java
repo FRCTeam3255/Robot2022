@@ -23,6 +23,8 @@ public class Climber extends SubsystemBase {
   private DigitalInput climberBottomSafetySwitch;
   private DoubleSolenoid climberLockPiston;
   private DoubleSolenoid climberPivotPiston;
+  // Somebody can rename this solenoid if they can think of a better name
+  private DoubleSolenoid actuateStationaryClimberHooks;
 
   // Solenoid Variables
   // Lock Piston
@@ -32,6 +34,10 @@ public class Climber extends SubsystemBase {
   // Pivot Piston
   private DoubleSolenoid.Value pivotDeploy = Value.kForward;
   private DoubleSolenoid.Value pivotRetract = Value.kReverse;
+
+  // Pivot to actuate climber hooks that are stationary
+  private DoubleSolenoid.Value stationaryClimbHooksdDeploy = Value.kForward;
+  private DoubleSolenoid.Value stationaryClimbHooksRetract = Value.kReverse;
 
   public Climber() {
 
