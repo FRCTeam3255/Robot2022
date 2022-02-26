@@ -33,41 +33,41 @@ public class CollectCargo extends CommandBase {
   @Override
   public void execute() {
     // Reject ball command
-    if (intake.ballColorMatchesAlliance() == false) {
-      // Reverse Motors
-      intake.setIntakeMotorSpeed(RobotPreferences.IntakePrefs.rejectSpeed.getValue());
+    // if (intake.ballColorMatchesAlliance() == false) {
+    // // Reverse Motors
+    // intake.setIntakeMotorSpeed(RobotPreferences.IntakePrefs.rejectSpeed.getValue());
+    // } else {
+
+    // Motor Controlling
+    // Top Belt Motors
+    if (transfer.isTopBallCollected() == true) {
+      transfer.setTopBeltMotorSpeed(0);
+
+    } else if (transfer.isTopBallCollected() == false) {
+      // Make the Top Belt Move
+      transfer.setTopBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
+    }
+
+    // Bottom Belt Motors
+    if (transfer.isBottomBallCollected() == true && transfer.isTopBallCollected() == true) {
+      // Retract the intake
+      intake.retractIntake();
+
+      transfer.setBottomBeltMotorSpeed(0);
+      transfer.setEntranceBeltMotorSpeed(0);
+      intake.setIntakeMotorSpeed(0);
+
     } else {
+      // Deploy the intake if it isn't already deployed
+      intake.deployIntake();
 
-      // Motor Controlling
-      // Top Belt Motors
-      if (transfer.isTopBallCollected() == true) {
-        transfer.setTopBeltMotorSpeed(0);
-
-      } else if (transfer.isTopBallCollected() == false) {
-        // Make the Top Belt Move
-        transfer.setTopBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
-      }
-
-      // Bottom Belt Motors
-      if (transfer.isBottomBallCollected() == true && transfer.isTopBallCollected() == true) {
-        // Retract the intake
-        intake.retractIntake();
-
-        transfer.setBottomBeltMotorSpeed(0);
-        transfer.setEntranceBeltMotorSpeed(0);
-        intake.setIntakeMotorSpeed(0);
-
-      } else {
-        // Deploy the intake if it isn't already deployed
-        intake.deployIntake();
-
-        // Set all bottom motors to Move
-        transfer.setBottomBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
-        transfer.setEntranceBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
-        intake.setIntakeMotorSpeed(RobotPreferences.IntakePrefs.collectSpeed.getValue());
-      }
+      // Set all bottom motors to Move
+      transfer.setBottomBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
+      transfer.setEntranceBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
+      intake.setIntakeMotorSpeed(RobotPreferences.IntakePrefs.collectSpeed.getValue());
     }
   }
+  // }
 
   // Called once the command ends or is interrupted.
   @Override
