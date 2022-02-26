@@ -36,27 +36,19 @@ public class CollectCargo extends CommandBase {
   @Override
   public void execute() {
 
-    // if the color sensor sees a non-alliance ball in prox, timer = 50
+    // if the color sensor sees a non-alliance ball in prox, timer = transferRejectLatchTimeLoops
     if (!intake.ballColorMatchesAlliance() && intake.isProximity()) {
       timer = RobotPreferences.TransferPrefs.transferRejectLatchTimeLoops.getValue();
     } else if (intake.ballColorMatchesAlliance() && intake.isProximity()) {
       timer = 0;
     }
 
-    if (intake.isProximity()) {
-      if (timer > 0) {
-        transfer.setEntranceBeltMotorSpeed(-RobotPreferences.TransferPrefs.transferSpeed.getValue());
-        timer--;
-      } else {
-        transfer.setEntranceBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
-      }
+    // If the timer is set, it must be the wrong ball so reverse intake until timer is 0
+    if (timer > 0) {
+      transfer.setEntranceBeltMotorSpeed(-RobotPreferences.TransferPrefs.transferSpeed.getValue());
+      timer--;
     } else {
-      if (timer > 0) {
-        transfer.setEntranceBeltMotorSpeed(-RobotPreferences.TransferPrefs.transferSpeed.getValue());
-        timer--;
-      } else {
-        transfer.setEntranceBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
-      }
+      transfer.setEntranceBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
     }
 
     if (!transfer.isTopBallCollected()) {
