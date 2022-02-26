@@ -4,6 +4,9 @@
 
 package frc.robot.commands.Climber;
 
+import com.frcteam3255.preferences.SN_BooleanPreference;
+import com.frcteam3255.utils.SN_Debug;
+
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotPreferences;
@@ -13,6 +16,7 @@ import frc.robot.subsystems.Climber;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ClimbNextRung extends SequentialCommandGroup {
+
   /** Creates a new ClimbNextRung. */
   public ClimbNextRung(Climber sub_climber) {
     // Add your commands in the addCommands() call, e.g.

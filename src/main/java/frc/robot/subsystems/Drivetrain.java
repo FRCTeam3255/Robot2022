@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.function.LongToDoubleFunction;
+
 import com.ctre.phoenix.motion.BufferedTrajectoryPointStream;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
@@ -11,6 +13,9 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
+import com.frcteam3255.preferences.SN_BooleanPreference;
+import com.frcteam3255.preferences.SN_Preferences;
+import com.frcteam3255.utils.SN_Debug;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -27,6 +32,8 @@ public class Drivetrain extends SubsystemBase {
 
   private TalonFXConfiguration config;
 
+  // SN_Debug logDebug = new SN_Debug("Reset Configs");
+
   // Initializes Variables for Drivetrain
   public Drivetrain() {
     leftLeadMotor = new TalonFX(RobotMap.DrivetrainMap.LEFT_LEAD_MOTOR_CAN);
@@ -35,6 +42,9 @@ public class Drivetrain extends SubsystemBase {
     rightFollowMotor = new TalonFX(RobotMap.DrivetrainMap.RIGHT_FOLLOW_MOTOR_CAN);
 
     config = new TalonFXConfiguration();
+
+    // logDebug.disableMessages(new SN_BooleanPreference("Disable Messages:",
+    // false));
 
     configure();
   }
@@ -73,7 +83,6 @@ public class Drivetrain extends SubsystemBase {
     rightFollowMotor.setNeutralMode(NeutralMode.Brake);
     rightLeadMotor.setNeutralMode(NeutralMode.Brake);
     rightFollowMotor.follow(rightLeadMotor);
-
   }
 
   public void resetDrivetrainEncodersCount() {
@@ -130,7 +139,6 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("DrivetrainRightLeadMotorSpeed", rightLeadMotor.getMotorOutputPercent());
     SmartDashboard.putNumber("DrivetrainLeftFollowMotorSpeed", leftFollowMotor.getMotorOutputPercent());
     SmartDashboard.putNumber("DrivetrainRightFollowMotorSpeed", rightFollowMotor.getMotorOutputPercent());
-
   }
 
 }
