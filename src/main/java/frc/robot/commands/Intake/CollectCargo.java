@@ -13,6 +13,8 @@ public class CollectCargo extends CommandBase {
   Intake intake;
   Transfer transfer;
 
+  int timer;
+
   /** Creates a new Collect. */
   public CollectCargo(Intake sub_intake, Transfer sub_transfer) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -27,45 +29,42 @@ public class CollectCargo extends CommandBase {
   public void initialize() {
     // Deploy the intake
     intake.deployIntake();
+    timer = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Reject ball command
-    if (intake.ballColorMatchesAlliance() == false) {
-      // Reverse Motors
-      intake.setIntakeMotorSpeed(RobotPreferences.IntakePrefs.rejectSpeed.getValue());
-    } else {
 
-      // Motor Controlling
-      // Top Belt Motors
-      if (transfer.isTopBallCollected() == true) {
-        transfer.setTopBeltMotorSpeed(0);
+    // if the color sensor sees a non-alliance ball in prox, timer = 50
+    if (!intake.ballColorMatchesAlliance() && intake.isProximity()) {
+      timer = RobotPreferences.TransferPrefs.transferRejectLatchTimeLoops.getValue();
+    } else if (intake.ballColorMatchesAlliance() && intake.isProximity()) {
+      timer = 0;
+    }
 
-      } else if (transfer.isTopBallCollected() == false) {
-        // Make the Top Belt Move
-        transfer.setTopBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
-      }
-
-      // Bottom Belt Motors
-      if (transfer.isBottomBallCollected() == true && transfer.isTopBallCollected() == true) {
-        // Retract the intake
-        intake.retractIntake();
-
-        transfer.setBottomBeltMotorSpeed(0);
-        transfer.setEntranceBeltMotorSpeed(0);
-        intake.setIntakeMotorSpeed(0);
-
+    if (intake.isProximity()) {
+      if (timer > 0) {
+        transfer.setEntranceBeltMotorSpeed(-RobotPreferences.TransferPrefs.transferSpeed.getValue());
+        timer--;
       } else {
-        // Deploy the intake if it isn't already deployed
-        intake.deployIntake();
-
-        // Set all bottom motors to Move
-        transfer.setBottomBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
         transfer.setEntranceBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
-        intake.setIntakeMotorSpeed(RobotPreferences.IntakePrefs.collectSpeed.getValue());
       }
+    } else {
+      if (timer > 0) {
+        transfer.setEntranceBeltMotorSpeed(-RobotPreferences.TransferPrefs.transferSpeed.getValue());
+        timer--;
+      } else {
+        transfer.setEntranceBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
+      }
+    }
+
+    if (!transfer.isTopBallCollected()) {
+      transfer.setTopBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
+    }
+
+    if (!transfer.isBottomBallCollected()) {
+      transfer.setBottomBeltMotorSpeed(RobotPreferences.TransferPrefs.transferSpeed.getValue());
     }
   }
 
