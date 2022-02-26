@@ -5,14 +5,15 @@
 package frc.robot.commands.Climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
+import frc.robot.commands.Intake.RetractIntake;
 import frc.robot.subsystems.Climber;
 
-public class Climb extends CommandBase {
+public class ResetClimber extends CommandBase {
+
   Climber climber;
 
-  /** Creates a new Climb. */
-  public Climb(Climber sub_climber) {
+  /** Creates a new ResetClimber. */
+  public ResetClimber(Climber sub_climber) {
     // Use addRequirements() here to declare subsystem dependencies.
     climber = sub_climber;
     addRequirements(climber);
@@ -21,31 +22,26 @@ public class Climb extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // Climber brake disengages when we press the button assigned to the climber
     climber.unlockClimber();
+    climber.pivotBackward();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Climber Speed is set depending joystick input
-    double speed = RobotContainer.coDriverStick.getLeftStickY();
-
-    climber.setClimberSpeed(speed);
+    climber.retractClimber();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // Stops Climber when joystick button is released and applies brake
     climber.setClimberSpeed(0);
     climber.lockClimber();
-
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return climber.isClimberAtBottom();
   }
 }

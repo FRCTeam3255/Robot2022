@@ -24,6 +24,8 @@ public final class RobotPreferences {
 
   public static final SN_ZeroIntPreference zeroIntPref = new SN_ZeroIntPreference();
   public static final SN_ZeroDoublePreference zeroDoublePref = new SN_ZeroDoublePreference();
+  public static final SN_DoublePreference encoderCountsPerTalonFXRotation = new SN_DoublePreference(
+      "encoderCountsPerTalonFXRotation", 2048);
 
   public static final class DrivetrainPrefs {
     public static final SN_DoublePreference arcadeSpeed = new SN_DoublePreference("arcadeSpeed", 1);
@@ -33,9 +35,11 @@ public final class RobotPreferences {
     public static final SN_DoublePreference driveP = new SN_DoublePreference("driveP", 1);
     public static final SN_DoublePreference driveI = new SN_DoublePreference("driveI", 0);
     public static final SN_DoublePreference driveD = new SN_DoublePreference("driveD", 0);
-    public static final SN_DoublePreference driveAllowableCLError = new SN_DoublePreference("driveAllowableCLError",
+    public static final SN_DoublePreference driveAllowableClosedLoopError = new SN_DoublePreference(
+        "driveAllowableClosedLoopError",
         1000);
-    public static final SN_DoublePreference driveCLPeakOutput = new SN_DoublePreference("driveCLPeakOutput", 1);
+    public static final SN_DoublePreference driveClosedLoopPeakOutput = new SN_DoublePreference(
+        "driveClosedLoopPeakOutput", 1);
 
     // drivetrain gear ratio: 10:60 aka motor rotates once, wheel rotates 1/6
     // 2048 counts per motor rotation, * 6 is 12288 counts per wheel rotation
@@ -44,6 +48,9 @@ public final class RobotPreferences {
     // 978 counts per inch * 12 = 11734 counts per foot
     public static final SN_IntPreference driveEncoderCountsPerFoot = new SN_IntPreference(
         "driveEncoderCountsPerFoot", 11734);
+
+    public static final SN_IntPreference motionProfileMinBufferedPoints = new SN_IntPreference(
+        "motionProfileMinBufferedPoints", 10);
   }
 
   public static final class HoodPrefs {
@@ -51,8 +58,9 @@ public final class RobotPreferences {
 
   public static final class ShooterPrefs {
     public static final SN_DoublePreference shooterMotorSpeed = new SN_DoublePreference("shooterMotorSpeed", 1);
-    public static final SN_DoublePreference shooterMotorTargetVelocity = new SN_DoublePreference(
-        "shooterMotorTargetVelocity", 5000.0);
+    // rpm is motor rpm
+    public static final SN_DoublePreference shooterTargetRPM = new SN_DoublePreference(
+        "shooterMotorTargetRPM", 5000.0);
 
     public static final SN_DoublePreference shooterF = new SN_DoublePreference("kF", 0);
     public static final SN_DoublePreference shooterP = new SN_DoublePreference("kP", 1);
@@ -85,6 +93,10 @@ public final class RobotPreferences {
 
   public static final class TransferPrefs {
     public final static SN_DoublePreference transferSpeed = new SN_DoublePreference("transferSpeed", 0.80);
+    // this one is time in loops. roborio runs at 50hz, so a loop is 20ms. 25 loops
+    // is 20*25ms to 500ms
+    public final static SN_IntPreference transferRejectLatchTimeLoops = new SN_IntPreference(
+        "transferRejectLatchTimeLoops", 25);
 
   }
 
@@ -102,5 +114,9 @@ public final class RobotPreferences {
     public static final SN_DoublePreference climberMotorSpeed = new SN_DoublePreference("climberMotorSpeed", 0.5);
     public static final SN_DoublePreference climberMaxEncoderCount = new SN_DoublePreference("climberMaxEncoderCount",
         200000);
+
+    // Climbing Up/Down Positions
+    public static final SN_DoublePreference climberUpPosition = new SN_DoublePreference("climberUpPosition", 32555);
+    public static final SN_DoublePreference climberDownPosition = new SN_DoublePreference("climberDownPosition", 0);
   }
 }

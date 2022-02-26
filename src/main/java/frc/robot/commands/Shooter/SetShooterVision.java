@@ -2,45 +2,43 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Climber;
+package frc.robot.commands.Shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Vision;
 
-public class Climb extends CommandBase {
-  Climber climber;
+public class SetShooterVision extends CommandBase {
+  Shooter shooter;
+  Vision vision;
 
-  /** Creates a new Climb. */
-  public Climb(Climber sub_climber) {
+  double goalRPM;
+
+  /** Creates a new SetShooterVision. */
+  public SetShooterVision(Vision sub_vision, Shooter sub_shooter) {
+    shooter = sub_shooter;
+    vision = sub_vision;
     // Use addRequirements() here to declare subsystem dependencies.
-    climber = sub_climber;
-    addRequirements(climber);
+    addRequirements(shooter);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // Climber brake disengages when we press the button assigned to the climber
-    climber.unlockClimber();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Climber Speed is set depending joystick input
-    double speed = RobotContainer.coDriverStick.getLeftStickY();
-
-    climber.setClimberSpeed(speed);
+    // math here for finding the thing
+    goalRPM = (vision.limelight.getOffsetY());
+    shooter.setShooterRPM(goalRPM);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // Stops Climber when joystick button is released and applies brake
-    climber.setClimberSpeed(0);
-    climber.lockClimber();
-
+    shooter.setShooterSpeed(0);
   }
 
   // Returns true when the command should end.

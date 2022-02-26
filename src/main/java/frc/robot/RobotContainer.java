@@ -15,6 +15,7 @@ import frc.robot.commands.Hood.*;
 import frc.robot.commands.Turret.*;
 import frc.robot.commands.Intake.*;
 import frc.robot.commands.Shooter.*;
+import frc.robot.commands.Transfer.*;
 import frc.robot.commands.Climber.*;
 import frc.robot.subsystems.*;
 
@@ -47,7 +48,6 @@ public class RobotContainer {
   // Drivetrain Commands
   private final Drive com_drive = new Drive(sub_drivetrain);
 
-
   // Hood Commands
   private final ShallowHood com_shallowHood = new ShallowHood(sub_hood);
   private final SteepenHood com_steepenHood = new SteepenHood(sub_hood);
@@ -74,6 +74,7 @@ public class RobotContainer {
   // Shooter Commands
   private final PushCargoToShooter com_pushCargoToShooter = new PushCargoToShooter(sub_shooter, sub_transfer);
   private final SpinFlywheel com_spinFlywheel = new SpinFlywheel(sub_shooter);
+
   // Transfer Commands
 
   // Intake Commands
@@ -85,8 +86,9 @@ public class RobotContainer {
   // Vision Commands
 
   // Climber Commands
-
   private final Climb com_climb = new Climb(sub_climber);
+  private final ClimbNextRung com_ClimbNextRung = new ClimbNextRung(sub_climber);
+  private final ResetClimber com_ResetClimber = new ResetClimber(sub_climber);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -118,6 +120,8 @@ public class RobotContainer {
 
     coDriverStick.btn_LStick.whileHeld(com_climb);
 
+    coDriverStick.POV_East.whenPressed(com_ResetClimber);
+    coDriverStick.btn_RBump.whenPressed(com_ClimbNextRung);
   }
 
   /**
