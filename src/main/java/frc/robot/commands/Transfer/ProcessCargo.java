@@ -2,97 +2,63 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Intake;
-
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Transfer;
-import frc.robot.subsystems.Transfer.TransferState;
-
-import static frc.robot.RobotPreferences.IntakePrefs.*;
-import static frc.robot.RobotPreferences.TransferPrefs.*;
-import static frc.robot.RobotPreferences.*;
+package frc.robot.commands.Transfer;
 
 import com.frcteam3255.preferences.SN_DoublePreference;
 
-public class CollectCargo extends CommandBase {
-  Intake intake;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Transfer;
+import frc.robot.subsystems.Transfer.TransferState;
+
+import static frc.robot.RobotPreferences.*;
+import static frc.robot.RobotPreferences.TransferPrefs.*;
+
+public class ProcessCargo extends CommandBase {
   Transfer transfer;
 
-  int intakeRejectLatch;
-  int entranceRejectLatch;
-
-  SN_DoublePreference outputIntakeSpeed;
   SN_DoublePreference outputEntranceSpeed;
   SN_DoublePreference outputBottomBeltSpeed;
   SN_DoublePreference outputTopBeltSpeed;
 
   boolean stateOverride;
 
-  /** Creates a new CollectBall. */
-  public CollectCargo(Intake sub_intake, Transfer sub_transfer) {
-    intake = sub_intake;
+  /** Creates a new ProcessCargo. */
+  public ProcessCargo(Transfer sub_transfer) {
     transfer = sub_transfer;
-
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(intake);
+    addRequirements();
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intake.deployIntake();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if (!transfer.isTopBallCollected() && !transfer.isBottomBallCollected()) {
-      outputIntakeSpeed = intakeCollectSpeed;
       outputEntranceSpeed = transferEntranceSpeed;
       outputBottomBeltSpeed = transferBeltSpeed;
       outputTopBeltSpeed = transferBeltSpeed;
     }
 
     if (!transfer.isTopBallCollected() && transfer.isBottomBallCollected()) {
-      outputIntakeSpeed = intakeCollectSpeed;
       outputEntranceSpeed = transferEntranceSpeed;
       outputBottomBeltSpeed = transferBeltSpeed;
       outputTopBeltSpeed = transferBeltSpeed;
     }
 
     if (transfer.isTopBallCollected() && !transfer.isBottomBallCollected()) {
-      outputIntakeSpeed = intakeCollectSpeed;
       outputEntranceSpeed = transferEntranceSpeed;
       outputTopBeltSpeed = zeroDoublePref;
       outputBottomBeltSpeed = transferBeltSpeed;
     }
 
     if (transfer.isTopBallCollected() && transfer.isBottomBallCollected()) {
-      outputIntakeSpeed = zeroDoublePref;
       outputEntranceSpeed = zeroDoublePref;
       outputBottomBeltSpeed = zeroDoublePref;
       outputTopBeltSpeed = zeroDoublePref;
-    }
-
-    if (intake.isProximity()) {
-      if (intake.ballColorMatchesAlliance()) {
-        intakeRejectLatch -= transferRejectLatchTimeLoops.getValue();
-        entranceRejectLatch = 0;
-      } else {
-        intakeRejectLatch = intakeRejectLatchTimeLoops.getValue();
-        entranceRejectLatch = transferRejectLatchTimeLoops.getValue();
-      }
-    }
-
-    if (intakeRejectLatch > 0) {
-      outputIntakeSpeed = intakeRejectSpeed;
-      intakeRejectLatch--;
-    }
-
-    if (entranceRejectLatch > 0) {
-      outputEntranceSpeed = transferEntranceRejectSpeed;
-      entranceRejectLatch--;
     }
 
     switch (transfer.getTransferState()) {
@@ -113,14 +79,11 @@ public class CollectCargo extends CommandBase {
       transfer.setBottomBeltMotorSpeed(outputBottomBeltSpeed);
       transfer.setTopBeltMotorSpeed(outputTopBeltSpeed);
     }
-
-    intake.setIntakeMotorSpeed(outputIntakeSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.setIntakeMotorSpeed(zeroDoublePref);
     transfer.setEntranceBeltMotorSpeed(zeroDoublePref);
     transfer.setBottomBeltMotorSpeed(zeroDoublePref);
     transfer.setTopBeltMotorSpeed(zeroDoublePref);

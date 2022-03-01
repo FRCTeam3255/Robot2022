@@ -8,12 +8,14 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
+import com.frcteam3255.preferences.SN_DoublePreference;
 import com.frcteam3255.utils.SN_Math;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.RobotPreferences;
+import static frc.robot.RobotPreferences.ShooterPrefs.*;
 
 public class Shooter extends SubsystemBase {
 
@@ -22,6 +24,8 @@ public class Shooter extends SubsystemBase {
   private TalonFX followMotor;
 
   private TalonFXConfiguration config = new TalonFXConfiguration();
+
+  double goalRPM;
 
   /**
    * Creates new shooter
@@ -33,6 +37,8 @@ public class Shooter extends SubsystemBase {
     config = new TalonFXConfiguration();
 
     configure();
+
+    goalRPM = 0;
   }
 
   /**
@@ -114,6 +120,40 @@ public class Shooter extends SubsystemBase {
    */
   private double getShooterVelocity() {
     return leadMotor.getSelectedSensorVelocity();
+  }
+
+  /**
+   * Sets the Goal RPM using primitive variable
+   * 
+   * @param a_rpm Desired Goal RPM
+   */
+  public void setGoalRPMPrimitive(double a_rpm) {
+    goalRPM = a_rpm;
+  }
+
+  /**
+   * Sets the Goal RPM
+   * 
+   * @param a_rpm Desired Goal RPM
+   */
+  public void setGoalRPM(SN_DoublePreference a_rpm) {
+    goalRPM = a_rpm.getValue();
+  }
+
+  /**
+   * @return Previously Set Goal RPM
+   */
+  public double getGoalRPM() {
+    return goalRPM;
+  }
+
+  /**
+   * 
+   * @return True if the Shooter RPM error is within the acceptable range to
+   *         shoot.
+   */
+  public boolean isErrorAcceptable() {
+    return (getShooterRPM() - getGoalRPM()) < shooterAcceptableErrorRPM.getValue();
   }
 
   @Override
