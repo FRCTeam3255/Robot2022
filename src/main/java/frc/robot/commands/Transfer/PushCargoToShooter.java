@@ -10,7 +10,6 @@ import static frc.robot.RobotPreferences.TransferPrefs.*;
 
 import com.frcteam3255.preferences.SN_DoublePreference;
 
-import static frc.robot.RobotPreferences.ShooterPrefs.*;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Transfer;
 import frc.robot.subsystems.Transfer.TransferState;
