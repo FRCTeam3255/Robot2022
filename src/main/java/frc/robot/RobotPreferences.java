@@ -116,6 +116,9 @@ public final class RobotPreferences {
     public final static SN_IntPreference transferRejectLatchTimeLoops = new SN_IntPreference(
         "transferRejectLatchTimeLoops", 25);
 
+    // Transfer ramping
+    public final static SN_DoublePreference transferRampTime = new SN_DoublePreference("transferRampTime", 0.75);
+
   }
 
   public static final class IntakePrefs {
