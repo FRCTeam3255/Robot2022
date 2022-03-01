@@ -16,6 +16,7 @@ import frc.robot.commands.Turret.*;
 import frc.robot.commands.Intake.*;
 import frc.robot.commands.Shooter.*;
 import frc.robot.commands.Transfer.*;
+import frc.robot.commands.ConfigureSubsystems;
 import frc.robot.commands.Climber.*;
 import frc.robot.subsystems.*;
 
@@ -45,6 +46,11 @@ public class RobotContainer {
   private final NavX sub_navX = new NavX();
   private final Vision sub_vision = new Vision();
 
+  // Commands for Multiple Subsystems
+  private final ConfigureSubsystems com_configureSubsystems = new ConfigureSubsystems(sub_climber, sub_drivetrain,
+      sub_intake, sub_shooter,
+      sub_transfer, sub_turret);
+
   // Drivetrain Commands
   private final Drive com_drive = new Drive(sub_drivetrain);
 
@@ -73,7 +79,9 @@ public class RobotContainer {
 
   // Shooter Commands
   private final PushCargoToShooter com_pushCargoToShooter = new PushCargoToShooter(sub_shooter, sub_transfer);
-  private final SpinFlywheel com_spinFlywheel = new SpinFlywheel(sub_shooter);
+  private final SpinFlywheelVelocity com_spinFlywheel = new SpinFlywheelVelocity(sub_shooter);
+  private final SpinFlywheelPercentOutput com_FlywheelPercentOutput = new SpinFlywheelPercentOutput(
+      sub_shooter);
 
   // Transfer Commands
 
@@ -121,6 +129,9 @@ public class RobotContainer {
     coDriverStick.btn_LStick.whileHeld(com_climb);
 
     coDriverStick.POV_East.whenPressed(com_ResetClimber);
+    coDriverStick.POV_North.whenPressed(com_shallowHood);
+    coDriverStick.POV_South.whenPressed(com_steepenHood);
+
     coDriverStick.btn_RBump.whenPressed(com_ClimbNextRung);
   }
 
@@ -128,6 +139,7 @@ public class RobotContainer {
    * Use this method to define your dashboard buttons
    */
   private void configureDashboardButtons() {
+    // Reset Encoders
     SmartDashboard.putData("Reset Climber Encoders",
         new InstantCommand(sub_climber::resetClimberEncoderCount, sub_climber));
     SmartDashboard.putData("Reset Drivetrain Encoders",
@@ -141,9 +153,35 @@ public class RobotContainer {
         new InstantCommand(sub_shooter::resetShooterEncoderCounts, sub_shooter));
     SmartDashboard.putData("Reset NavX Heading",
         new InstantCommand(sub_navX::resetHeading, sub_navX));
+
+    // Calibration
     SmartDashboard.putData("Calibrate NavX",
         new InstantCommand(sub_navX::calibrate, sub_navX));
 
+    // Configure Resets (Each Subsystem & All Subsystems at once)
+    SmartDashboard.putData("Configure Climber",
+        new InstantCommand(sub_climber::configure, sub_climber));
+
+    SmartDashboard.putData("Configure Drivetrain",
+        new InstantCommand(sub_drivetrain::configure, sub_drivetrain));
+
+    SmartDashboard.putData("Configure Intake",
+        new InstantCommand(sub_intake::configure, sub_intake));
+
+    SmartDashboard.putData("Configure Shooter",
+        new InstantCommand(sub_shooter::configure, sub_shooter));
+
+    SmartDashboard.putData("Configure Transfer",
+        new InstantCommand(sub_transfer::configure, sub_shooter));
+
+    SmartDashboard.putData("Configure Turret",
+        new InstantCommand(sub_turret::configure, sub_turret));
+    // The hood is not configured since its pretty hard to configure a solenoid
+    // The NanX and the Vision subsystems are also not featured here since I have no
+    // clue how they work B)
+
+    SmartDashboard.putData("Configure All Subsystems", new ConfigureSubsystems(sub_climber, sub_drivetrain,
+        sub_intake, sub_shooter, sub_transfer, sub_turret));
   }
 
   /**
