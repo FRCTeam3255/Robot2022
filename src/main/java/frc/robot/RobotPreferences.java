@@ -48,6 +48,9 @@ public final class RobotPreferences {
     // 978 counts per inch * 12 = 11734 counts per foot
     public static final SN_IntPreference driveEncoderCountsPerFoot = new SN_IntPreference(
         "driveEncoderCountsPerFoot", 11734);
+
+    public static final SN_IntPreference motionProfileMinBufferedPoints = new SN_IntPreference(
+        "motionProfileMinBufferedPoints", 10);
   }
 
   public static final class HoodPrefs {
@@ -90,6 +93,10 @@ public final class RobotPreferences {
 
   public static final class TransferPrefs {
     public final static SN_DoublePreference transferSpeed = new SN_DoublePreference("transferSpeed", 0.80);
+    // this one is time in loops. roborio runs at 50hz, so a loop is 20ms. 25 loops
+    // is 20*25ms to 500ms
+    public final static SN_IntPreference transferRejectLatchTimeLoops = new SN_IntPreference(
+        "transferRejectLatchTimeLoops", 25);
 
   }
 
