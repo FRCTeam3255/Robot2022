@@ -4,16 +4,11 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-
-import java.sql.Driver;
-
 import com.frcteam3255.joystick.SN_DualActionStick;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandGroupBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.Drivetrain.*;
 import frc.robot.commands.Hood.*;

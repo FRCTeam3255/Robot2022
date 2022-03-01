@@ -4,8 +4,6 @@
 
 package frc.robot.subsystems;
 
-import java.util.function.LongToDoubleFunction;
-
 import com.ctre.phoenix.motion.BufferedTrajectoryPointStream;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
