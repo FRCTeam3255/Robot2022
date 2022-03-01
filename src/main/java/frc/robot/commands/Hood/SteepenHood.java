@@ -13,9 +13,11 @@ public class SteepenHood extends InstantCommand {
 
   /** Creates a new ShallowHood. */
   public SteepenHood(Hood sub_hood) {
-    addCommands(new InstantCommand(sub_hood::steepenHood, sub_hood));
+    hood = sub_hood;
   }
 
-  private void addCommands(InstantCommand instantCommand) {
+  @Override
+  public void initialize() {
+    hood.steepenHood();
   }
 }

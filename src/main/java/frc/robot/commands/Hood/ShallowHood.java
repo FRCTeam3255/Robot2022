@@ -13,9 +13,11 @@ public class ShallowHood extends InstantCommand {
 
   /** Creates a new ShallowHood. */
   public ShallowHood(Hood sub_hood) {
-    addCommands(new InstantCommand(sub_hood::shallowHood, sub_hood));
+    hood = sub_hood;
   }
 
-  private void addCommands(InstantCommand instantCommand) {
+  @Override
+  public void initialize() {
+    hood.shallowHood();
   }
 }
