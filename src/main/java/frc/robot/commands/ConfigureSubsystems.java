@@ -4,11 +4,7 @@
 
 package frc.robot.commands;
 
-import com.frcteam3255.preferences.SN_BooleanPreference;
-import com.frcteam3255.utils.SN_Debug;
-
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.RobotPreferences.DrivetrainPrefs;
 import frc.robot.subsystems.*;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more

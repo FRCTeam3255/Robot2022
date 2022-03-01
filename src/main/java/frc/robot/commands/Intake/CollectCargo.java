@@ -34,7 +34,7 @@ public class CollectCargo extends CommandBase {
   public void execute() {
     // Reject ball command
     if (intake.ballColorMatchesAlliance() == false) {
-      // // Reverse Motors
+      // Reverse Motors
       intake.setIntakeMotorSpeed(RobotPreferences.IntakePrefs.rejectSpeed.getValue());
     } else {
 

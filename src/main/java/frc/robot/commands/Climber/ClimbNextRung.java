@@ -16,7 +16,6 @@ import frc.robot.subsystems.Climber;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ClimbNextRung extends SequentialCommandGroup {
-
   /** Creates a new ClimbNextRung. */
   public ClimbNextRung(Climber sub_climber) {
     // Add your commands in the addCommands() call, e.g.
