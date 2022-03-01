@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 import frc.robot.RobotPreferences;
 
-public class setSpinFlywheelPercentOutput extends CommandBase {
+public class SpinFlywheelPercentOutput extends CommandBase {
   /** Creates a new setSpinFlywheelSpeed. */
   // Initializes Shooter Variables
   Shooter shooter;
 
-  public setSpinFlywheelPercentOutput(Shooter sub_shooter) {
+  public SpinFlywheelPercentOutput(Shooter sub_shooter) {
     // Use addRequirements() here to declare subsystem dependencies.
     shooter = sub_shooter;
     addRequirements(shooter);
