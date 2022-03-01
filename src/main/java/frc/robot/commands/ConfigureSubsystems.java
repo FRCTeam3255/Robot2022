@@ -8,7 +8,7 @@ import com.frcteam3255.preferences.SN_BooleanPreference;
 import com.frcteam3255.utils.SN_Debug;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-
+import frc.robot.RobotPreferences.DrivetrainPrefs;
 import frc.robot.subsystems.*;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -17,28 +17,34 @@ import frc.robot.subsystems.*;
 public class ConfigureSubsystems extends InstantCommand {
   /** Creates a new ConfigureSubsystems. */
 
-  SN_Debug logDebug = new SN_Debug("Reset Configs");
+  Climber climber;
+  Drivetrain drivetrain;
+  Intake intake;
+  Shooter shooter;
+  Transfer transfer;
+  Turret turret;
 
-  public ConfigureSubsystems(Climber sub_climber, Drivetrain sub_drivetrain, Intake sub_intake, Shooter sub_shooter,
-      Transfer sub_transfer, Turret sub_turret) {
+  public ConfigureSubsystems(Climber a_climber, Drivetrain a_drivetrain, Intake a_intake, Shooter a_shooter,
+      Transfer a_transfer, Turret a_turret) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
-    logDebug.disableMessages(new SN_BooleanPreference("Disable Messages:", false));
+    climber = a_climber;
+    drivetrain = a_drivetrain;
+    intake = a_intake;
+    shooter = a_shooter;
+    transfer = a_transfer;
+    turret = a_turret;
+  }
 
-    // The hood is not configured since its pretty hard to configure a solenoid
-    // The NanX and the Vision subsystems are also not featured here since I have no
-    // clue how they work B)
-    sub_climber.configure();
-    sub_drivetrain.configure();
-    sub_intake.configure();
-    sub_shooter.configure();
-    sub_transfer.configure();
-    sub_turret.configure();
-    for (int i = 0; i < 100; i++) {
-      logDebug.printDebug("TASK COMPLETE!", "YOUR SUFFERING IS OVER!");
-    }
+  @Override
+  public void initialize() {
+
+    climber.configure();
+    drivetrain.configure();
+    intake.configure();
+    shooter.configure();
+    transfer.configure();
+    turret.configure();
   }
 }
-
-// TODO: Test logging BEFORE configuring - Ask Ian if need help
