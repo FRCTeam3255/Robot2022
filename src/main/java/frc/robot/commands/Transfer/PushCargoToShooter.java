@@ -6,10 +6,10 @@ package frc.robot.commands.Transfer;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import static frc.robot.RobotPreferences.*;
-import static frc.robot.RobotPreferences.TransferPrefs.*;
 
 import com.frcteam3255.preferences.SN_DoublePreference;
 
+import frc.robot.RobotPreferences;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Transfer;
 import frc.robot.subsystems.Transfer.TransferState;
@@ -46,32 +46,32 @@ public class PushCargoToShooter extends CommandBase {
 
     if (!shooter.isErrorAcceptable()) {
       if (!transfer.isTopBallCollected() && !transfer.isBottomBallCollected()) {
-        outputEntranceSpeed = transferEntranceSpeed;
-        outputBottomBeltSpeed = transferBeltSpeed;
-        outputTopBeltSpeed = transferBeltSpeed;
+        outputEntranceSpeed = TransferPrefs.transferEntranceSpeed;
+        outputBottomBeltSpeed = TransferPrefs.transferBeltSpeed;
+        outputTopBeltSpeed = TransferPrefs.transferBeltSpeed;
       }
 
       if (!transfer.isTopBallCollected() && transfer.isBottomBallCollected()) {
-        outputEntranceSpeed = transferEntranceSpeed;
-        outputBottomBeltSpeed = transferBeltSpeed;
-        outputTopBeltSpeed = transferBeltSpeed;
+        outputEntranceSpeed = TransferPrefs.transferEntranceSpeed;
+        outputBottomBeltSpeed = TransferPrefs.transferBeltSpeed;
+        outputTopBeltSpeed = TransferPrefs.transferBeltSpeed;
       }
 
       if (transfer.isTopBallCollected() && !transfer.isBottomBallCollected()) {
-        outputEntranceSpeed = transferEntranceSpeed;
-        outputTopBeltSpeed = zeroDoublePref;
-        outputBottomBeltSpeed = transferBeltSpeed;
+        outputEntranceSpeed = TransferPrefs.transferEntranceSpeed;
+        outputTopBeltSpeed = RobotPreferences.zeroDoublePref;
+        outputBottomBeltSpeed = TransferPrefs.transferBeltSpeed;
       }
 
       if (transfer.isTopBallCollected() && transfer.isBottomBallCollected()) {
-        outputEntranceSpeed = zeroDoublePref;
-        outputBottomBeltSpeed = zeroDoublePref;
-        outputTopBeltSpeed = zeroDoublePref;
+        outputEntranceSpeed = RobotPreferences.zeroDoublePref;
+        outputBottomBeltSpeed = RobotPreferences.zeroDoublePref;
+        outputTopBeltSpeed = RobotPreferences.zeroDoublePref;
       }
     } else {
-      outputEntranceSpeed = transferEntranceSpeed;
-      outputBottomBeltSpeed = transferBeltSpeed;
-      outputTopBeltSpeed = transferBeltSpeed;
+      outputEntranceSpeed = TransferPrefs.transferEntranceSpeed;
+      outputBottomBeltSpeed = TransferPrefs.transferBeltSpeed;
+      outputTopBeltSpeed = TransferPrefs.transferBeltSpeed;
     }
 
     transfer.setEntranceBeltMotorSpeed(outputEntranceSpeed);
@@ -82,8 +82,8 @@ public class PushCargoToShooter extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    transfer.setTopBeltMotorSpeed(zeroDoublePref);
-    transfer.setBottomBeltMotorSpeed(zeroDoublePref);
+    transfer.setTopBeltMotorSpeed(RobotPreferences.zeroDoublePref);
+    transfer.setBottomBeltMotorSpeed(RobotPreferences.zeroDoublePref);
     transfer.setTransferState(TransferState.OFF);
 
   }
