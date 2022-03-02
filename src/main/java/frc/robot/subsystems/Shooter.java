@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.RobotPreferences;
-import static frc.robot.RobotPreferences.ShooterPrefs.*;
+import static frc.robot.RobotPreferences.*;
 
 public class Shooter extends SubsystemBase {
 
@@ -153,7 +153,7 @@ public class Shooter extends SubsystemBase {
    *         shoot.
    */
   public boolean isErrorAcceptable() {
-    return (getShooterRPM() - getGoalRPM()) < shooterAcceptableErrorRPM.getValue();
+    return (getShooterRPM() - getGoalRPM()) < ShooterPrefs.shooterAcceptableErrorRPM.getValue();
   }
 
   @Override
