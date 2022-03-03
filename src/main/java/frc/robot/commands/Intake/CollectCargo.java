@@ -46,29 +46,16 @@ public class CollectCargo extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (!transfer.isTopBallCollected() && !transfer.isBottomBallCollected()) {
-      outputIntakeSpeed = IntakePrefs.intakeCollectSpeed;
-      outputEntranceSpeed = TransferPrefs.transferEntranceSpeed;
-      outputBottomBeltSpeed = TransferPrefs.transferBeltSpeed;
-      outputTopBeltSpeed = TransferPrefs.transferBeltSpeed;
-    }
 
-    if (!transfer.isTopBallCollected() && transfer.isBottomBallCollected()) {
-      outputIntakeSpeed = IntakePrefs.intakeCollectSpeed;
-      outputEntranceSpeed = TransferPrefs.transferEntranceSpeed;
-      outputBottomBeltSpeed = TransferPrefs.transferBeltSpeed;
-      outputTopBeltSpeed = TransferPrefs.transferBeltSpeed;
-    }
+    outputEntranceSpeed = TransferPrefs.transferEntranceSpeed;
+    outputBottomBeltSpeed = TransferPrefs.transferBeltSpeed;
+    outputTopBeltSpeed = TransferPrefs.transferBeltSpeed;
 
-    if (transfer.isTopBallCollected() && !transfer.isBottomBallCollected()) {
-      outputIntakeSpeed = IntakePrefs.intakeCollectSpeed;
-      outputEntranceSpeed = TransferPrefs.transferEntranceSpeed;
+    if (transfer.isTopBallCollected()) {
       outputTopBeltSpeed = RobotPreferences.zeroDoublePref;
-      outputBottomBeltSpeed = TransferPrefs.transferBeltSpeed;
     }
 
     if (transfer.isTopBallCollected() && transfer.isBottomBallCollected()) {
-      outputIntakeSpeed = RobotPreferences.zeroDoublePref;
       outputEntranceSpeed = RobotPreferences.zeroDoublePref;
       outputBottomBeltSpeed = RobotPreferences.zeroDoublePref;
       outputTopBeltSpeed = RobotPreferences.zeroDoublePref;
