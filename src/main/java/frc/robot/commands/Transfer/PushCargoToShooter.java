@@ -57,9 +57,10 @@ public class PushCargoToShooter extends CommandBase {
       outputBottomBeltSpeed = RobotPreferences.zeroDoublePref;
       outputTopBeltSpeed = RobotPreferences.zeroDoublePref;
 
-    transfer.setEntranceBeltMotorSpeed(outputEntranceSpeed);
-    transfer.setBottomBeltMotorSpeed(outputBottomBeltSpeed);
-    transfer.setTopBeltMotorSpeed(outputTopBeltSpeed);
+      transfer.setEntranceBeltMotorSpeed(outputEntranceSpeed);
+      transfer.setBottomBeltMotorSpeed(outputBottomBeltSpeed);
+      transfer.setTopBeltMotorSpeed(outputTopBeltSpeed);
+    }
   }
 
   // Called once the command ends or is interrupted.
