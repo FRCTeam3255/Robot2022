@@ -43,6 +43,7 @@ public class PushCargoToShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
     outputEntranceSpeed = TransferPrefs.transferEntranceSpeed;
     outputBottomBeltSpeed = TransferPrefs.transferBeltSpeed;
     outputTopBeltSpeed = TransferPrefs.transferBeltSpeed;
@@ -55,7 +56,6 @@ public class PushCargoToShooter extends CommandBase {
       outputEntranceSpeed = RobotPreferences.zeroDoublePref;
       outputBottomBeltSpeed = RobotPreferences.zeroDoublePref;
       outputTopBeltSpeed = RobotPreferences.zeroDoublePref;
-    }
 
     transfer.setEntranceBeltMotorSpeed(outputEntranceSpeed);
     transfer.setBottomBeltMotorSpeed(outputBottomBeltSpeed);
