@@ -51,6 +51,7 @@ public final class RobotMap {
 
   public final class IntakeMap {
     public static final int INTAKE_MOTOR_CAN = 30;
+
     public static final int INTAKE_SOLENOID_PCM_A = 6;
     public static final int INTAKE_SOLENOID_PCM_B = 7;
   }
