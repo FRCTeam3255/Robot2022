@@ -43,35 +43,18 @@ public class PushCargoToShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    outputEntranceSpeed = TransferPrefs.transferEntranceSpeed;
+    outputBottomBeltSpeed = TransferPrefs.transferBeltSpeed;
+    outputTopBeltSpeed = TransferPrefs.transferBeltSpeed;
 
-    if (!shooter.isErrorAcceptable()) {
-      if (!transfer.isTopBallCollected() && !transfer.isBottomBallCollected()) {
-        outputEntranceSpeed = TransferPrefs.transferEntranceSpeed;
-        outputBottomBeltSpeed = TransferPrefs.transferBeltSpeed;
-        outputTopBeltSpeed = TransferPrefs.transferBeltSpeed;
-      }
+    if (transfer.isTopBallCollected()) {
+      outputTopBeltSpeed = RobotPreferences.zeroDoublePref;
+    }
 
-      if (!transfer.isTopBallCollected() && transfer.isBottomBallCollected()) {
-        outputEntranceSpeed = TransferPrefs.transferEntranceSpeed;
-        outputBottomBeltSpeed = TransferPrefs.transferBeltSpeed;
-        outputTopBeltSpeed = TransferPrefs.transferBeltSpeed;
-      }
-
-      if (transfer.isTopBallCollected() && !transfer.isBottomBallCollected()) {
-        outputEntranceSpeed = TransferPrefs.transferEntranceSpeed;
-        outputTopBeltSpeed = RobotPreferences.zeroDoublePref;
-        outputBottomBeltSpeed = TransferPrefs.transferBeltSpeed;
-      }
-
-      if (transfer.isTopBallCollected() && transfer.isBottomBallCollected()) {
-        outputEntranceSpeed = RobotPreferences.zeroDoublePref;
-        outputBottomBeltSpeed = RobotPreferences.zeroDoublePref;
-        outputTopBeltSpeed = RobotPreferences.zeroDoublePref;
-      }
-    } else {
-      outputEntranceSpeed = TransferPrefs.transferEntranceSpeed;
-      outputBottomBeltSpeed = TransferPrefs.transferBeltSpeed;
-      outputTopBeltSpeed = TransferPrefs.transferBeltSpeed;
+    if (transfer.isTopBallCollected() && transfer.isBottomBallCollected()) {
+      outputEntranceSpeed = RobotPreferences.zeroDoublePref;
+      outputBottomBeltSpeed = RobotPreferences.zeroDoublePref;
+      outputTopBeltSpeed = RobotPreferences.zeroDoublePref;
     }
 
     transfer.setEntranceBeltMotorSpeed(outputEntranceSpeed);
@@ -82,9 +65,9 @@ public class PushCargoToShooter extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    transfer.setTopBeltMotorSpeed(RobotPreferences.zeroDoublePref);
-    transfer.setBottomBeltMotorSpeed(RobotPreferences.zeroDoublePref);
     transfer.setEntranceBeltMotorSpeed(RobotPreferences.zeroDoublePref);
+    transfer.setBottomBeltMotorSpeed(RobotPreferences.zeroDoublePref);
+    transfer.setTopBeltMotorSpeed(RobotPreferences.zeroDoublePref);
     transfer.setTransferState(TransferState.OFF);
 
   }
