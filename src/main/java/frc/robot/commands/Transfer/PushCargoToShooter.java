@@ -84,6 +84,7 @@ public class PushCargoToShooter extends CommandBase {
   public void end(boolean interrupted) {
     transfer.setTopBeltMotorSpeed(RobotPreferences.zeroDoublePref);
     transfer.setBottomBeltMotorSpeed(RobotPreferences.zeroDoublePref);
+    transfer.setEntranceBeltMotorSpeed(RobotPreferences.zeroDoublePref);
     transfer.setTransferState(TransferState.OFF);
 
   }
