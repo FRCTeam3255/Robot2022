@@ -18,6 +18,16 @@ public class CollectCargo extends CommandBase {
   Intake intake;
   Transfer transfer;
 
+  // When a wrong colored ball comes into the robot, you can't just run in reverse
+  // while you see the ball, because as soon as you don't see a ball anymore you
+  // run the motor forward again and just recollect the same wrong colored ball.
+  // So what we do is when we see a wrong colored ball we remember it for enough
+  // time to make sure it's completely out of the robot. If we see a correct
+  // colored ball, we know that we don't want to spit it out, so we stop the
+  // entrance motor. But, the intake is further away from the color sensor, so the
+  // time it will take for the ball to actually exit the robot and not just the
+  // contact of the entrance, so we have a seperate, longer timer for the intake.
+
   int intakeRejectLatch;
   int entranceRejectLatch;
 
@@ -61,21 +71,33 @@ public class CollectCargo extends CommandBase {
       outputTopBeltSpeed = RobotPreferences.zeroDoublePref;
     }
 
+    // If there is a ball
     if (intake.isProximity()) {
+      // And it's the correct color
       if (intake.ballColorMatchesAlliance()) {
-        intakeRejectLatch -= TransferPrefs.transferRejectLatchTimeLoops.getValue();
+
+        // the entrance motor should go
         entranceRejectLatch = 0;
+
+        // but not the intake, since the incorrect color ball may still be there
+        intakeRejectLatch -= TransferPrefs.transferRejectLatchTimeLoops.getValue();
+
+        // but if it's the wrong color
       } else {
+
+        // the intake should go in reverse
         intakeRejectLatch = IntakePrefs.intakeRejectLatchTimeLoops.getValue();
+
+        // and the entrance motor
         entranceRejectLatch = TransferPrefs.transferRejectLatchTimeLoops.getValue();
       }
     }
 
+    // here we set the output speeds of the robot, and count down the timers
     if (intakeRejectLatch > 0) {
       outputIntakeSpeed = IntakePrefs.intakeRejectSpeed;
       intakeRejectLatch--;
     }
-
     if (entranceRejectLatch > 0) {
       outputEntranceSpeed = TransferPrefs.transferEntranceRejectSpeed;
       entranceRejectLatch--;
