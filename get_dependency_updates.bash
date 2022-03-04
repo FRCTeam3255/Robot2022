@@ -17,4 +17,5 @@ if [  -n "$outdated" ]; then
     exit 1
 else
     echo 'All dependencies up to date'
+    exit 0
 fi
