@@ -49,6 +49,23 @@ turn and drive forwards to 2
 drive backwards
 shoot
 
+Two ball auto path
+drive forwards to either 1 or 3
+shoot
+
+alt Two ball auto path
+drive forwards to 2
+shoot
+
+One ball + taxi auto
+shoot
+drive forwards
+
+One ball auto
+shoot
+
+taxi auto
+drive forwards
 
 Team 624 Six ball path:
 starts at fender close to 3
