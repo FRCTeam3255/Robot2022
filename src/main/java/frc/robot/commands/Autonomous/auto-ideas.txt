@@ -1,0 +1,48 @@
+PATHS REFER TO field_image_labeled.png
+INTAKE IS FRONT
+
+all paths start with robot placed with back up against fender close to 1 unless otherwise specified
+
+
+
+Five ball auto path:
+drive forwards to 1
+drive backwards
+shoot
+turn and drive forwards to 2
+shoot
+drive forwards to 4 and 5
+drive backwards
+shoot
+
+Four ball auto path:
+drive forwards to 2
+drive backwards
+shoot
+drive forwards to 4 and 5
+drive backwards
+shoot
+
+Three ball auto path:
+drive forwards to 1
+drive backwards
+shoot
+turn and drive forwards to 2
+drive backwards
+shoot
+
+
+Team 624 Six ball path:
+starts at fender close to 3
+drive forwards to 3
+shoot
+drive forwards to 4 and 5
+drive backwards
+shoot
+spin around 180
+drive forwards to 2 and 1
+shoot
+
+624 has swerve but no turret so we could maybe match this auto
+12.3 seconds in robot reveal
+https://youtu.be/UUrBm5_JU9w?t=62
