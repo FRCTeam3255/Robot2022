@@ -3,7 +3,17 @@ INTAKE IS FRONT
 
 all paths start with robot placed with back up against fender close to 1 unless otherwise specified
 
-
+Six ball auto path
+drive forwards to 1
+drive backwards
+shoot
+turn and drive forwards to 2
+shoot
+drive forwards to 4 and 5
+drive backwards towards 3
+shoot
+turn and drive forwards to 3
+shoot
 
 Five ball auto path:
 drive forwards to 1
@@ -20,6 +30,14 @@ drive forwards to 2
 drive backwards
 shoot
 drive forwards to 4 and 5
+drive backwards
+shoot
+
+alt Four ball auto path
+drive forward to 1
+drive backwards
+shoot
+turn and drive forward to 4 and 5
 drive backwards
 shoot
 
