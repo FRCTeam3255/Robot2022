@@ -2,11 +2,9 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Autonomous.AutoTwoCargoA;
+package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.Autonomous.SetHoodPosition;
-import frc.robot.commands.Autonomous.SetShooterRPM;
 import frc.robot.commands.Drivetrain.DriveMotionProfile;
 import frc.robot.commands.Intake.CollectCargo;
 import frc.robot.commands.Transfer.PushCargoToShooter;
@@ -22,7 +20,7 @@ import static frc.robot.RobotPreferences.AutoPrefs.TwoCargoA.*;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoTwoCargo extends SequentialCommandGroup {
+public class AutoTwoCargoA extends SequentialCommandGroup {
 
   Drivetrain drivetrain;
   Shooter shooter;
@@ -38,8 +36,8 @@ public class AutoTwoCargo extends SequentialCommandGroup {
   CollectCargo collectCargo;
   PushCargoToShooter shootBall;
 
-  /** Creates a new AutoTwoCargo. */
-  public AutoTwoCargo(Drivetrain sub_drivetrain, Shooter sub_shooter, Turret sub_turret, Hood sub_hood,
+  /** Creates a new AutoTwoCargoA. */
+  public AutoTwoCargoA(Drivetrain sub_drivetrain, Shooter sub_shooter, Turret sub_turret, Hood sub_hood,
       Transfer sub_transfer, Intake sub_intake, String a_leftPath, String a_rightPath) {
 
     drivetrain = sub_drivetrain;
@@ -59,9 +57,7 @@ public class AutoTwoCargo extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        parallel(driveToOneOrThree, setShooterRPM, setTurretPosition, setHoodPosition, collectCargo),
-        shootBall
-
-    );
+        parallel(driveToOneOrThree, collectCargo, setShooterRPM, setTurretPosition, setHoodPosition),
+        shootBall);
   }
 }

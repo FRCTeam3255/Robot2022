@@ -163,5 +163,20 @@ public final class RobotPreferences {
       public static final SN_DoublePreference auto1turretAngle = new SN_DoublePreference("auto1turretAngle", 0);
       public static final SN_BooleanPreference auto1hoodSteep = new SN_BooleanPreference("auto1hoodSteep", true);
     }
+
+    // auto2
+    public static final class FiveCargoA {
+      public static final SN_DoublePreference auto2shooterRPM1 = new SN_DoublePreference("auto2shooterRPM1", 3000);
+      public static final SN_DoublePreference auto2turretAngle1 = new SN_DoublePreference("auto2turretAngle1", 0);
+      public static final SN_BooleanPreference auto2hoodSteep1 = new SN_BooleanPreference("auto2hoodSteep1", true);
+
+      public static final SN_DoublePreference auto2shooterRPM2 = new SN_DoublePreference("auto2shooterRPM2", 3000);
+      public static final SN_DoublePreference auto2turretAngle2 = new SN_DoublePreference("auto2turretAngle2", 0);
+      public static final SN_BooleanPreference auto2hoodSteep2 = new SN_BooleanPreference("auto2hoodSteep2", true);
+
+      public static final SN_DoublePreference auto2shooterRPM3 = new SN_DoublePreference("auto2shooterRPM3", 3000);
+      public static final SN_DoublePreference auto2turretAngle3 = new SN_DoublePreference("auto2turretAngle3", 0);
+      public static final SN_BooleanPreference auto2hoodSteep3 = new SN_BooleanPreference("auto2hoodSteep3", true);
+    }
   }
 }
