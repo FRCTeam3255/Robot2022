@@ -112,7 +112,7 @@ public class Shooter extends SubsystemBase {
 
   public boolean isShooterUpToSpeed() {
     return ShooterPrefs.shooterAcceptableErrorRPM.getValue() > Math
-        .abs(SN_Math.RPMToVelocity(leadMotor.getClosedLoopError(), SN_Math.TALONFX_ENCODER_PULSES_PER_COUNT));
+        .abs(SN_Math.VelocityToRPM(leadMotor.getClosedLoopError(), SN_Math.TALONFX_ENCODER_PULSES_PER_COUNT));
 
     // return true if the acceptable error (in rpm) is greater than the actual error
     // (converted to rpm)
