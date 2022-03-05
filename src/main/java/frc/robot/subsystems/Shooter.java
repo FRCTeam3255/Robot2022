@@ -111,6 +111,16 @@ public class Shooter extends SubsystemBase {
     return leadMotor.getSelectedSensorVelocity();
   }
 
+  public boolean isShooterUpToSpeed() {
+    double closedLoopError = leadMotor.getClosedLoopError() * ShooterPrefs.shooterEncoderCountsPerDegrees.getValue();
+
+    boolean isShooterUpToSpeed = false;
+    if (closedLoopError >= ShooterPrefs.shooterTargetRPM.getValue()) {
+      isShooterUpToSpeed = true;
+    }
+    return isShooterUpToSpeed;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
