@@ -35,7 +35,10 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
+    # Runs a single command using the runners shell
+    - name: Get dependency list
+      run: ./gradlew dependencyUpdates -DoutputFormatter=json 
 
     # Runs a single command using the runners shell
-    - name: Check for dependency updates
+    - name: Check if dependencies are outdated
       run: bash ./get_dependency_updates.bash
