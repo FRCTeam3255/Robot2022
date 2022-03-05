@@ -51,6 +51,11 @@ public class RobotContainer {
       sub_intake, sub_shooter,
       sub_transfer, sub_turret);
 
+  // Climber Commands
+  private final Climb com_climb = new Climb(sub_climber);
+  private final ClimbNextRung com_ClimbNextRung = new ClimbNextRung(sub_climber);
+  private final ResetClimber com_ResetClimber = new ResetClimber(sub_climber);
+
   // Drivetrain Commands
   private final Drive com_drive = new Drive(sub_drivetrain);
 
@@ -58,12 +63,24 @@ public class RobotContainer {
   private final ShallowHood com_shallowHood = new ShallowHood(sub_hood);
   private final SteepenHood com_steepenHood = new SteepenHood(sub_hood);
 
+  // Intake Commands
+  private final CollectCargo com_collect = new CollectCargo(sub_intake,
+      sub_transfer);
+  private final RetractIntake com_retractIntake = new RetractIntake(sub_intake);
+  private final DeployIntake com_deployIntake = new DeployIntake(sub_intake);
+
   private final DriveMotionProfile com_driveTestPath = new DriveMotionProfile(sub_drivetrain,
       "testpath_left.csv", "testpath_right.csv");
   private final DriveMotionProfile com_drive2020Field = new DriveMotionProfile(sub_drivetrain,
       "full2020path_left.csv", "full2020path_right.csv");
   private final DriveMotionProfile com_driveHanger = new DriveMotionProfile(sub_drivetrain,
       "hanger_left.csv", "hanger_right.csv");
+
+  // Shooter Commands
+  private final PushCargoToShooter com_pushCargoToShooter = new PushCargoToShooter(sub_shooter, sub_transfer);
+  private final SpinFlywheelVelocity com_spinFlywheel = new SpinFlywheelVelocity(sub_shooter);
+  private final SpinFlywheelPercentOutput com_FlywheelPercentOutput = new SpinFlywheelPercentOutput(
+      sub_shooter);
 
   // Turret Commands
   private final MoveTurret com_moveTurret = new MoveTurret(sub_turret);
@@ -77,32 +94,16 @@ public class RobotContainer {
   private final VisionNavXAimTurret com_visionHoldAimTurret = new VisionNavXAimTurret(sub_turret, sub_vision,
       sub_navX);
 
-  // Shooter Commands
-  private final PushCargoToShooter com_pushCargoToShooter = new PushCargoToShooter(sub_shooter, sub_transfer);
-  private final SpinFlywheelVelocity com_spinFlywheel = new SpinFlywheelVelocity(sub_shooter);
-  private final SpinFlywheelPercentOutput com_FlywheelPercentOutput = new SpinFlywheelPercentOutput(
-      sub_shooter);
-
   // Transfer Commands
 
-  // Intake Commands
-  private final CollectCargo com_collect = new CollectCargo(sub_intake,
-      sub_transfer);
-  private final RetractIntake com_retractIntake = new RetractIntake(sub_intake);
-  private final DeployIntake com_deployIntake = new DeployIntake(sub_intake);
 
   // Vision Commands
 
-  // Climber Commands
-  private final Climb com_climb = new Climb(sub_climber);
-  private final ClimbNextRung com_ClimbNextRung = new ClimbNextRung(sub_climber);
-  private final ResetClimber com_ResetClimber = new ResetClimber(sub_climber);
+  
 
   /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() {
-    // Configure the button bindings
+   * The container f
+
     configureButtonBindings();
     configureDashboardButtons();
     sub_drivetrain.setDefaultCommand(com_drive);
