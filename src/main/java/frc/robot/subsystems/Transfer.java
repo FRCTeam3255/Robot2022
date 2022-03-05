@@ -104,11 +104,11 @@ public class Transfer extends SubsystemBase {
   }
 
   public boolean isTopBallCollected() {
-    return !transferTopRightLimitSwitch.get() || !transferTopLeftLimitSwitch.get();
+    return transferTopRightLimitSwitch.get() || transferTopLeftLimitSwitch.get();
   }
 
   public boolean isBottomBallCollected() {
-    return !transferBottomRightLimitSwitch.get() || !transferBottomLeftLimitSwitch.get();
+    return transferBottomRightLimitSwitch.get() || transferBottomLeftLimitSwitch.get();
   }
 
   @Override
