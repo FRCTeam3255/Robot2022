@@ -154,4 +154,14 @@ public final class RobotPreferences {
     public static final SN_DoublePreference climberUpPosition = new SN_DoublePreference("climberUpPosition", 32555);
     public static final SN_DoublePreference climberDownPosition = new SN_DoublePreference("climberDownPosition", 0);
   }
+
+  public static final class AutoPrefs {
+
+    // auto1
+    public static final class TwoCargoA {
+      public static final SN_DoublePreference auto1shooterRPM = new SN_DoublePreference("auto1shooterRPM", 3000);
+      public static final SN_DoublePreference auto1turretAngle = new SN_DoublePreference("auto1turretAngle", 0);
+      public static final SN_BooleanPreference auto1hoodSteep = new SN_BooleanPreference("auto1hoodSteep", true);
+    }
+  }
 }
