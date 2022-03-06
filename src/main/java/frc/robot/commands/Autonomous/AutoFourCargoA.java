@@ -15,12 +15,12 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Transfer;
 import frc.robot.subsystems.Turret;
-import static frc.robot.RobotPreferences.AutoPrefs.FiveCargoA.*;
+import static frc.robot.RobotPreferences.AutoPrefs.FourCargoA.*;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoFiveCargoA extends SequentialCommandGroup {
+public class AutoFourCargoA extends SequentialCommandGroup {
 
   Drivetrain drivetrain;
   Shooter shooter;
@@ -29,9 +29,8 @@ public class AutoFiveCargoA extends SequentialCommandGroup {
   Transfer transfer;
   Intake intake;
 
-  DriveMotionProfile driveForwardsToOne;
-  DriveMotionProfile driveBackwardsFromOne;
   DriveMotionProfile driveForwardsToTwo;
+  DriveMotionProfile driveBackwardsFromTwo;
   DriveMotionProfile driveForwardsToTerminal;
   DriveMotionProfile driveBackwardsFromTerminal;
 
@@ -43,20 +42,16 @@ public class AutoFiveCargoA extends SequentialCommandGroup {
   SetTurretPosition setTurretPosition2;
   SetHoodPosition setHoodPosition2;
 
-  SetShooterRPM setShooterRPM3;
-  SetTurretPosition setTurretPosition3;
-  SetHoodPosition setHoodPosition3;
-
   CollectCargo collectCargo;
   AutoPushCargoToShooter shootBall;
 
   /** Creates a new AutoTwoCargo. */
-  public AutoFiveCargoA(Drivetrain sub_drivetrain, Shooter sub_shooter, Turret sub_turret, Hood sub_hood,
-      Transfer sub_transfer, Intake sub_intake, String a_driveForwardsToOneLeft, String a_driveForwardsToOneRight,
-      String a_driveBackwardsFromOneLeft, String a_driveBackwardsFromOneRight, String a_driveForwardsToTwoLeft,
-      String a_driveForwardsToTwoRight, String a_driveForwardsToTerminalLeft,
-      String a_driveForwardsToTerminalRight, String a_driveBackwardsFromTerminalLeft,
-      String a_driveBackwardsFromTerminalRight) {
+  public AutoFourCargoA(Drivetrain sub_drivetrain, Shooter sub_shooter, Turret sub_turret, Hood sub_hood,
+      Transfer sub_transfer, Intake sub_intake,
+      String a_driveForwardsToTwoLeft, String a_driveForwardsToTwoRight,
+      String a_driveBackwardsFromTwoLeft, String a_driveBackwardsFromTwoRight,
+      String a_driveForwardsToTerminalLeft, String a_driveForwardsToTerminalRight,
+      String a_driveBackwardsFromTerminalLeft, String a_driveBackwardsFromTerminalRight) {
 
     drivetrain = sub_drivetrain;
     shooter = sub_shooter;
@@ -65,26 +60,21 @@ public class AutoFiveCargoA extends SequentialCommandGroup {
     transfer = sub_transfer;
     intake = sub_intake;
 
-    driveForwardsToOne = new DriveMotionProfile(drivetrain, a_driveForwardsToOneLeft, a_driveForwardsToOneRight);
-    driveBackwardsFromOne = new DriveMotionProfile(drivetrain, a_driveBackwardsFromOneLeft,
-        a_driveBackwardsFromOneRight);
     driveForwardsToTwo = new DriveMotionProfile(drivetrain, a_driveForwardsToTwoLeft, a_driveForwardsToTwoRight);
+    driveBackwardsFromTwo = new DriveMotionProfile(drivetrain, a_driveBackwardsFromTwoLeft,
+        a_driveBackwardsFromTwoRight);
     driveForwardsToTerminal = new DriveMotionProfile(drivetrain, a_driveForwardsToTerminalLeft,
         a_driveForwardsToTerminalRight);
     driveBackwardsFromTerminal = new DriveMotionProfile(drivetrain, a_driveBackwardsFromTerminalLeft,
         a_driveBackwardsFromTerminalRight);
 
-    setShooterRPM1 = new SetShooterRPM(shooter, auto2shooterRPM1);
-    setTurretPosition1 = new SetTurretPosition(turret, auto2turretAngle1);
-    setHoodPosition1 = new SetHoodPosition(hood, auto2hoodSteep1);
+    setShooterRPM1 = new SetShooterRPM(shooter, auto3shooterRPM1);
+    setTurretPosition1 = new SetTurretPosition(turret, auto3turretAngle1);
+    setHoodPosition1 = new SetHoodPosition(hood, auto3hoodSteep1);
 
-    setShooterRPM2 = new SetShooterRPM(shooter, auto2shooterRPM2);
-    setTurretPosition2 = new SetTurretPosition(turret, auto2turretAngle2);
-    setHoodPosition2 = new SetHoodPosition(hood, auto2hoodSteep2);
-
-    setShooterRPM3 = new SetShooterRPM(shooter, auto2shooterRPM3);
-    setTurretPosition3 = new SetTurretPosition(turret, auto2turretAngle3);
-    setHoodPosition3 = new SetHoodPosition(hood, auto2hoodSteep3);
+    setShooterRPM2 = new SetShooterRPM(shooter, auto3shooterRPM2);
+    setTurretPosition2 = new SetTurretPosition(turret, auto3turretAngle2);
+    setHoodPosition2 = new SetHoodPosition(hood, auto3hoodSteep2);
 
     collectCargo = new CollectCargo(intake, transfer);
     shootBall = new AutoPushCargoToShooter(shooter, transfer);
@@ -94,14 +84,10 @@ public class AutoFiveCargoA extends SequentialCommandGroup {
     addCommands(
         collectCargo.perpetually(),
         setShooterRPM1.perpetually(),
-        parallel(driveForwardsToOne, setTurretPosition1, setHoodPosition1),
-        driveBackwardsFromOne,
+        parallel(driveForwardsToTwo, setTurretPosition1, setHoodPosition1),
         shootBall,
         setShooterRPM2.perpetually(),
-        parallel(driveForwardsToTwo, setTurretPosition2, setHoodPosition2),
-        shootBall,
-        setShooterRPM3.perpetually(),
-        parallel(driveForwardsToTerminal, setTurretPosition3, setHoodPosition3),
+        parallel(driveForwardsToTerminal, setTurretPosition2, setHoodPosition2),
         driveBackwardsFromTerminal,
         shootBall);
   }

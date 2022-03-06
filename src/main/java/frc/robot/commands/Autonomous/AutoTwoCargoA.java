@@ -7,7 +7,7 @@ package frc.robot.commands.Autonomous;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Drivetrain.DriveMotionProfile;
 import frc.robot.commands.Intake.CollectCargo;
-import frc.robot.commands.Transfer.PushCargoToShooter;
+import frc.robot.commands.Transfer.AutoPushCargoToShooter;
 import frc.robot.commands.Turret.SetTurretPosition;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hood;
@@ -34,7 +34,7 @@ public class AutoTwoCargoA extends SequentialCommandGroup {
   SetTurretPosition setTurretPosition;
   SetHoodPosition setHoodPosition;
   CollectCargo collectCargo;
-  PushCargoToShooter shootBall;
+  AutoPushCargoToShooter shootBall;
 
   /** Creates a new AutoTwoCargoA. */
   public AutoTwoCargoA(Drivetrain sub_drivetrain, Shooter sub_shooter, Turret sub_turret, Hood sub_hood,
@@ -52,12 +52,14 @@ public class AutoTwoCargoA extends SequentialCommandGroup {
     setTurretPosition = new SetTurretPosition(turret, auto1turretAngle);
     setHoodPosition = new SetHoodPosition(hood, auto1hoodSteep);
     collectCargo = new CollectCargo(intake, transfer);
-    shootBall = new PushCargoToShooter(shooter, transfer);
+    shootBall = new AutoPushCargoToShooter(shooter, transfer);
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        parallel(driveToOneOrThree, collectCargo, setShooterRPM, setTurretPosition, setHoodPosition),
+        collectCargo.perpetually(),
+        setShooterRPM.perpetually(),
+        parallel(driveToOneOrThree, setTurretPosition, setHoodPosition),
         shootBall);
   }
 }
