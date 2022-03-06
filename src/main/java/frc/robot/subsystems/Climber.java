@@ -24,7 +24,7 @@ public class Climber extends SubsystemBase {
   private DoubleSolenoid climberLockPiston;
   private DoubleSolenoid climberPivotPiston;
   // Somebody can rename this solenoid if they can think of a better name
-  private DoubleSolenoid actuateStationaryClimberHooks;
+  private DoubleSolenoid climberActuateStationaryClimberHooks;
 
   // Solenoid Variables
   // Lock Piston
@@ -48,6 +48,9 @@ public class Climber extends SubsystemBase {
     configure();
     climberPivotPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.ClimberMap.PIVOT_PISTON_PCM_A,
         RobotMap.ClimberMap.PIVOT_PISTON_PCM_B);
+    climberActuateStationaryClimberHooks = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,
+        RobotMap.ClimberMap.STATIONARY_CLIMB_HOOKS_PISTON_A,
+        RobotMap.ClimberMap.STATIONARY_CLIMB_HOOKS_PISTON_B);
   }
 
   public boolean isClimberLocked() {
@@ -133,6 +136,14 @@ public class Climber extends SubsystemBase {
 
   public void pivotBackward() {
     climberPivotPiston.set(pivotRetract);
+  }
+
+  public void stationaryClimbHooksUp() {
+    climberActuateStationaryClimberHooks.set(stationaryClimbHooksdDeploy);
+  }
+
+  public void stationaryClimbHooksDown() {
+    climberActuateStationaryClimberHooks.set(stationaryClimbHooksRetract);
   }
 
   // TODO: change when location of mag switch is (ex: isClimberRaised)
