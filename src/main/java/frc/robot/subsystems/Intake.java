@@ -6,36 +6,34 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.frcteam3255.components.SN_DoubleSolenoid;
+import com.frcteam3255.preferences.SN_DoublePreference;
 import com.revrobotics.ColorSensorV3;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
-import frc.robot.RobotPreferences;
+import frc.robot.RobotMap.*;
+import static frc.robot.RobotPreferences.*;
 
 public class Intake extends SubsystemBase {
 
   // Creates the Intake motors
   private TalonFX intakeMotor;
-  private DoubleSolenoid intakeSolenoid;
+  private SN_DoubleSolenoid intakePiston;
   private ColorSensorV3 intakeColorSensorV3;
   private final I2C.Port i2cPort = I2C.Port.kMXP;
 
-  // Create the Variables for Deployed and Retracted
-  public DoubleSolenoid.Value intakeDeploy = Value.kForward;
-  public DoubleSolenoid.Value intakeRetract = Value.kReverse;
-
   // Initializes Intake Variables
   public Intake() {
-    intakeMotor = new TalonFX(RobotMap.IntakeMap.INTAKE_MOTOR_CAN);
-    intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.IntakeMap.INTAKE_SOLENOID_PCM_A,
-        RobotMap.IntakeMap.INTAKE_SOLENOID_PCM_B);
+    intakeMotor = new TalonFX(IntakeMap.INTAKE_MOTOR_CAN);
+    intakePiston = new SN_DoubleSolenoid(RobotMap.PRIMARY_PCM, PneumaticsModuleType.CTREPCM,
+        IntakeMap.INTAKE_SOLENOID_PCM_A,
+        IntakeMap.INTAKE_SOLENOID_PCM_B);
     intakeColorSensorV3 = new ColorSensorV3(i2cPort);
 
     configure();
@@ -44,6 +42,10 @@ public class Intake extends SubsystemBase {
   // Sets factory default (configure it)
   public void configure() {
     intakeMotor.configFactoryDefault();
+
+    intakeMotor.setInverted(true);
+    intakePiston.setInverted(true);
+
   }
 
   // Resets Intake Motor Encoder Count
@@ -52,8 +54,8 @@ public class Intake extends SubsystemBase {
   }
 
   // Sets Intake Motor Speed
-  public void setIntakeMotorSpeed(double a_speed) {
-    double speed = a_speed;
+  public void setIntakeMotorSpeed(SN_DoublePreference a_speed) {
+    double speed = a_speed.getValue();
 
     intakeMotor.set(ControlMode.PercentOutput, speed);
   }
@@ -64,27 +66,17 @@ public class Intake extends SubsystemBase {
   }
 
   public boolean isIntakeDeployed() {
-    Value intakeSolenoidStatus = intakeSolenoid.get();
-    boolean isIntakeDeployed = false;
-
-    if (intakeSolenoidStatus == intakeDeploy) {
-      isIntakeDeployed = true;
-    } else {
-      isIntakeDeployed = false;
-    }
-
-    return isIntakeDeployed;
-
+    return intakePiston.isDeployed();
   }
 
   // Deploys Intake Solenoid
   public void deployIntake() {
-    intakeSolenoid.set(intakeDeploy);
+    intakePiston.setDeployed();
   }
 
   // Retracts Intake Solenoid
   public void retractIntake() {
-    intakeSolenoid.set(intakeRetract);
+    intakePiston.setRetracted();
   }
 
   // Returns Ball color in Intake
@@ -107,7 +99,7 @@ public class Intake extends SubsystemBase {
   }
 
   public ballColor getBallColor() {
-    if (isProximity()) {
+    if (isBallNearIntake()) {
       if (getBlue() > getRed()) {
         return ballColor.blue;
       } else {
@@ -131,8 +123,8 @@ public class Intake extends SubsystemBase {
     }
   }
 
-  public boolean isProximity() {
-    return getProximity() > RobotPreferences.IntakePrefs.colorSensorMinProximity.getValue();
+  public boolean isBallNearIntake() {
+    return getProximity() > IntakePrefs.colorSensorMinProximity.getValue();
   }
 
   public boolean isBallBlue() {
@@ -168,5 +160,6 @@ public class Intake extends SubsystemBase {
     SmartDashboard.putBoolean("Is Ball Blue", isBallBlue());
     SmartDashboard.putBoolean("Is Alliance Blue", isAllianceBlue());
     SmartDashboard.putBoolean("Ball Color Matches Alliance", ballColorMatchesAlliance());
+    SmartDashboard.putBoolean("Is Proximity", isBallNearIntake());
   }
 }

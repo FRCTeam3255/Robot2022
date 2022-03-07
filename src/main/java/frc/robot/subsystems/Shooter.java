@@ -12,8 +12,8 @@ import com.frcteam3255.utils.SN_Math;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.RobotMap;
-import frc.robot.RobotPreferences;
+import frc.robot.RobotMap.*;
+import static frc.robot.RobotPreferences.*;
 
 public class Shooter extends SubsystemBase {
 
@@ -23,16 +23,20 @@ public class Shooter extends SubsystemBase {
 
   private TalonFXConfiguration config = new TalonFXConfiguration();
 
+  double goalRPM;
+
   /**
    * Creates new shooter
    */
   public Shooter() {
-    leadMotor = new TalonFX(RobotMap.ShooterMap.LEFT_MOTOR_CAN);
-    followMotor = new TalonFX(RobotMap.ShooterMap.RIGHT_MOTOR_CAN);
+    leadMotor = new TalonFX(ShooterMap.LEFT_MOTOR_CAN);
+    followMotor = new TalonFX(ShooterMap.RIGHT_MOTOR_CAN);
 
     config = new TalonFXConfiguration();
 
     configure();
+
+    goalRPM = 0;
   }
 
   /**
@@ -42,10 +46,10 @@ public class Shooter extends SubsystemBase {
     leadMotor.configFactoryDefault();
     followMotor.configFactoryDefault();
 
-    config.slot0.kF = RobotPreferences.ShooterPrefs.shooterF.getValue();
-    config.slot0.kP = RobotPreferences.ShooterPrefs.shooterP.getValue();
-    config.slot0.kI = RobotPreferences.ShooterPrefs.shooterI.getValue();
-    config.slot0.kD = RobotPreferences.ShooterPrefs.shooterD.getValue();
+    config.slot0.kF = ShooterPrefs.shooterF.getValue();
+    config.slot0.kP = ShooterPrefs.shooterP.getValue();
+    config.slot0.kI = ShooterPrefs.shooterI.getValue();
+    config.slot0.kD = ShooterPrefs.shooterD.getValue();
 
     leadMotor.configAllSettings(config);
     followMotor.configAllSettings(config);
@@ -76,18 +80,8 @@ public class Shooter extends SubsystemBase {
   }
 
   // Sets/Controls Shooter Motor speeds
-  public void setShooterSpeed(double a_speed) {
-    double speed = a_speed;
-    leadMotor.set(ControlMode.PercentOutput, speed);
-  }
-
-  /**
-   * Sets the shooter velocity (encoder counts per 100ms)
-   * 
-   * @param a_velocity Encoder counts per 100ms
-   */
-  private void setShooterVelocity(double a_velocity) {
-    leadMotor.set(ControlMode.Velocity, a_velocity);
+  public void setShooterPercentOutput(double a_speed) {
+    leadMotor.set(ControlMode.PercentOutput, a_speed);
   }
 
   /**
@@ -97,7 +91,7 @@ public class Shooter extends SubsystemBase {
    */
   public void setShooterRPM(double a_rpm) {
     double rpm = SN_Math.RPMToVelocity(a_rpm, SN_Math.TALONFX_ENCODER_PULSES_PER_COUNT);
-    setShooterVelocity(rpm);
+    leadMotor.set(ControlMode.Velocity, rpm);
   }
 
   /**
@@ -116,11 +110,20 @@ public class Shooter extends SubsystemBase {
     return leadMotor.getSelectedSensorVelocity();
   }
 
+  public boolean isShooterUpToSpeed() {
+    return ShooterPrefs.shooterAcceptableErrorRPM.getValue() > Math
+        .abs(SN_Math.velocityToRPM(leadMotor.getClosedLoopError(), SN_Math.TALONFX_ENCODER_PULSES_PER_COUNT));
+
+    // return true if the acceptable error (in rpm) is greater than the actual error
+    // (converted to rpm)
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Shooter Left Motor", getShooterEncoderCount());
     SmartDashboard.putNumber("Shooter Velocity", getShooterVelocity());
+    SmartDashboard.putBoolean("Is Shooter Up To Speed", isShooterUpToSpeed());
     SmartDashboard.putNumber("ShooterLeadMotorSpeed", leadMotor.getMotorOutputPercent());
     SmartDashboard.putNumber("ShooterFollowMotorSpeed", followMotor.getMotorOutputPercent());
 

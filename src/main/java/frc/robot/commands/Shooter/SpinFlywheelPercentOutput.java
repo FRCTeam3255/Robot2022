@@ -6,19 +6,16 @@ package frc.robot.commands.Shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Vision;
+import frc.robot.RobotPreferences;
 
-public class SetShooterVision extends CommandBase {
+public class SpinFlywheelPercentOutput extends CommandBase {
+  /** Creates a new setSpinFlywheelSpeed. */
+  // Initializes Shooter Variables
   Shooter shooter;
-  Vision vision;
 
-  double goalRPM;
-
-  /** Creates a new SetShooterVision. */
-  public SetShooterVision(Vision sub_vision, Shooter sub_shooter) {
-    shooter = sub_shooter;
-    vision = sub_vision;
+  public SpinFlywheelPercentOutput(Shooter sub_shooter) {
     // Use addRequirements() here to declare subsystem dependencies.
+    shooter = sub_shooter;
     addRequirements(shooter);
   }
 
@@ -30,9 +27,8 @@ public class SetShooterVision extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // math here for finding the thing
-    goalRPM = (vision.limelight.getOffsetY());
-    shooter.setShooterRPM(goalRPM);
+    shooter.setShooterPercentOutput(RobotPreferences.ShooterPrefs.shooterPercentOutput.getValue());
+
   }
 
   // Called once the command ends or is interrupted.

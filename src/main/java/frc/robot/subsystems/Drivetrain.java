@@ -9,13 +9,13 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.RobotMap;
-import frc.robot.RobotPreferences;
+import frc.robot.RobotMap.*;
+import frc.robot.RobotPreferences.*;
 
 public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
@@ -29,10 +29,10 @@ public class Drivetrain extends SubsystemBase {
 
   // Initializes Variables for Drivetrain
   public Drivetrain() {
-    leftLeadMotor = new TalonFX(RobotMap.DrivetrainMap.LEFT_LEAD_MOTOR_CAN);
-    rightLeadMotor = new TalonFX(RobotMap.DrivetrainMap.RIGHT_LEAD_MOTOR_CAN);
-    leftFollowMotor = new TalonFX(RobotMap.DrivetrainMap.LEFT_FOLLOW_MOTOR_CAN);
-    rightFollowMotor = new TalonFX(RobotMap.DrivetrainMap.RIGHT_FOLLOW_MOTOR_CAN);
+    leftLeadMotor = new TalonFX(DrivetrainMap.LEFT_LEAD_MOTOR_CAN);
+    rightLeadMotor = new TalonFX(DrivetrainMap.RIGHT_LEAD_MOTOR_CAN);
+    leftFollowMotor = new TalonFX(DrivetrainMap.LEFT_FOLLOW_MOTOR_CAN);
+    rightFollowMotor = new TalonFX(DrivetrainMap.RIGHT_FOLLOW_MOTOR_CAN);
 
     config = new TalonFXConfiguration();
 
@@ -42,12 +42,12 @@ public class Drivetrain extends SubsystemBase {
   // Sets Drivetrain Variable's Default Settings
   public void configure() {
 
-    config.slot0.allowableClosedloopError = RobotPreferences.DrivetrainPrefs.driveAllowableClosedLoopError.getValue();
-    config.slot0.closedLoopPeakOutput = RobotPreferences.DrivetrainPrefs.driveClosedLoopPeakOutput.getValue();
-    config.slot0.kF = RobotPreferences.DrivetrainPrefs.driveF.getValue();
-    config.slot0.kP = RobotPreferences.DrivetrainPrefs.driveP.getValue();
-    config.slot0.kI = RobotPreferences.DrivetrainPrefs.driveI.getValue();
-    config.slot0.kD = RobotPreferences.DrivetrainPrefs.driveD.getValue();
+    config.slot0.allowableClosedloopError = DrivetrainPrefs.driveAllowableClosedLoopError.getValue();
+    config.slot0.closedLoopPeakOutput = DrivetrainPrefs.driveClosedLoopPeakOutput.getValue();
+    config.slot0.kF = DrivetrainPrefs.driveF.getValue();
+    config.slot0.kP = DrivetrainPrefs.driveP.getValue();
+    config.slot0.kI = DrivetrainPrefs.driveI.getValue();
+    config.slot0.kD = DrivetrainPrefs.driveD.getValue();
 
     // Left
     leftLeadMotor.configFactoryDefault();
@@ -89,10 +89,59 @@ public class Drivetrain extends SubsystemBase {
     return rightLeadMotor.getSelectedSensorPosition();
   }
 
+  public double getAverageEncoderCount() {
+    return (getLeftEncoderCount() + getRightEncoderCount()) / 2;
+  }
+
+  public double getLeftFeetDriven() {
+    return getLeftEncoderCount() / DrivetrainPrefs.driveEncoderCountsPerFoot.getValue();
+  }
+
+  public double getRightFeetDriven() {
+    return getRightEncoderCount() / DrivetrainPrefs.driveEncoderCountsPerFoot.getValue();
+  }
+
+  public double getAverageFeetDriven() {
+    return getAverageEncoderCount() / DrivetrainPrefs.driveEncoderCountsPerFoot.getValue();
+  }
+
+  public double getLeftVelocity() {
+    return leftLeadMotor.getSelectedSensorVelocity();
+  }
+
+  public double getRightVelocity() {
+    return rightLeadMotor.getSelectedSensorVelocity();
+  }
+
+  public double getAverageVelocity() {
+    return (getLeftVelocity() + getRightVelocity()) / 2;
+  }
+
+  public double getLeftFeetPerSecond() {
+    double fps = getLeftVelocity(); // encoder counts per 100ms
+    fps *= 10; // counts per second
+    fps /= DrivetrainPrefs.driveEncoderCountsPerFoot.getValue(); // feet per second
+    return fps;
+  }
+
+  public double getRightFeetPerSecond() {
+    double fps = getRightVelocity(); // encoder counts per 100ms
+    fps *= 10; // counts per second
+    fps /= DrivetrainPrefs.driveEncoderCountsPerFoot.getValue(); // feet per second
+    return fps;
+  }
+
+  public double getAverageFeetPerSecond() {
+    double fps = getAverageVelocity(); // encoder counts per 100ms
+    fps *= 10; // counts per second
+    fps /= DrivetrainPrefs.driveEncoderCountsPerFoot.getValue(); // feet per second
+    return fps;
+  }
+
   // Method controls Drivetrain Motor speeds
   public void arcadeDrive(double a_speed, double a_turn) {
-    double speed = a_speed * RobotPreferences.DrivetrainPrefs.arcadeSpeed.getValue();
-    double turn = a_turn * RobotPreferences.DrivetrainPrefs.arcadeTurn.getValue();
+    double speed = a_speed * DrivetrainPrefs.arcadeSpeed.getValue();
+    double turn = a_turn * DrivetrainPrefs.arcadeTurn.getValue();
 
     leftLeadMotor.set(ControlMode.PercentOutput, speed, DemandType.ArbitraryFeedForward, turn);
     rightLeadMotor.set(ControlMode.PercentOutput, speed, DemandType.ArbitraryFeedForward, -turn);
@@ -104,8 +153,10 @@ public class Drivetrain extends SubsystemBase {
     configure();
     resetDrivetrainEncodersCount();
 
-    leftLeadMotor.startMotionProfile(pointsLeft, 10, ControlMode.MotionProfile);
-    rightLeadMotor.startMotionProfile(pointsRight, 10, ControlMode.MotionProfile);
+    leftLeadMotor.startMotionProfile(
+        pointsLeft, DrivetrainPrefs.motionProfileMinBufferedPoints.getValue(), ControlMode.MotionProfile);
+    rightLeadMotor.startMotionProfile(
+        pointsRight, DrivetrainPrefs.motionProfileMinBufferedPoints.getValue(), ControlMode.MotionProfile);
   }
 
   public boolean isMotionProfileFinished() {
@@ -123,14 +174,34 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
+    // Encoder Counts
     SmartDashboard.putNumber("Drivetrain Left Encoder", getLeftEncoderCount());
     SmartDashboard.putNumber("Drivetrain Right Encoder", getRightEncoderCount());
-    SmartDashboard.putBoolean("Drivetrain Motion Profile Finished", isMotionProfileFinished());
-    SmartDashboard.putNumber("DrivetrainLeftLeadMotorSpeed", leftLeadMotor.getMotorOutputPercent());
-    SmartDashboard.putNumber("DrivetrainRightLeadMotorSpeed", rightLeadMotor.getMotorOutputPercent());
-    SmartDashboard.putNumber("DrivetrainLeftFollowMotorSpeed", leftFollowMotor.getMotorOutputPercent());
-    SmartDashboard.putNumber("DrivetrainRightFollowMotorSpeed", rightFollowMotor.getMotorOutputPercent());
+    SmartDashboard.putNumber("Drivetrain Average Encoder", getAverageEncoderCount());
 
+    // Motion Profile
+    SmartDashboard.putBoolean("Is Drivetrain Motion Profile Finished", isMotionProfileFinished());
+
+    // Motor Percent Output
+    SmartDashboard.putNumber("Drivetrain Left Lead Motor Speed", leftLeadMotor.getMotorOutputPercent());
+    SmartDashboard.putNumber("Drivetrain Right Lead Motor Speed", rightLeadMotor.getMotorOutputPercent());
+    SmartDashboard.putNumber("Drivetrain Left Follow Motor Speed", leftFollowMotor.getMotorOutputPercent());
+    SmartDashboard.putNumber("Drivetrain Right Follow Motor Speed", rightFollowMotor.getMotorOutputPercent());
+
+    // Feet Driven
+    SmartDashboard.putNumber("Drivetrain Left Feet Driven", getLeftFeetDriven());
+    SmartDashboard.putNumber("Drivetrain Right Feet Driven", getRightFeetDriven());
+    SmartDashboard.putNumber("Drivetrain Average Feet Driven", getAverageFeetDriven());
+
+    // Feet Per Second
+    SmartDashboard.putNumber("Drivetrain Left Feet Per Second", getLeftFeetPerSecond());
+    SmartDashboard.putNumber("Drivetrain Right Feet Per Second", getRightFeetPerSecond());
+    SmartDashboard.putNumber("Drivetrain Average Feet Per Second", getAverageFeetPerSecond());
+
+    // Encoder Counts per 100ms
+    SmartDashboard.putNumber("Drivetrain Left Velocity", getLeftVelocity());
+    SmartDashboard.putNumber("Drivetrain Right Velocity", getRightVelocity());
+    SmartDashboard.putNumber("Drivetrain Average Velocity", getAverageVelocity());
   }
-
 }

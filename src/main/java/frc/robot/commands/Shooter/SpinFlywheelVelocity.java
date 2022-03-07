@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotPreferences;
 import frc.robot.subsystems.Shooter;
 
-public class SpinFlywheel extends CommandBase {
+public class SpinFlywheelVelocity extends CommandBase {
   // Creates Shooter Variables
   Shooter shooter;
 
   /** Creates a new ShootCargo. */
-  public SpinFlywheel(Shooter sub_shooter) {
+  public SpinFlywheelVelocity(Shooter sub_shooter) {
     // Initializes shooter variables
     shooter = sub_shooter;
     addRequirements(shooter);
@@ -27,13 +27,13 @@ public class SpinFlywheel extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.setShooterSpeed(RobotPreferences.ShooterPrefs.shooterMotorSpeed.getValue());
+    shooter.setShooterRPM(RobotPreferences.ShooterPrefs.shooterTargetRPM.getValue());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooter.setShooterSpeed(0);
+    shooter.setShooterPercentOutput(0);
   }
 
   // Returns true when the command should end.
