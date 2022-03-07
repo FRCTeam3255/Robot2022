@@ -48,8 +48,8 @@ public class Climber extends SubsystemBase {
         ClimberMap.LOCK_PISTON_PCM_B);
     
     climberActuateStationaryClimberHooks = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,
-        RobotMap.ClimberMap.STATIONARY_CLIMB_HOOKS_PISTON_A,
-        RobotMap.ClimberMap.STATIONARY_CLIMB_HOOKS_PISTON_B);
+        ClimberMap.STATIONARY_CLIMB_HOOKS_PISTON_A,
+        ClimberMap.STATIONARY_CLIMB_HOOKS_PISTON_B);
 
     climberPivotPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, ClimberMap.PIVOT_PISTON_PCM_A,
         ClimberMap.PIVOT_PISTON_PCM_B);
