@@ -13,6 +13,11 @@ import frc.robot.subsystems.Climber;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class MagicClimb extends SequentialCommandGroup {
 
+  SetClimberPosition extendClimber;
+  SetClimberPosition retractClimber;
+  InstantCommand pivotPerpendicular;
+  InstantCommand pivotAngled;
+
   /** Creates a new ClimbNextRung. */
   public MagicClimb(Climber sub_climber) {
 
