@@ -7,12 +7,12 @@ package frc.robot.commands.Shooter;
 import com.frcteam3255.preferences.SN_BooleanPreference;
 import com.frcteam3255.preferences.SN_DoublePreference;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
 
-public class PresetShooter extends CommandBase {
+public class PresetShooter extends InstantCommand {
 
   Shooter shooter;
   Hood hood;
@@ -43,21 +43,5 @@ public class PresetShooter extends CommandBase {
       hood.shallowHood();
     }
 
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-  }
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
   }
 }
