@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotPreferences.ClimberPrefs;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Hood;
+import frc.robot.subsystems.Turret;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -15,6 +17,10 @@ import frc.robot.subsystems.Climber;
 public class MagicClimb extends SequentialCommandGroup {
 
   Climber climber;
+  Turret turret;
+  Hood hood;
+
+  // ReadyClimber readyClimber;
 
   SetClimberPosition extendClimber;
   SetClimberPosition retractClimber;
@@ -24,9 +30,13 @@ public class MagicClimb extends SequentialCommandGroup {
   InstantCommand hookDown;
 
   /** Creates a new ClimbNextRung. */
-  public MagicClimb(Climber sub_climber) {
+  public MagicClimb(Climber sub_climber, Turret sub_turret, Hood sub_hood) {
 
     climber = sub_climber;
+    turret = sub_turret;
+    hood = sub_hood;
+
+    // readyClimber = new ReadyClimber(climber, turret, hood);
 
     extendClimber = new SetClimberPosition(climber, ClimberPrefs.climberUpPosition);
     retractClimber = new SetClimberPosition(climber, ClimberPrefs.climberDownPosition);
@@ -35,6 +45,17 @@ public class MagicClimb extends SequentialCommandGroup {
     hookUp = new InstantCommand(climber::hookUp);
     hookDown = new InstantCommand(climber::hookDown);
 
-    addCommands();
+    addCommands(
+        // readyClimber,
+        extendClimber,
+        retractClimber,
+        pivotAngled,
+        extendClimber,
+        pivotPerpendicular,
+        retractClimber,
+        pivotAngled,
+        extendClimber,
+        pivotPerpendicular,
+        retractClimber);
   }
 }
