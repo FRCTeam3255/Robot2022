@@ -85,7 +85,7 @@ public class RobotContainer {
   private final SpinFlywheelVelocity com_spinFlywheelVelocity = new SpinFlywheelVelocity(sub_shooter);
   private final SpinFlywheelPercentOutput com_FlywheelPercentOutput = new SpinFlywheelPercentOutput(
       sub_shooter);
-  private final SetShooterGoalRPM com_setShooterGoalRPM = new SetShooterGoalRPM(sub_shooter);
+  private final SpinFlywheelGoalRPM com_spinFlywheelGoalRPM = new SpinFlywheelGoalRPM(sub_shooter);
 
   private final InstantCommand com_setUpperHubGoal = new InstantCommand(sub_shooter::setGoalUpperHub);
   private final InstantCommand com_setLowerHubGoal = new InstantCommand(sub_shooter::setGoalLowerHub);
