@@ -74,7 +74,7 @@ public class RobotContainer {
       RobotPreferences.zeroDoublePref);
   private final HoldTurretPosition com_holdTurretPos1 = new HoldTurretPosition(sub_turret, sub_navX,
       RobotPreferences.TurretPrefs.turretPresetPos1);
-  private final VisionAimTurret com_visionAimTurret = new VisionAimTurret(sub_turret, sub_vision);
+  private final VisionAimTurret com_visionAimTurret = new VisionAimTurret(sub_turret, sub_shooter, sub_vision);
   private final VisionNavXAimTurret com_visionHoldAimTurret = new VisionNavXAimTurret(sub_turret, sub_vision,
       sub_navX);
 
@@ -83,6 +83,7 @@ public class RobotContainer {
   private final SpinFlywheelVelocity com_spinFlywheel = new SpinFlywheelVelocity(sub_shooter);
   private final SpinFlywheelPercentOutput com_FlywheelPercentOutput = new SpinFlywheelPercentOutput(
       sub_shooter);
+  private final SetShooterGoalRPM com_setShooterGoalRPM = new SetShooterGoalRPM(sub_shooter);
 
   // Transfer Commands
 
