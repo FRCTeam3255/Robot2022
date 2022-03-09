@@ -110,11 +110,11 @@ public class Climber extends SubsystemBase {
     return climberPivotPiston.isDeployed();
   }
 
-  public void hookForward() {
+  public void hookUp() {
     climberHookPiston.setDeployed();
   }
 
-  public void hookBackward() {
+  public void hookDown() {
     climberHookPiston.setRetracted();
   }
 

@@ -6,6 +6,7 @@ package frc.robot.commands.Climber;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.RobotPreferences.ClimberPrefs;
 import frc.robot.subsystems.Climber;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -13,18 +14,26 @@ import frc.robot.subsystems.Climber;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class MagicClimb extends SequentialCommandGroup {
 
+  Climber climber;
+
   SetClimberPosition extendClimber;
   SetClimberPosition retractClimber;
   InstantCommand pivotPerpendicular;
   InstantCommand pivotAngled;
+  InstantCommand hookUp;
+  InstantCommand hookDown;
 
   /** Creates a new ClimbNextRung. */
   public MagicClimb(Climber sub_climber) {
 
-    // addCommands(new InstantCommand(sub_climber::extendClimber, sub_climber));
-    // addCommands(new InstantCommand(sub_climber::pivotBackward, sub_climber));
-    // addCommands(new InstantCommand(sub_climber::pivotForward, sub_climber));
-    // addCommands(new InstantCommand(sub_climber::retractClimber, sub_climber));
+    climber = sub_climber;
+
+    extendClimber = new SetClimberPosition(climber, ClimberPrefs.climberUpPosition);
+    retractClimber = new SetClimberPosition(climber, ClimberPrefs.climberDownPosition);
+    pivotPerpendicular = new InstantCommand(climber::pivotPerpendicular, climber);
+    pivotAngled = new InstantCommand(climber::pivotAngled, climber);
+    hookUp = new InstantCommand(climber::hookUp);
+    hookDown = new InstantCommand(climber::hookDown);
 
     addCommands();
   }
