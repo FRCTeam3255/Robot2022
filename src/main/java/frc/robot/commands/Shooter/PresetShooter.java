@@ -10,7 +10,6 @@ import com.frcteam3255.preferences.SN_DoublePreference;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Turret;
 
 public class PresetShooter extends CommandBase {
 
@@ -35,6 +34,8 @@ public class PresetShooter extends CommandBase {
   @Override
   public void initialize() {
 
+    // note: the preset is meant not to spin the shooter, but to set the goal rpm
+    // the coDriver will still have to spin the shooter themselves
     shooter.setGoalRPM(shooterRPM.getValue());
 
     if (hoodSteep.getValue()) {

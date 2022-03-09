@@ -20,6 +20,8 @@ import frc.robot.commands.Turret.*;
 import frc.robot.commands.Intake.*;
 import frc.robot.commands.Shooter.*;
 import frc.robot.commands.Transfer.*;
+import frc.robot.RobotPreferences.HoodPrefs;
+import frc.robot.RobotPreferences.ShooterPrefs;
 import frc.robot.commands.ConfigureSubsystems;
 import frc.robot.commands.Climber.*;
 import frc.robot.subsystems.*;
@@ -84,6 +86,27 @@ public class RobotContainer {
   private final SpinFlywheelPercentOutput com_FlywheelPercentOutput = new SpinFlywheelPercentOutput(
       sub_shooter);
   private final SetShooterGoalRPM com_setShooterGoalRPM = new SetShooterGoalRPM(sub_shooter);
+
+  private final InstantCommand com_setUpperHubGoal = new InstantCommand(sub_shooter::setGoalUpperHub);
+  private final InstantCommand com_setLowerHubGoal = new InstantCommand(sub_shooter::setGoalLowerHub);
+
+  // Shooter Presets
+  private final PresetShooter com_presetFenderUpper = new PresetShooter(sub_shooter, sub_hood,
+      ShooterPrefs.shooterPresetUpperFenderRPM, HoodPrefs.hoodPresetUpperFenderSteep);
+  private final PresetShooter com_presetFenderLower = new PresetShooter(sub_shooter, sub_hood,
+      ShooterPrefs.shooterPresetLowerFenderRPM, HoodPrefs.hoodPresetLowerFenderSteep);
+  private final PresetShooter com_presetTarmacUpper = new PresetShooter(sub_shooter, sub_hood,
+      ShooterPrefs.shooterPresetUpperTarmacRPM, HoodPrefs.hoodPresetUpperTarmacSteep);
+  private final PresetShooter com_presetTarmacLower = new PresetShooter(sub_shooter, sub_hood,
+      ShooterPrefs.shooterPresetLowerTarmacRPM, HoodPrefs.hoodPresetLowerTarmacSteep);
+  private final PresetShooter com_presetLaunchpadUpper = new PresetShooter(sub_shooter, sub_hood,
+      ShooterPrefs.shooterPresetUpperLaunchpadRPM, HoodPrefs.hoodPresetUpperLaunchpadSteep);
+  private final PresetShooter com_presetLaunchpadLower = new PresetShooter(sub_shooter, sub_hood,
+      ShooterPrefs.shooterPresetLowerLaunchpadRPM, HoodPrefs.hoodPresetLowerLaunchpadSteep);
+  private final PresetShooter com_presetTerminalUpper = new PresetShooter(sub_shooter, sub_hood,
+      ShooterPrefs.shooterPresetUpperTerminalRPM, HoodPrefs.hoodPresetUpperTerminalSteep);
+  private final PresetShooter com_presetTerminalLower = new PresetShooter(sub_shooter, sub_hood,
+      ShooterPrefs.shooterPresetLowerTerminalRPM, HoodPrefs.hoodPresetLowerTerminalSteep);
 
   // Transfer Commands
 
