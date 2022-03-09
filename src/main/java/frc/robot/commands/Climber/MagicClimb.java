@@ -12,24 +12,15 @@ import frc.robot.subsystems.Climber;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class MagicClimb extends SequentialCommandGroup {
+
   /** Creates a new ClimbNextRung. */
   public MagicClimb(Climber sub_climber) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
 
-    // The Climber must already be on a rung for this to work (just do
-    // setClimberMotorUp and then setClimberMotorDown)
-
-    // This does NOT lock anything which is pretty bad and a pretty sob sob moment
-    // :(
-
-    // i commented this command out because it doesn't work and this isn't how to
-    // use a sequential command group
-    // addCommands(new InstantCommand(sub_climber::stationaryClimbHooksUp,
-    // sub_climber));
     // addCommands(new InstantCommand(sub_climber::extendClimber, sub_climber));
     // addCommands(new InstantCommand(sub_climber::pivotBackward, sub_climber));
     // addCommands(new InstantCommand(sub_climber::pivotForward, sub_climber));
     // addCommands(new InstantCommand(sub_climber::retractClimber, sub_climber));
+
+    addCommands();
   }
 }
