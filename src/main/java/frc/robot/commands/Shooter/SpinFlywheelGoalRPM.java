@@ -7,11 +7,11 @@ package frc.robot.commands.Shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 
-public class SetShooterGoalRPM extends CommandBase {
+public class SpinFlywheelGoalRPM extends CommandBase {
   Shooter shooter;
 
   /** Creates a new SetShooterGoalRPM. */
-  public SetShooterGoalRPM(Shooter sub_shooter) {
+  public SpinFlywheelGoalRPM(Shooter sub_shooter) {
     shooter = sub_shooter;
     addRequirements(shooter);
   }

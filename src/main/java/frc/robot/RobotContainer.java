@@ -80,10 +80,10 @@ public class RobotContainer {
 
   // Shooter Commands
   private final PushCargoToShooter com_pushCargoToShooter = new PushCargoToShooter(sub_shooter, sub_transfer);
-  private final SpinFlywheelVelocity com_spinFlywheel = new SpinFlywheelVelocity(sub_shooter);
+  private final SpinFlywheelVelocity com_spinFlywheelVelocity = new SpinFlywheelVelocity(sub_shooter);
   private final SpinFlywheelPercentOutput com_FlywheelPercentOutput = new SpinFlywheelPercentOutput(
       sub_shooter);
-  private final SetShooterGoalRPM com_setShooterGoalRPM = new SetShooterGoalRPM(sub_shooter);
+  private final SpinFlywheelGoalRPM com_setShooterGoalRPM = new SpinFlywheelGoalRPM(sub_shooter);
 
   // Transfer Commands
 
@@ -142,7 +142,7 @@ public class RobotContainer {
     // coDriver Stick
 
     coDriverStick.btn_RTrig.whileHeld(com_pushCargoToShooter);
-    coDriverStick.btn_RTrig.whileHeld(com_spinFlywheel);
+    coDriverStick.btn_RTrig.whileHeld(com_spinFlywheelVelocity);
 
     coDriverStick.btn_Back.whileHeld(com_retractIntake);
 
