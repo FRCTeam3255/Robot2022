@@ -27,7 +27,9 @@ public class MoveTurret extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    turret.setTurretSpeed(RobotContainer.coDriverStick.getRightStickX() * TurretPrefs.turretOpenLoopSpeed.getValue());
+    if (RobotContainer.switchBoard.btn_1.get()) {
+      turret.setTurretSpeed(RobotContainer.coDriverStick.getRightStickX() * TurretPrefs.turretOpenLoopSpeed.getValue());
+    }
   }
 
   // Called once the command ends or is interrupted.
