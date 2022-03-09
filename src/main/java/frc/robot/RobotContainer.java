@@ -96,7 +96,7 @@ public class RobotContainer {
 
   // Climber Commands
   private final Climb com_climb = new Climb(sub_climber);
-  private final ClimbNextRung com_ClimbNextRung = new ClimbNextRung(sub_climber);
+  private final MagicClimb com_ClimbNextRung = new MagicClimb(sub_climber);
   private final ResetClimber com_ResetClimber = new ResetClimber(sub_climber);
   private final InstantCommand com_lockClimber = new InstantCommand(sub_climber::lockClimber);
   private final InstantCommand com_unlockClimber = new InstantCommand(sub_climber::unlockClimber);
