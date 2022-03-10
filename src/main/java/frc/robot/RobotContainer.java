@@ -91,21 +91,17 @@ public class RobotContainer {
   private final InstantCommand com_setLowerHubGoal = new InstantCommand(sub_shooter::setGoalLowerHub);
 
   // Shooter Presets
-  private final PresetShooter com_presetFenderUpper = new PresetShooter(sub_shooter, sub_hood,
-      ShooterPrefs.shooterPresetUpperFenderRPM, HoodPrefs.hoodPresetUpperFenderSteep);
-  private final PresetShooter com_presetFenderLower = new PresetShooter(sub_shooter, sub_hood,
+  private final PresetShooter com_presetFender = new PresetShooter(sub_shooter, sub_hood,
+      ShooterPrefs.shooterPresetUpperFenderRPM, HoodPrefs.hoodPresetUpperFenderSteep,
       ShooterPrefs.shooterPresetLowerFenderRPM, HoodPrefs.hoodPresetLowerFenderSteep);
   private final PresetShooter com_presetTarmacUpper = new PresetShooter(sub_shooter, sub_hood,
-      ShooterPrefs.shooterPresetUpperTarmacRPM, HoodPrefs.hoodPresetUpperTarmacSteep);
-  private final PresetShooter com_presetTarmacLower = new PresetShooter(sub_shooter, sub_hood,
+      ShooterPrefs.shooterPresetUpperTarmacRPM, HoodPrefs.hoodPresetUpperTarmacSteep,
       ShooterPrefs.shooterPresetLowerTarmacRPM, HoodPrefs.hoodPresetLowerTarmacSteep);
   private final PresetShooter com_presetLaunchpadUpper = new PresetShooter(sub_shooter, sub_hood,
-      ShooterPrefs.shooterPresetUpperLaunchpadRPM, HoodPrefs.hoodPresetUpperLaunchpadSteep);
-  private final PresetShooter com_presetLaunchpadLower = new PresetShooter(sub_shooter, sub_hood,
+      ShooterPrefs.shooterPresetUpperLaunchpadRPM, HoodPrefs.hoodPresetUpperLaunchpadSteep,
       ShooterPrefs.shooterPresetLowerLaunchpadRPM, HoodPrefs.hoodPresetLowerLaunchpadSteep);
   private final PresetShooter com_presetTerminalUpper = new PresetShooter(sub_shooter, sub_hood,
-      ShooterPrefs.shooterPresetUpperTerminalRPM, HoodPrefs.hoodPresetUpperTerminalSteep);
-  private final PresetShooter com_presetTerminalLower = new PresetShooter(sub_shooter, sub_hood,
+      ShooterPrefs.shooterPresetUpperTerminalRPM, HoodPrefs.hoodPresetUpperTerminalSteep,
       ShooterPrefs.shooterPresetLowerTerminalRPM, HoodPrefs.hoodPresetLowerTerminalSteep);
 
   // Transfer Commands
