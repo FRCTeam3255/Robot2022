@@ -7,6 +7,7 @@ package frc.robot;
 import java.sql.Driver;
 
 import com.frcteam3255.joystick.SN_DualActionStick;
+import com.frcteam3255.joystick.SN_F310Gamepad;
 import com.frcteam3255.joystick.SN_SwitchboardStick;
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -20,6 +21,8 @@ import frc.robot.commands.Turret.*;
 import frc.robot.commands.Intake.*;
 import frc.robot.commands.Shooter.*;
 import frc.robot.commands.Transfer.*;
+import frc.robot.RobotPreferences.HoodPrefs;
+import frc.robot.RobotPreferences.ShooterPrefs;
 import frc.robot.commands.ConfigureSubsystems;
 import frc.robot.commands.Climber.*;
 import frc.robot.subsystems.*;
@@ -34,7 +37,7 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
 
   // Joysticks
-  public static final SN_DualActionStick DriverStick = new SN_DualActionStick(
+  public static final SN_F310Gamepad DriverStick = new SN_F310Gamepad(
       RobotMap.ControllerMap.DRIVER_STICK);
   public static final SN_DualActionStick coDriverStick = new SN_DualActionStick(
       RobotMap.ControllerMap.CODRIVER_STICK);
@@ -83,7 +86,24 @@ public class RobotContainer {
   private final SpinFlywheelVelocity com_spinFlywheelVelocity = new SpinFlywheelVelocity(sub_shooter);
   private final SpinFlywheelPercentOutput com_FlywheelPercentOutput = new SpinFlywheelPercentOutput(
       sub_shooter);
-  private final SpinFlywheelGoalRPM com_setShooterGoalRPM = new SpinFlywheelGoalRPM(sub_shooter);
+  private final SpinFlywheelGoalRPM com_spinFlywheelGoalRPM = new SpinFlywheelGoalRPM(sub_shooter);
+
+  private final InstantCommand com_setUpperHubGoal = new InstantCommand(sub_shooter::setGoalUpperHub);
+  private final InstantCommand com_setLowerHubGoal = new InstantCommand(sub_shooter::setGoalLowerHub);
+
+  // Shooter Presets
+  private final PresetShooter com_presetFender = new PresetShooter(sub_shooter, sub_hood,
+      ShooterPrefs.shooterPresetUpperFenderRPM, HoodPrefs.hoodPresetUpperFenderSteep,
+      ShooterPrefs.shooterPresetLowerFenderRPM, HoodPrefs.hoodPresetLowerFenderSteep);
+  private final PresetShooter com_presetTarmacUpper = new PresetShooter(sub_shooter, sub_hood,
+      ShooterPrefs.shooterPresetUpperTarmacRPM, HoodPrefs.hoodPresetUpperTarmacSteep,
+      ShooterPrefs.shooterPresetLowerTarmacRPM, HoodPrefs.hoodPresetLowerTarmacSteep);
+  private final PresetShooter com_presetLaunchpadUpper = new PresetShooter(sub_shooter, sub_hood,
+      ShooterPrefs.shooterPresetUpperLaunchpadRPM, HoodPrefs.hoodPresetUpperLaunchpadSteep,
+      ShooterPrefs.shooterPresetLowerLaunchpadRPM, HoodPrefs.hoodPresetLowerLaunchpadSteep);
+  private final PresetShooter com_presetTerminalUpper = new PresetShooter(sub_shooter, sub_hood,
+      ShooterPrefs.shooterPresetUpperTerminalRPM, HoodPrefs.hoodPresetUpperTerminalSteep,
+      ShooterPrefs.shooterPresetLowerTerminalRPM, HoodPrefs.hoodPresetLowerTerminalSteep);
 
   // Transfer Commands
 

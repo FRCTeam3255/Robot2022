@@ -2,43 +2,43 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Shooter;
+package frc.robot.commands.Climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Vision;
+import frc.robot.Robot;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.Climber;
 
-public class SetShooterVision extends CommandBase {
-  Shooter shooter;
-  Vision vision;
+public class RunSpoolBackward extends CommandBase {
 
-  double goalRPM;
+  Climber climber;
 
-  /** Creates a new SetShooterVision. */
-  public SetShooterVision(Vision sub_vision, Shooter sub_shooter) {
-    shooter = sub_shooter;
-    vision = sub_vision;
+  /** Creates a new RunSpoolBackward. */
+  public RunSpoolBackward(Climber sub_climber) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(shooter);
+    climber = sub_climber;
+    addRequirements(climber);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    climber.unlockClimber();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // math here for finding the thing
-    goalRPM = (vision.limelight.getOffsetY());
-    shooter.setShooterRPM(goalRPM);
+    double speed = RobotContainer.DriverStick.getAxisLT();
+
+    climber.setClimberSpeed(-speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooter.setShooterPercentOutput(0);
+    climber.setClimberSpeed(0);
+    climber.lockClimber();
   }
 
   // Returns true when the command should end.
