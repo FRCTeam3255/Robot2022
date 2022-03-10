@@ -29,7 +29,7 @@ public class CollectCargo extends CommandBase {
   // contact of the entrance, so we have a seperate, longer timer for the intake.
 
   int intakeRejectTimer;
-  int entranceRejectTimer;
+  int transferRejectTimer;
 
   SN_DoublePreference outputIntakeSpeed;
   SN_DoublePreference outputEntranceSpeed;
@@ -78,10 +78,10 @@ public class CollectCargo extends CommandBase {
       if (intake.ballColorMatchesAlliance()) {
 
         // the entrance motor should run
-        entranceRejectTimer = 0;
+        transferRejectTimer = 0;
 
         // but not the intake, since the incorrect color ball may still be there
-        intakeRejectTimer -= TransferPrefs.transferRejectTimerLoops.getValue();
+        intakeRejectTimer -= IntakePrefs.intakeRejectTimerLoops.getValue();
 
         // but if it's the wrong color
       } else {
@@ -90,7 +90,7 @@ public class CollectCargo extends CommandBase {
         intakeRejectTimer = IntakePrefs.intakeRejectTimerLoops.getValue();
 
         // and the entrance motor should also go in reverse
-        entranceRejectTimer = TransferPrefs.transferRejectTimerLoops.getValue();
+        transferRejectTimer = TransferPrefs.transferRejectTimerLoops.getValue();
       }
     }
 
@@ -100,9 +100,9 @@ public class CollectCargo extends CommandBase {
       outputIntakeSpeed = IntakePrefs.intakeRejectSpeed;
       intakeRejectTimer--;
     }
-    if (entranceRejectTimer > 0) {
+    if (transferRejectTimer > 0) {
       outputEntranceSpeed = TransferPrefs.transferEntranceRejectSpeed;
-      entranceRejectTimer--;
+      transferRejectTimer--;
     }
     // If the Intake and/or the entrance timer is greater than zero then the
     // transfer state will show Shooting to be true
@@ -141,7 +141,7 @@ public class CollectCargo extends CommandBase {
     }
 
     intakeRejectTimer = 0;
-    entranceRejectTimer = 0;
+    transferRejectTimer = 0;
 
   }
 
