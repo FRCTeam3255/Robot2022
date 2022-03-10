@@ -32,9 +32,9 @@ public class RunSpoolForward extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SN_DoublePreference position = RobotPreferences.ClimberPrefs.climberUpPosition;
+    double speed = RobotContainer.DriverStick.getAxisRT();
 
-    climber.setClimberPosition(position);
+    climber.setClimberSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
