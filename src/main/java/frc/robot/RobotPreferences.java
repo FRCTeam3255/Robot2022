@@ -52,9 +52,30 @@ public final class RobotPreferences {
 
     public static final SN_IntPreference motionProfileMinBufferedPoints = new SN_IntPreference(
         "motionProfileMinBufferedPoints", 10);
+    public static final SN_DoublePreference driveOpenLoopRampTimeSeconds = new SN_DoublePreference(
+        "driveOpenLoopRampTimeSeconds", .25);
+
+    public static final SN_BooleanPreference driveBreakMode = new SN_BooleanPreference("driveBreakMode", false);
   }
 
   public static final class HoodPrefs {
+    public static final SN_BooleanPreference hoodPresetUpperFenderSteep = new SN_BooleanPreference(
+        "hoodPresetUpperFenderSteep", false);
+    public static final SN_BooleanPreference hoodPresetUpperTarmacSteep = new SN_BooleanPreference(
+        "hoodPresetUpperTarmacSteep", true);
+    public static final SN_BooleanPreference hoodPresetUpperLaunchpadSteep = new SN_BooleanPreference(
+        "hoodPresetUpperLaunchpadSteep", true);
+    public static final SN_BooleanPreference hoodPresetUpperTerminalSteep = new SN_BooleanPreference(
+        "hoodPresetUpperTerminalSteep", true);
+
+    public static final SN_BooleanPreference hoodPresetLowerFenderSteep = new SN_BooleanPreference(
+        "hoodPresetLowerFenderSteep", true);
+    public static final SN_BooleanPreference hoodPresetLowerTarmacSteep = new SN_BooleanPreference(
+        "hoodPresetLowerTarmacSteep", true);
+    public static final SN_BooleanPreference hoodPresetLowerLaunchpadSteep = new SN_BooleanPreference(
+        "hoodPresetLowerLaunchpadSteep", true);
+    public static final SN_BooleanPreference hoodPresetLowerTerminalSteep = new SN_BooleanPreference(
+        "hoodPresetLowerTerminalSteep", true);
   }
 
   public static final class ShooterPrefs {
@@ -71,17 +92,38 @@ public final class RobotPreferences {
     public static final SN_DoublePreference shooterEncoderCountsPerDegrees = new SN_DoublePreference(
         "shooterEncoderCountsPerDegrees", 84);
 
-    public static final SN_DoublePreference shooterF = new SN_DoublePreference("shooterF", 0);
-    public static final SN_DoublePreference shooterP = new SN_DoublePreference("shooterP", 1);
-    public static final SN_DoublePreference shooterI = new SN_DoublePreference("shooterI", 0);
+    public static final SN_DoublePreference shooterF = new SN_DoublePreference("shooterF", 0.05);
+    public static final SN_DoublePreference shooterP = new SN_DoublePreference("shooterP", 0.005);
+    public static final SN_DoublePreference shooterI = new SN_DoublePreference("shooterI", 0.0001);
     public static final SN_DoublePreference shooterD = new SN_DoublePreference("shooterD", 0);
+
+    public static final SN_DoublePreference shooterPresetUpperFenderRPM = new SN_DoublePreference(
+        "shooterPresetUpperFenderRPM", 3100);
+    public static final SN_DoublePreference shooterPresetUpperTarmacRPM = new SN_DoublePreference(
+        "shooterPresetUpperTarmacRPM", 4000);
+    public static final SN_DoublePreference shooterPresetUpperLaunchpadRPM = new SN_DoublePreference(
+        "shooterPresetUpperLaunchpadRPM", 4500);
+    public static final SN_DoublePreference shooterPresetUpperTerminalRPM = new SN_DoublePreference(
+        "shooterPresetUpperTerminalRPM", 5000);
+
+    public static final SN_DoublePreference shooterPresetLowerFenderRPM = new SN_DoublePreference(
+        "shooterPresetLowerFenderRPM", 2000);
+    public static final SN_DoublePreference shooterPresetLowerTarmacRPM = new SN_DoublePreference(
+        "shooterPresetLowerTarmacRPM", 2500);
+    public static final SN_DoublePreference shooterPresetLowerLaunchpadRPM = new SN_DoublePreference(
+        "shooterPresetLowerLaunchpadRPM", 3000);
+    public static final SN_DoublePreference shooterPresetLowerTerminalRPM = new SN_DoublePreference(
+        "shooterPresetLowerTerminalRPM", 3500);
+
+    public static final SN_IntPreference shooterIgnoreRPMTimeAfterShotLoops = new SN_IntPreference(
+        "shooterIgnoreRPMTimeAfterShotLoops", 25);
   }
 
   public static final class TurretPrefs {
     public static final SN_DoublePreference turretMaxAngleDegrees = new SN_DoublePreference("turretMaxAngleDegrees",
-        180);
+        360);
     public static final SN_DoublePreference turretMinAngleDegrees = new SN_DoublePreference("turretMinAngleDegrees",
-        -180);
+        0);
 
     // 2048 encoder counts per rotation * 65 (gr) = 133120
     // 133120 / 360 = 370
@@ -100,13 +142,14 @@ public final class RobotPreferences {
     public static final SN_IntPreference turretLoopsToFinish = new SN_IntPreference("turretLoopsToFinish", 25);
 
     public static final SN_DoublePreference turretPresetPos1 = new SN_DoublePreference("turretTestPos", 45);
+    public static final SN_DoublePreference turretOpenLoopSpeed = new SN_DoublePreference("turretOpenLoopSpeed", .3);
   }
 
   public static final class TransferPrefs {
     public final static SN_DoublePreference transferEntranceSpeed = new SN_DoublePreference(
-        "transferEntranceSpeed", .75);
+        "transferEntranceSpeed", .8);
     public final static SN_DoublePreference transferEntranceRejectSpeed = new SN_DoublePreference(
-        "transferEntranceRejectSpeed", -.75);
+        "transferEntranceRejectSpeed", -.8);
     public final static SN_DoublePreference transferBeltSpeed = new SN_DoublePreference(
         "transferBeltSpeed", 1);
 
@@ -118,11 +161,11 @@ public final class RobotPreferences {
         "transferTopBeltInvert", false);
 
     // one loop is 20ms
-    public final static SN_IntPreference transferRejectLatchTimeLoops = new SN_IntPreference(
+    public final static SN_IntPreference transferRejectTimerLoops = new SN_IntPreference(
         "transferRejectLatchTimeLoops", 25);
 
     // Transfer ramping
-    public final static SN_DoublePreference transferRampTime = new SN_DoublePreference("transferRampTime", 0.75);
+    public final static SN_DoublePreference transferRampTime = new SN_DoublePreference("transferRampTime", 0);
 
   }
 
@@ -137,7 +180,7 @@ public final class RobotPreferences {
     public final static SN_DoublePreference intakeRejectSpeed = new SN_DoublePreference(
         "intakeRejectSpeed", -0.80);
     // one loop is 20ms
-    public final static SN_IntPreference intakeRejectLatchTimeLoops = new SN_IntPreference(
+    public final static SN_IntPreference intakeRejectTimerLoops = new SN_IntPreference(
         "intakeRejectLatchTimeLoops", 50);
     public final static SN_IntPreference colorSensorMinProximity = new SN_IntPreference(
         "colorSensorMinProximity", 1000);
@@ -148,13 +191,27 @@ public final class RobotPreferences {
 
   public static final class ClimberPrefs {
     public static final SN_DoublePreference climberMotorSpeed = new SN_DoublePreference("climberMotorSpeed", 0.5);
-    public static final SN_DoublePreference climberMaxEncoderCount = new SN_DoublePreference(
-        "climberMaxEncoderCount",
-        200000);
+    public static final SN_DoublePreference climberMaxEncoderCountPerpendicular = new SN_DoublePreference(
+        "climberMaxEncoderCount", 150000);
+    public static final SN_DoublePreference climberMaxEncoderCountAngled = new SN_DoublePreference(
+        "climberMaxEncoderCountPivoted", 200000);
+    public static final SN_DoublePreference climberMinEncoderCount = new SN_DoublePreference(
+        "climberMinEncoderCount", 0);
 
     // Climbing Up/Down Positions
     public static final SN_DoublePreference climberUpPosition = new SN_DoublePreference("climberUpPosition", 32555);
     public static final SN_DoublePreference climberDownPosition = new SN_DoublePreference("climberDownPosition", 0);
+
+    public static final SN_BooleanPreference climberLockPistonInvert = new SN_BooleanPreference(
+        "climberLockPistonInvert", false);
+    public static final SN_BooleanPreference climberPivotPistonInvert = new SN_BooleanPreference(
+        "climberPivotPistonInvert", false);
+    public static final SN_BooleanPreference climberHookPistonInvert = new SN_BooleanPreference(
+        "climberHookPistonInvert", false);
+
+    public static final SN_IntPreference climberLoopsToFinish = new SN_IntPreference("climberLoopsToFinish", 25);
+    public static final SN_DoublePreference climberAcceptableClosedLoopError = new SN_DoublePreference(
+        "climberAcceptableClosedLoopError", 300);
   }
 
   public static final class AutoPrefs {

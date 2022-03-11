@@ -5,15 +5,16 @@
 package frc.robot.commands.Climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotPreferences.ClimberPrefs;
+import frc.robot.Robot;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.Climber;
 
-public class ResetClimber extends CommandBase {
+public class RunSpoolBackward extends CommandBase {
 
   Climber climber;
 
-  /** Creates a new ResetClimber. */
-  public ResetClimber(Climber sub_climber) {
+  /** Creates a new RunSpoolBackward. */
+  public RunSpoolBackward(Climber sub_climber) {
     // Use addRequirements() here to declare subsystem dependencies.
     climber = sub_climber;
     addRequirements(climber);
@@ -23,13 +24,14 @@ public class ResetClimber extends CommandBase {
   @Override
   public void initialize() {
     climber.unlockClimber();
-    climber.pivotAngled();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climber.setClimberPosition(ClimberPrefs.climberDownPosition);
+    double speed = RobotContainer.DriverStick.getAxisLT();
+
+    climber.setClimberSpeed(-speed);
   }
 
   // Called once the command ends or is interrupted.
@@ -42,6 +44,6 @@ public class ResetClimber extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return climber.isClimberAtBottom();
+    return false;
   }
 }

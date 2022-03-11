@@ -4,18 +4,27 @@
 
 package frc.robot;
 
+import java.sql.Driver;
+
 import com.frcteam3255.joystick.SN_DualActionStick;
+import com.frcteam3255.joystick.SN_F310Gamepad;
+import com.frcteam3255.joystick.SN_SwitchboardStick;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Drivetrain.*;
 import frc.robot.commands.Hood.*;
 import frc.robot.commands.Turret.*;
 import frc.robot.commands.Intake.*;
 import frc.robot.commands.Shooter.*;
 import frc.robot.commands.Transfer.*;
+import frc.robot.RobotPreferences.ClimberPrefs;
+import frc.robot.RobotPreferences.HoodPrefs;
+import frc.robot.RobotPreferences.ShooterPrefs;
 import frc.robot.commands.ConfigureSubsystems;
 import frc.robot.commands.Climber.*;
 import frc.robot.subsystems.*;
@@ -30,10 +39,12 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
 
   // Joysticks
-  public static final SN_DualActionStick DriverStick = new SN_DualActionStick(
+  public static final SN_F310Gamepad DriverStick = new SN_F310Gamepad(
       RobotMap.ControllerMap.DRIVER_STICK);
   public static final SN_DualActionStick coDriverStick = new SN_DualActionStick(
       RobotMap.ControllerMap.CODRIVER_STICK);
+  public static final SN_SwitchboardStick switchBoard = new SN_SwitchboardStick(
+      RobotMap.ControllerMap.SWITCH_BOARD);
 
   // Subsystems
   private final Drivetrain sub_drivetrain = new Drivetrain();
@@ -68,15 +79,33 @@ public class RobotContainer {
       RobotPreferences.zeroDoublePref);
   private final HoldTurretPosition com_holdTurretPos1 = new HoldTurretPosition(sub_turret, sub_navX,
       RobotPreferences.TurretPrefs.turretPresetPos1);
-  private final VisionAimTurret com_visionAimTurret = new VisionAimTurret(sub_turret, sub_vision);
+  private final VisionAimTurret com_visionAimTurret = new VisionAimTurret(sub_turret, sub_shooter, sub_vision);
   private final VisionNavXAimTurret com_visionHoldAimTurret = new VisionNavXAimTurret(sub_turret, sub_vision,
       sub_navX);
 
   // Shooter Commands
   private final PushCargoToShooter com_pushCargoToShooter = new PushCargoToShooter(sub_shooter, sub_transfer);
-  private final SpinFlywheelVelocity com_spinFlywheel = new SpinFlywheelVelocity(sub_shooter);
+  private final SpinFlywheelVelocity com_spinFlywheelVelocity = new SpinFlywheelVelocity(sub_shooter);
   private final SpinFlywheelPercentOutput com_FlywheelPercentOutput = new SpinFlywheelPercentOutput(
       sub_shooter);
+  private final SpinFlywheelGoalRPM com_spinFlywheelGoalRPM = new SpinFlywheelGoalRPM(sub_shooter);
+
+  private final InstantCommand com_setUpperHubGoal = new InstantCommand(sub_shooter::setGoalUpperHub);
+  private final InstantCommand com_setLowerHubGoal = new InstantCommand(sub_shooter::setGoalLowerHub);
+
+  // Shooter Presets
+  private final PresetShooter com_presetFender = new PresetShooter(sub_shooter, sub_hood,
+      ShooterPrefs.shooterPresetUpperFenderRPM, HoodPrefs.hoodPresetUpperFenderSteep,
+      ShooterPrefs.shooterPresetLowerFenderRPM, HoodPrefs.hoodPresetLowerFenderSteep);
+  private final PresetShooter com_presetTarmacUpper = new PresetShooter(sub_shooter, sub_hood,
+      ShooterPrefs.shooterPresetUpperTarmacRPM, HoodPrefs.hoodPresetUpperTarmacSteep,
+      ShooterPrefs.shooterPresetLowerTarmacRPM, HoodPrefs.hoodPresetLowerTarmacSteep);
+  private final PresetShooter com_presetLaunchpadUpper = new PresetShooter(sub_shooter, sub_hood,
+      ShooterPrefs.shooterPresetUpperLaunchpadRPM, HoodPrefs.hoodPresetUpperLaunchpadSteep,
+      ShooterPrefs.shooterPresetLowerLaunchpadRPM, HoodPrefs.hoodPresetLowerLaunchpadSteep);
+  private final PresetShooter com_presetTerminalUpper = new PresetShooter(sub_shooter, sub_hood,
+      ShooterPrefs.shooterPresetUpperTerminalRPM, HoodPrefs.hoodPresetUpperTerminalSteep,
+      ShooterPrefs.shooterPresetLowerTerminalRPM, HoodPrefs.hoodPresetLowerTerminalSteep);
 
   // Transfer Commands
 
@@ -90,8 +119,16 @@ public class RobotContainer {
 
   // Climber Commands
   private final Climb com_climb = new Climb(sub_climber);
-  private final ClimbNextRung com_ClimbNextRung = new ClimbNextRung(sub_climber);
-  private final ResetClimber com_ResetClimber = new ResetClimber(sub_climber);
+  private final MagicClimb com_magicClimb = new MagicClimb(sub_climber);
+  private final ResetClimber com_resetClimber = new ResetClimber(sub_climber);
+  private final InstantCommand com_lockClimber = new InstantCommand(sub_climber::lockClimber);
+  private final InstantCommand com_unlockClimber = new InstantCommand(sub_climber::unlockClimber);
+  private final InstantCommand com_pivotClimberForward = new InstantCommand(sub_climber::pivotPerpendicular);
+  private final InstantCommand com_pivotClimberBackward = new InstantCommand(sub_climber::pivotAngled);
+  private final InstantCommand com_hookClimberUp = new InstantCommand(sub_climber::hookUp);
+  private final InstantCommand com_hookClimberDown = new InstantCommand(sub_climber::hookDown);
+
+  private final PrepClimb com_prepClimb = new PrepClimb(sub_turret, sub_hood, sub_climber);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -110,24 +147,38 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    coDriverStick.btn_RTrig.whileHeld(com_pushCargoToShooter);
-    coDriverStick.btn_RTrig.whileHeld(com_spinFlywheel);
 
-    coDriverStick.btn_A.whileHeld(com_deployIntake);
-    coDriverStick.btn_B.whileHeld(com_retractIntake);
-    coDriverStick.btn_X.whileHeld(com_visionAimTurret);
-    coDriverStick.btn_Y.whileHeld(com_visionHoldAimTurret);
-    coDriverStick.btn_LBump.whileHeld(com_moveTurret);
+    // Driver Stick
+
+    DriverStick.btn_B.whileHeld(com_pivotClimberForward);
+    DriverStick.btn_A.whileHeld(com_pivotClimberBackward);
+
+    DriverStick.btn_Y.whileHeld(com_hookClimberUp);
+    DriverStick.btn_X.whileHeld(com_hookClimberDown);
+
+    // DriverStick.btn_Start.whileHeld(com_magicClimb);
+    // DriverStick.btn_LTrig.whileHeld(com_runSpoolBackward);
+    // DriverStick.btn_RTrig.whileHeld(com_runSpoolForward);
+
+    // DriverStick.btn_Y.whileHeld(com_highHub);
+    // DriverStick.btn_X.whileHeld(com_lowHub);
+
+    DriverStick.btn_Back.whileHeld(com_prepClimb);
+
+    // coDriver Stick
+
+    coDriverStick.btn_RTrig.whileHeld(com_pushCargoToShooter);
+    coDriverStick.btn_RTrig.whileHeld(com_spinFlywheelVelocity);
+
+    coDriverStick.btn_Back.whileHeld(com_retractIntake);
 
     coDriverStick.btn_LTrig.whileHeld(com_collect);
 
-    coDriverStick.btn_LStick.whileHeld(com_climb);
+    // coDriverStick.POV_North.whileHeld(com_fenderPreset);
+    // coDriverStick.POV_East.whileHeld(com_tarmacPreset);
+    // coDriverStick.POV_South.whileHeld(com_launchPadPreset);
+    // coDriverStick.POV_West.whileHeld(com_unusedPreset);
 
-    coDriverStick.POV_East.whenPressed(com_ResetClimber);
-    coDriverStick.POV_North.whenPressed(com_shallowHood);
-    coDriverStick.POV_South.whenPressed(com_steepenHood);
-
-    coDriverStick.btn_RBump.whenPressed(com_ClimbNextRung);
   }
 
   /**
@@ -177,6 +228,13 @@ public class RobotContainer {
 
     SmartDashboard.putData("Configure All Subsystems", new ConfigureSubsystems(sub_climber, sub_drivetrain,
         sub_intake, sub_shooter, sub_transfer, sub_turret));
+
+    SmartDashboard.putData("Lock Climber", com_lockClimber);
+    SmartDashboard.putData("Unlock Climber", com_unlockClimber);
+    SmartDashboard.putData("Pivot Climber Forward", com_pivotClimberForward);
+    SmartDashboard.putData("Pivot Climber Backward", com_pivotClimberBackward);
+    SmartDashboard.putData("Hook Climber Forward", com_hookClimberUp);
+    SmartDashboard.putData("Hook Climber Backwards", com_hookClimberDown);
   }
 
   /**

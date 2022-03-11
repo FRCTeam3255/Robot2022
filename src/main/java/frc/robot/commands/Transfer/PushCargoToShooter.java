@@ -9,7 +9,6 @@ import static frc.robot.RobotPreferences.*;
 
 import com.frcteam3255.preferences.SN_DoublePreference;
 
-import frc.robot.RobotPreferences.*;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Transfer;
 import frc.robot.subsystems.Transfer.TransferState;
@@ -22,6 +21,8 @@ public class PushCargoToShooter extends CommandBase {
   SN_DoublePreference outputEntranceSpeed;
   SN_DoublePreference outputBottomBeltSpeed;
   SN_DoublePreference outputTopBeltSpeed;
+
+  int timeToleranceLoops = 0;
 
   /** Creates a new ShootCargo. */
   public PushCargoToShooter(Shooter sub_shooter, Transfer sub_transfer) {
@@ -49,7 +50,8 @@ public class PushCargoToShooter extends CommandBase {
     outputTopBeltSpeed = TransferPrefs.transferBeltSpeed;
 
     // If the shooter rpm is greater or equal to the target rpm
-    if (shooter.isShooterUpToSpeed()) {
+    if (!shooter.isShooterUpToSpeed()) {
+      timeToleranceLoops--;
 
       if (transfer.isTopBallCollected()) {
         outputTopBeltSpeed = zeroDoublePref;
@@ -60,10 +62,18 @@ public class PushCargoToShooter extends CommandBase {
         outputBottomBeltSpeed = zeroDoublePref;
         outputTopBeltSpeed = zeroDoublePref;
       }
-      transfer.setEntranceBeltMotorSpeed(outputEntranceSpeed);
-      transfer.setBottomBeltMotorSpeed(outputBottomBeltSpeed);
-      transfer.setTopBeltMotorSpeed(outputTopBeltSpeed);
+    } else {
+      timeToleranceLoops = ShooterPrefs.shooterIgnoreRPMTimeAfterShotLoops.getValue();
     }
+
+    if (timeToleranceLoops > 0) {
+      outputEntranceSpeed = TransferPrefs.transferEntranceSpeed;
+      outputBottomBeltSpeed = TransferPrefs.transferBeltSpeed;
+      outputTopBeltSpeed = TransferPrefs.transferBeltSpeed;
+    }
+    transfer.setEntranceBeltMotorSpeed(outputEntranceSpeed);
+    transfer.setBottomBeltMotorSpeed(outputBottomBeltSpeed);
+    transfer.setTopBeltMotorSpeed(outputTopBeltSpeed);
   }
 
   // Called once the command ends or is interrupted.

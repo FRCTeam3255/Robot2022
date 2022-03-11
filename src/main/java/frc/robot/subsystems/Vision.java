@@ -22,6 +22,14 @@ public class Vision extends SubsystemBase {
     limelight = new SN_Limelight();
   }
 
+  public double getIdealUpperHubRPM() {
+    return /* regression */ limelight.getOffsetY(); // TODO: find regression
+  }
+
+  public double getIdealLowerHubRPM() {
+    return /* different regression */ limelight.getOffsetY(); // TODO: ^
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -29,6 +37,8 @@ public class Vision extends SubsystemBase {
     SmartDashboard.putNumber("limelight x error", limelight.getOffsetX());
     SmartDashboard.putNumber("limelight y error", limelight.getOffsetY());
     SmartDashboard.putNumber("limelight target area", limelight.getTargetArea());
+    SmartDashboard.putNumber("limelight Ideal Upper Hub RPM", getIdealUpperHubRPM());
+    SmartDashboard.putNumber("limelight Idead Lower Hub RPM", getIdealLowerHubRPM());
 
     if (RobotController.getUserButton()) {
       if (timer > 25) {

@@ -48,6 +48,7 @@ public class Drivetrain extends SubsystemBase {
     config.slot0.kP = DrivetrainPrefs.driveP.getValue();
     config.slot0.kI = DrivetrainPrefs.driveI.getValue();
     config.slot0.kD = DrivetrainPrefs.driveD.getValue();
+    config.openloopRamp = DrivetrainPrefs.driveOpenLoopRampTimeSeconds.getValue();
 
     // Left
     leftLeadMotor.configFactoryDefault();
@@ -57,8 +58,14 @@ public class Drivetrain extends SubsystemBase {
     leftLeadMotor.setInverted(true);
     leftFollowMotor.setInverted(TalonFXInvertType.FollowMaster);
     leftLeadMotor.setSensorPhase(true);
-    leftFollowMotor.setNeutralMode(NeutralMode.Brake);
-    leftLeadMotor.setNeutralMode(NeutralMode.Brake);
+
+    if (DrivetrainPrefs.driveBreakMode.getValue()) {
+      leftFollowMotor.setNeutralMode(NeutralMode.Brake);
+      leftLeadMotor.setNeutralMode(NeutralMode.Brake);
+    } else {
+      leftFollowMotor.setNeutralMode(NeutralMode.Coast);
+      leftLeadMotor.setNeutralMode(NeutralMode.Coast);
+    }
 
     leftFollowMotor.follow(leftLeadMotor);
 
@@ -70,8 +77,13 @@ public class Drivetrain extends SubsystemBase {
     rightLeadMotor.setInverted(false);
     rightFollowMotor.setInverted(TalonFXInvertType.FollowMaster);
     rightLeadMotor.setSensorPhase(false);
-    rightFollowMotor.setNeutralMode(NeutralMode.Brake);
-    rightLeadMotor.setNeutralMode(NeutralMode.Brake);
+    if (DrivetrainPrefs.driveBreakMode.getValue()) {
+      rightFollowMotor.setNeutralMode(NeutralMode.Brake);
+      rightLeadMotor.setNeutralMode(NeutralMode.Brake);
+    } else {
+      rightFollowMotor.setNeutralMode(NeutralMode.Coast);
+      rightLeadMotor.setNeutralMode(NeutralMode.Coast);
+    }
     rightFollowMotor.follow(rightLeadMotor);
 
   }
