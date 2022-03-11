@@ -6,7 +6,6 @@ package frc.robot.commands.Drivetrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.RobotPreferences.DrivetrainPrefs;
 import frc.robot.subsystems.Drivetrain;
 
 public class Drive extends CommandBase {
@@ -14,8 +13,6 @@ public class Drive extends CommandBase {
 
   double speed;
   double turn;
-
-  double previousSpeed;
 
   public Drive(Drivetrain sub_drivetrain) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -33,16 +30,13 @@ public class Drive extends CommandBase {
   public void execute() {
     // Read direction of the joystick
     speed = RobotContainer.DriverStick.getArcadeMove();
-    turn = RobotContainer.DriverStick.getArcadeRotate();
+    speed = drivetrain.slewRateLimiter.calculate(speed);
 
-    if (Math.abs(previousSpeed - speed) > DrivetrainPrefs.driveMaximumArcadeSpeedDelta.getValue()) {
-      speed = previousSpeed - DrivetrainPrefs.driveMaximumArcadeSpeedDelta.getValue();
-    }
+    turn = RobotContainer.DriverStick.getArcadeRotate();
 
     // Set motors to direction to joystick
     drivetrain.arcadeDrive(speed, turn);
 
-    previousSpeed = speed;
   }
 
   // Called once the command ends or is interrupted.
