@@ -119,18 +119,7 @@ public class RobotContainer {
 
   // Climber Commands
   private final Climb com_climb = new Climb(sub_climber);
-  SequentialCommandGroup com_magicClimb = new SequentialCommandGroup(
-      new SetClimberPosition(sub_climber, ClimberPrefs.climberUpPosition), // extend
-      new SetClimberPosition(sub_climber, ClimberPrefs.climberDownPosition), // retract
-      new InstantCommand(sub_climber::pivotAngled, sub_climber), // pivot angled
-      new SetClimberPosition(sub_climber, ClimberPrefs.climberUpPosition), // extend
-      new InstantCommand(sub_climber::pivotPerpendicular, sub_climber), // pivot perpendicular
-      new SetClimberPosition(sub_climber, ClimberPrefs.climberDownPosition), // retract
-      new InstantCommand(sub_climber::pivotAngled, sub_climber), // pivot angled
-      new SetClimberPosition(sub_climber, ClimberPrefs.climberUpPosition), // extend
-      new InstantCommand(sub_climber::pivotPerpendicular, sub_climber), // pivot perpendicular
-      new SetClimberPosition(sub_climber, ClimberPrefs.climberDownPosition) // retract
-  );
+  private final MagicClimb com_magicClimb = new MagicClimb(sub_climber);
   private final ResetClimber com_resetClimber = new ResetClimber(sub_climber);
   private final InstantCommand com_lockClimber = new InstantCommand(sub_climber::lockClimber);
   private final InstantCommand com_unlockClimber = new InstantCommand(sub_climber::unlockClimber);
