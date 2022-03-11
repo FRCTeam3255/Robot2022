@@ -36,11 +36,12 @@ public final class RobotPreferences {
     public static final SN_DoublePreference driveP = new SN_DoublePreference("driveP", 1);
     public static final SN_DoublePreference driveI = new SN_DoublePreference("driveI", 0);
     public static final SN_DoublePreference driveD = new SN_DoublePreference("driveD", 0);
-    public static final SN_DoublePreference driveAllowableClosedLoopError = new SN_DoublePreference(
-        "driveAllowableClosedLoopError",
-        1000);
+
+    public static final SN_DoublePreference driveAllowableClosedLoopErrorInches = new SN_DoublePreference(
+        "driveAllowableClosedLoopErrorInches", 2);
     public static final SN_DoublePreference driveClosedLoopPeakOutput = new SN_DoublePreference(
         "driveClosedLoopPeakOutput", 1);
+    public static final SN_DoublePreference driveLoopsToFinish = new SN_DoublePreference("driveLoopsToFinish", 25);
 
     // drivetrain gear ratio: 10:60 aka motor rotates once, wheel rotates 1/6
     // 2048 counts per motor rotation, * 6 is 12288 counts per wheel rotation
@@ -56,6 +57,7 @@ public final class RobotPreferences {
         "driveOpenLoopRampTimeSeconds", .25);
 
     public static final SN_BooleanPreference driveBreakMode = new SN_BooleanPreference("driveBreakMode", false);
+
   }
 
   public static final class HoodPrefs {
