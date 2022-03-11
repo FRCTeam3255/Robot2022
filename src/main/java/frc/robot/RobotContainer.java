@@ -22,6 +22,7 @@ import frc.robot.commands.Turret.*;
 import frc.robot.commands.Intake.*;
 import frc.robot.commands.Shooter.*;
 import frc.robot.commands.Transfer.*;
+import frc.robot.RobotPreferences.ClimberPrefs;
 import frc.robot.RobotPreferences.HoodPrefs;
 import frc.robot.RobotPreferences.ShooterPrefs;
 import frc.robot.commands.ConfigureSubsystems;
@@ -118,7 +119,18 @@ public class RobotContainer {
 
   // Climber Commands
   private final Climb com_climb = new Climb(sub_climber);
-  private final MagicClimb com_magicClimb = new MagicClimb(sub_climber, sub_turret, sub_hood);
+  SequentialCommandGroup com_magicClimb = new SequentialCommandGroup(
+      new SetClimberPosition(sub_climber, ClimberPrefs.climberUpPosition), // extend
+      new SetClimberPosition(sub_climber, ClimberPrefs.climberDownPosition), // retract
+      new InstantCommand(sub_climber::pivotAngled, sub_climber), // pivot angled
+      new SetClimberPosition(sub_climber, ClimberPrefs.climberUpPosition), // extend
+      new InstantCommand(sub_climber::pivotPerpendicular, sub_climber), // pivot perpendicular
+      new SetClimberPosition(sub_climber, ClimberPrefs.climberDownPosition), // retract
+      new InstantCommand(sub_climber::pivotAngled, sub_climber), // pivot angled
+      new SetClimberPosition(sub_climber, ClimberPrefs.climberUpPosition), // extend
+      new InstantCommand(sub_climber::pivotPerpendicular, sub_climber), // pivot perpendicular
+      new SetClimberPosition(sub_climber, ClimberPrefs.climberDownPosition) // retract
+  );
   private final ResetClimber com_resetClimber = new ResetClimber(sub_climber);
   private final InstantCommand com_lockClimber = new InstantCommand(sub_climber::lockClimber);
   private final InstantCommand com_unlockClimber = new InstantCommand(sub_climber::unlockClimber);
