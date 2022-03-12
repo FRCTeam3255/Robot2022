@@ -29,19 +29,18 @@ public class RunSpool extends CommandBase {
   public void execute() {
     double speed = 0;
     if (climber.isHookDeployed()) {
-      if (RobotContainer.DriverStick.getAxisRT() > 0 || RobotContainer.DriverStick.getAxisLT() > 0) {
+      if (RobotContainer.DriverStick.getAxisRT() > 0) {
         climber.unlockClimber();
-        if (RobotContainer.DriverStick.getAxisRT() > 0) {
-          speed = RobotContainer.DriverStick.getAxisRT();
-        }
-
-        if (RobotContainer.DriverStick.getAxisLT() > 0) {
-          speed = -RobotContainer.DriverStick.getAxisRT();
-        }
-      } else {
-        speed = 0;
-        climber.lockClimber();
+        speed = RobotContainer.DriverStick.getAxisRT();
       }
+
+      if (RobotContainer.DriverStick.getAxisLT() > 0) {
+        climber.unlockClimber();
+        speed = -RobotContainer.DriverStick.getAxisRT();
+      }
+    } else {
+      speed = 0;
+      climber.lockClimber();
     }
     climber.setClimberSpeed(speed);
   }
