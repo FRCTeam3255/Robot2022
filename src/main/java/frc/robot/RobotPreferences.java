@@ -127,6 +127,9 @@ public final class RobotPreferences {
 
     public static final SN_IntPreference shooterIgnoreRPMTimeAfterShotLoops = new SN_IntPreference(
         "shooterIgnoreRPMTimeAfterShotLoops", 25);
+
+    public static final SN_IntPreference shooterDelayLoops = new SN_IntPreference(
+        "shooterDelayLoops", 20);
   }
 
   public static final class TurretPrefs {
