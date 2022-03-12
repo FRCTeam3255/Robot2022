@@ -28,7 +28,8 @@ public class Drivetrain extends SubsystemBase {
 
   private TalonFXConfiguration config;
 
-  public SlewRateLimiter slewRateLimiter;
+  public SlewRateLimiter posSlewRateLimiter;
+  public SlewRateLimiter negSlewRateLimiter;
 
   // Initializes Variables for Drivetrain
   public Drivetrain() {
@@ -39,7 +40,8 @@ public class Drivetrain extends SubsystemBase {
 
     config = new TalonFXConfiguration();
 
-    slewRateLimiter = new SlewRateLimiter(DrivetrainPrefs.driveSlewRateLimit.getValue());
+    posSlewRateLimiter = new SlewRateLimiter(DrivetrainPrefs.drivePosSlewRateLimit.getValue());
+    negSlewRateLimiter = new SlewRateLimiter(DrivetrainPrefs.driveNegSlewRateLimit.getValue());
 
     configure();
   }
@@ -91,7 +93,8 @@ public class Drivetrain extends SubsystemBase {
     }
     rightFollowMotor.follow(rightLeadMotor);
 
-    slewRateLimiter = new SlewRateLimiter(DrivetrainPrefs.driveSlewRateLimit.getValue());
+    posSlewRateLimiter = new SlewRateLimiter(DrivetrainPrefs.drivePosSlewRateLimit.getValue());
+    negSlewRateLimiter = new SlewRateLimiter(DrivetrainPrefs.driveNegSlewRateLimit.getValue());
 
   }
 

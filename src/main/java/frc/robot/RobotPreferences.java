@@ -62,7 +62,11 @@ public final class RobotPreferences {
 
     // value is in controller input delta per second, eg 0.3 means that the
     // controller can only change by 0.3 in a second
-    public static final SN_DoublePreference driveSlewRateLimit = new SN_DoublePreference("driveSlewRateLimit", .7);
+    public static final SN_DoublePreference drivePosSlewRateLimit = new SN_DoublePreference(
+        "drivePosSlewRateLimit", .7);
+    public static final SN_DoublePreference driveNegSlewRateLimit = new SN_DoublePreference(
+        "driveNegSlewRateLimit", .7);
+    public static final SN_BooleanPreference driveSquaredInputs = new SN_BooleanPreference("driveSquaredInputs", true);
   }
 
   public static final class HoodPrefs {
