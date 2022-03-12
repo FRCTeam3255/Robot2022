@@ -37,7 +37,7 @@ public class DriveDistance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (drivetrain.getAverageClosedLoopErrorInches() < DrivetrainPrefs.driveAllowableClosedLoopErrorInches.getValue()) {
+    if (drivetrain.getAverageClosedLoopErrorInches() <= DrivetrainPrefs.driveAllowableClosedLoopErrorInches.getValue()) {
       loopsWithAcceptableError++;
     } else {
       loopsWithAcceptableError = 0;
