@@ -84,6 +84,8 @@ public class PushCargoToShooter extends CommandBase {
     transfer.setTopBeltMotorSpeed(zeroDoublePref);
     transfer.setTransferState(TransferState.OFF);
 
+    timeToleranceLoops = 0;
+
   }
 
   // Returns true when the command should end.

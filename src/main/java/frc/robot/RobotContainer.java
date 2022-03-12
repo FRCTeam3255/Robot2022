@@ -140,6 +140,8 @@ public class RobotContainer {
     configureDashboardButtons();
     sub_drivetrain.setDefaultCommand(com_drive);
     sub_climber.setDefaultCommand(com_runSpool);
+    com_setUpperHubGoal.initialize(); // upper hub needs to be set as goal
+    com_presetFender.initialize(); // before setting fender as the preset
   }
 
   /**
