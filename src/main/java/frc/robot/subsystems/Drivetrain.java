@@ -13,8 +13,11 @@ import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.frcteam3255.preferences.SN_DoublePreference;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
+import frc.robot.RobotPreferences;
 import frc.robot.RobotMap.*;
 import frc.robot.RobotPreferences.*;
 
@@ -28,6 +31,9 @@ public class Drivetrain extends SubsystemBase {
 
   private TalonFXConfiguration config;
 
+  public SlewRateLimiter posSlewRateLimiter;
+  public SlewRateLimiter negSlewRateLimiter;
+
   // Initializes Variables for Drivetrain
   public Drivetrain() {
     leftLeadMotor = new TalonFX(DrivetrainMap.LEFT_LEAD_MOTOR_CAN);
@@ -36,6 +42,9 @@ public class Drivetrain extends SubsystemBase {
     rightFollowMotor = new TalonFX(DrivetrainMap.RIGHT_FOLLOW_MOTOR_CAN);
 
     config = new TalonFXConfiguration();
+
+    posSlewRateLimiter = new SlewRateLimiter(DrivetrainPrefs.drivePosSlewRateLimit.getValue());
+    negSlewRateLimiter = new SlewRateLimiter(DrivetrainPrefs.driveNegSlewRateLimit.getValue());
 
     configure();
   }
@@ -85,6 +94,9 @@ public class Drivetrain extends SubsystemBase {
       rightLeadMotor.setNeutralMode(NeutralMode.Coast);
     }
     rightFollowMotor.follow(rightLeadMotor);
+
+    posSlewRateLimiter = new SlewRateLimiter(DrivetrainPrefs.drivePosSlewRateLimit.getValue());
+    negSlewRateLimiter = new SlewRateLimiter(DrivetrainPrefs.driveNegSlewRateLimit.getValue());
 
   }
 
@@ -154,9 +166,18 @@ public class Drivetrain extends SubsystemBase {
   public void arcadeDrive(double a_speed, double a_turn) {
     double speed = a_speed * DrivetrainPrefs.arcadeSpeed.getValue();
     double turn = a_turn * DrivetrainPrefs.arcadeTurn.getValue();
+    double multiplier = 1;
 
-    leftLeadMotor.set(ControlMode.PercentOutput, speed, DemandType.ArbitraryFeedForward, turn);
-    rightLeadMotor.set(ControlMode.PercentOutput, speed, DemandType.ArbitraryFeedForward, -turn);
+    if (RobotContainer.DriverStick.btn_LBump.get()) {
+      multiplier = RobotPreferences.DrivetrainPrefs.arcadeLowSpeed.getValue();
+    }
+
+    if (RobotContainer.DriverStick.btn_RBump.get()) {
+      multiplier = RobotPreferences.DrivetrainPrefs.arcadeHighSpeed.getValue();
+    }
+
+    leftLeadMotor.set(ControlMode.PercentOutput, speed * multiplier, DemandType.ArbitraryFeedForward, turn);
+    rightLeadMotor.set(ControlMode.PercentOutput, speed * multiplier, DemandType.ArbitraryFeedForward, -turn);
   }
 
   // starts motion profile using seperate left and right trajectories, and ctre

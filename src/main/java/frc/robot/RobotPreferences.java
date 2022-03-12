@@ -29,7 +29,9 @@ public final class RobotPreferences {
       "encoderCountsPerTalonFXRotation", 2048);
 
   public static final class DrivetrainPrefs {
-    public static final SN_DoublePreference arcadeSpeed = new SN_DoublePreference("arcadeSpeed", 1);
+    public static final SN_DoublePreference arcadeSpeed = new SN_DoublePreference("arcadeSpeed", 0.75);
+    public static final SN_DoublePreference arcadeLowSpeed = new SN_DoublePreference("arcadeLowSpeed", 0.5);
+    public static final SN_DoublePreference arcadeHighSpeed = new SN_DoublePreference("arcadeHighSpeed", 1);
     public static final SN_DoublePreference arcadeTurn = new SN_DoublePreference("arcadeTurn", 1);
 
     public static final SN_DoublePreference driveF = new SN_DoublePreference("driveF", 0);
@@ -57,6 +59,17 @@ public final class RobotPreferences {
         "driveOpenLoopRampTimeSeconds", .25);
 
     public static final SN_BooleanPreference driveBreakMode = new SN_BooleanPreference("driveBreakMode", false);
+
+    public static final SN_DoublePreference driveMaximumArcadeSpeedDelta = new SN_DoublePreference(
+        "driveMaximumArcadeSpeedDelta", .01);
+
+    // value is in controller input delta per second, eg 0.3 means that the
+    // controller can only change by 0.3 in a second
+    public static final SN_DoublePreference drivePosSlewRateLimit = new SN_DoublePreference(
+        "drivePosSlewRateLimit", .7);
+    public static final SN_DoublePreference driveNegSlewRateLimit = new SN_DoublePreference(
+        "driveNegSlewRateLimit", .7);
+    public static final SN_BooleanPreference driveSquaredInputs = new SN_BooleanPreference("driveSquaredInputs", true);
 
   }
 
