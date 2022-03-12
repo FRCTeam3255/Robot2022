@@ -27,9 +27,8 @@ public class RunSpool extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    double speed = 0;
     if (climber.isHookDeployed()) {
-      double speed = 0;
-
       if (RobotContainer.DriverStick.getAxisRT() > 0 || RobotContainer.DriverStick.getAxisLT() > 0) {
         climber.unlockClimber();
         if (RobotContainer.DriverStick.getAxisRT() > 0) {
@@ -43,16 +42,15 @@ public class RunSpool extends CommandBase {
         speed = 0;
         climber.lockClimber();
       }
-
-      climber.setClimberSpeed(speed);
-      // not sure if this will work B)
-
     }
+    climber.setClimberSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    climber.setClimberSpeed(0);
+    climber.lockClimber();
   }
 
   // Returns true when the command should end.
