@@ -167,7 +167,8 @@ public class RobotContainer {
     // coDriver Stick
 
     coDriverStick.btn_RTrig.whileHeld(com_pushCargoToShooter);
-    coDriverStick.btn_RTrig.whileHeld(com_spinFlywheelVelocity);
+    coDriverStick.btn_RTrig.whileHeld(com_spinFlywheelGoalRPM);
+    coDriverStick.btn_RBump.whileHeld(com_spinFlywheelGoalRPM);
 
     coDriverStick.btn_X.whileHeld(com_setLowerHubGoal);
     coDriverStick.btn_Y.whileHeld(com_setUpperHubGoal);
