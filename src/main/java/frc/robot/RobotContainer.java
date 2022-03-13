@@ -112,6 +112,7 @@ public class RobotContainer {
       ShooterPrefs.shooterPresetLowerTerminalRPM, HoodPrefs.hoodPresetLowerTerminalSteep);
 
   // Transfer Commands
+  private final ReverseTransfer com_reverseTransfer = new ReverseTransfer(sub_transfer);
 
   // Intake Commands
   private final CollectCargo com_collect = new CollectCargo(sub_intake,
