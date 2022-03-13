@@ -65,7 +65,7 @@ public class RobotContainer {
   // Drivetrain Commands
   private final Drive com_drive = new Drive(sub_drivetrain);
   private final DriveDistanceOpenLoop com_driveOpenLoop = new DriveDistanceOpenLoop(
-      sub_drivetrain, DrivetrainPrefs.driveOpenLoopCounts, DrivetrainPrefs.driveOpenLoopSpeed);
+      sub_drivetrain, DrivetrainPrefs.driveOpenLoopCounts, DrivetrainPrefs.driveOpenLoopSpeedPositive);
 
   // Hood Commands
   private final ShallowHood com_shallowHood = new ShallowHood(sub_hood);
