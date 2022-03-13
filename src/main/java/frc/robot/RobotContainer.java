@@ -119,6 +119,7 @@ public class RobotContainer {
       ShooterPrefs.shooterPresetLowerTerminalRPM, HoodPrefs.hoodPresetLowerTerminalSteep);
 
   // Transfer Commands
+  private final ReverseTransfer com_reverseTransfer = new ReverseTransfer(sub_transfer);
 
   // Intake Commands
   private final CollectCargo com_collect = new CollectCargo(sub_intake,
@@ -186,7 +187,7 @@ public class RobotContainer {
     coDriverStick.btn_RBump.whenPressed(com_spinFlywheelGoalRPM);
 
     coDriverStick.btn_A.whileHeld(com_visionAimTurret);
-    coDriverStick.btn_B.whileHeld(com_spinFlywheelGoalRPM);
+    coDriverStick.btn_B.whileHeld(com_reverseTransfer);
     coDriverStick.btn_X.whenPressed(com_setLowerHubGoal);
     coDriverStick.btn_Y.whenPressed(com_setUpperHubGoal);
 
