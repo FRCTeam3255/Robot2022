@@ -66,10 +66,10 @@ public final class RobotPreferences {
         "driveNegSlewRateLimit", 2);
     public static final SN_BooleanPreference driveSquaredInputs = new SN_BooleanPreference("driveSquaredInputs", true);
 
-    public static final SN_DoublePreference driveOpenLoopSpeedPositive = new SN_DoublePreference(
-        "driveOpenLoopSpeedPositive", .3);
-    public static final SN_DoublePreference driveOpenLoopSpeedNegative = new SN_DoublePreference(
-        "driveOpenLoopSpeedNegative", -.3);
+    public static final SN_DoublePreference driveOpenLoopSpeedForward = new SN_DoublePreference(
+        "driveOpenLoopSpeedForward", .3);
+    public static final SN_DoublePreference driveOpenLoopSpeedReverse = new SN_DoublePreference(
+        "driveOpenLoopSpeedReverse", -.3);
 
     public static final SN_DoublePreference driveOpenLoopCounts = new SN_DoublePreference("driveOpenLoopCounts", 44444);
 
