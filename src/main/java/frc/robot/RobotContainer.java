@@ -29,7 +29,7 @@ import frc.robot.RobotPreferences.DrivetrainPrefs;
 import frc.robot.RobotPreferences.HoodPrefs;
 import frc.robot.RobotPreferences.ShooterPrefs;
 import frc.robot.commands.ConfigureSubsystems;
-import frc.robot.commands.Autonomous.OpenLoopDrive;
+import frc.robot.commands.Autonomous.DriveDistanceOpenLoop;
 import frc.robot.commands.Autonomous.OpenLoopTwoBall;
 import frc.robot.commands.Climber.*;
 import frc.robot.subsystems.*;
@@ -64,7 +64,7 @@ public class RobotContainer {
 
   // Drivetrain Commands
   private final Drive com_drive = new Drive(sub_drivetrain);
-  private final OpenLoopDrive com_driveOpenLoop = new OpenLoopDrive(
+  private final DriveDistanceOpenLoop com_driveOpenLoop = new DriveDistanceOpenLoop(
       sub_drivetrain, DrivetrainPrefs.driveOpenLoopCounts, DrivetrainPrefs.driveOpenLoopSpeed);
 
   // Hood Commands

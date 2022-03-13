@@ -9,14 +9,15 @@ import com.frcteam3255.preferences.SN_DoublePreference;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
-public class OpenLoopDrive extends CommandBase {
+public class DriveDistanceOpenLoop extends CommandBase {
 
   Drivetrain drivetrain;
   SN_DoublePreference encoderCounts;
   SN_DoublePreference speed;
 
   /** Creates a new OpenLoopDrive. */
-  public OpenLoopDrive(Drivetrain sub_drivetrain, SN_DoublePreference a_encoderCounts, SN_DoublePreference a_speed) {
+  public DriveDistanceOpenLoop(Drivetrain sub_drivetrain, SN_DoublePreference a_encoderCounts,
+      SN_DoublePreference a_speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     drivetrain = sub_drivetrain;
     encoderCounts = a_encoderCounts;
