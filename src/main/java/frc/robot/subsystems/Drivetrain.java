@@ -10,10 +10,14 @@ import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
+import com.frcteam3255.preferences.SN_DoublePreference;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
+import frc.robot.RobotPreferences;
 import frc.robot.RobotMap.*;
 import frc.robot.RobotPreferences.*;
 
@@ -27,6 +31,9 @@ public class Drivetrain extends SubsystemBase {
 
   private TalonFXConfiguration config;
 
+  public SlewRateLimiter posSlewRateLimiter;
+  public SlewRateLimiter negSlewRateLimiter;
+
   // Initializes Variables for Drivetrain
   public Drivetrain() {
     leftLeadMotor = new TalonFX(DrivetrainMap.LEFT_LEAD_MOTOR_CAN);
@@ -36,19 +43,20 @@ public class Drivetrain extends SubsystemBase {
 
     config = new TalonFXConfiguration();
 
+    posSlewRateLimiter = new SlewRateLimiter(DrivetrainPrefs.drivePosSlewRateLimit.getValue());
+    negSlewRateLimiter = new SlewRateLimiter(DrivetrainPrefs.driveNegSlewRateLimit.getValue());
+
     configure();
   }
 
   // Sets Drivetrain Variable's Default Settings
   public void configure() {
 
-    config.slot0.allowableClosedloopError = DrivetrainPrefs.driveAllowableClosedLoopError.getValue();
     config.slot0.closedLoopPeakOutput = DrivetrainPrefs.driveClosedLoopPeakOutput.getValue();
     config.slot0.kF = DrivetrainPrefs.driveF.getValue();
     config.slot0.kP = DrivetrainPrefs.driveP.getValue();
     config.slot0.kI = DrivetrainPrefs.driveI.getValue();
     config.slot0.kD = DrivetrainPrefs.driveD.getValue();
-    config.openloopRamp = DrivetrainPrefs.driveOpenLoopRampTimeSeconds.getValue();
 
     // Left
     leftLeadMotor.configFactoryDefault();
@@ -85,6 +93,9 @@ public class Drivetrain extends SubsystemBase {
       rightLeadMotor.setNeutralMode(NeutralMode.Coast);
     }
     rightFollowMotor.follow(rightLeadMotor);
+
+    posSlewRateLimiter = new SlewRateLimiter(DrivetrainPrefs.drivePosSlewRateLimit.getValue());
+    negSlewRateLimiter = new SlewRateLimiter(DrivetrainPrefs.driveNegSlewRateLimit.getValue());
 
   }
 
@@ -154,9 +165,18 @@ public class Drivetrain extends SubsystemBase {
   public void arcadeDrive(double a_speed, double a_turn) {
     double speed = a_speed * DrivetrainPrefs.arcadeSpeed.getValue();
     double turn = a_turn * DrivetrainPrefs.arcadeTurn.getValue();
+    double multiplier = 1;
 
-    leftLeadMotor.set(ControlMode.PercentOutput, speed, DemandType.ArbitraryFeedForward, turn);
-    rightLeadMotor.set(ControlMode.PercentOutput, speed, DemandType.ArbitraryFeedForward, -turn);
+    if (RobotContainer.DriverStick.btn_LBump.get()) {
+      multiplier = RobotPreferences.DrivetrainPrefs.arcadeLowSpeed.getValue();
+    }
+
+    if (RobotContainer.DriverStick.btn_RBump.get()) {
+      multiplier = RobotPreferences.DrivetrainPrefs.arcadeHighSpeed.getValue();
+    }
+
+    leftLeadMotor.set(ControlMode.PercentOutput, speed * multiplier, DemandType.ArbitraryFeedForward, turn);
+    rightLeadMotor.set(ControlMode.PercentOutput, speed * multiplier, DemandType.ArbitraryFeedForward, -turn);
   }
 
   // starts motion profile using seperate left and right trajectories, and ctre
@@ -181,6 +201,25 @@ public class Drivetrain extends SubsystemBase {
     rightLeadMotor.clearMotionProfileTrajectories();
     leftLeadMotor.clearMotionProfileTrajectories();
     resetDrivetrainEncodersCount();
+  }
+
+  public void driveDistance(SN_DoublePreference a_inchesToDrive, SN_DoublePreference a_peakPercentOutput) {
+    leftLeadMotor.configClosedLoopPeakOutput(0, a_peakPercentOutput.getValue());
+    double position = a_inchesToDrive.getValue() * (DrivetrainPrefs.driveEncoderCountsPerFoot.getValue() / 12);
+    leftLeadMotor.set(ControlMode.Position, position);
+    rightLeadMotor.set(ControlMode.Position, position);
+  }
+
+  public double getLeftClosedLoopErrorInches() {
+    return leftLeadMotor.getClosedLoopError() * (DrivetrainPrefs.driveEncoderCountsPerFoot.getValue() / 12);
+  }
+
+  public double getRightClosedLoopErrorInches() {
+    return rightLeadMotor.getClosedLoopError() * (DrivetrainPrefs.driveEncoderCountsPerFoot.getValue() / 12);
+  }
+
+  public double getAverageClosedLoopErrorInches() {
+    return (getLeftClosedLoopErrorInches() + getRightClosedLoopErrorInches()) / 2;
   }
 
   @Override
@@ -215,5 +254,10 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Drivetrain Left Velocity", getLeftVelocity());
     SmartDashboard.putNumber("Drivetrain Right Velocity", getRightVelocity());
     SmartDashboard.putNumber("Drivetrain Average Velocity", getAverageVelocity());
+
+    // Closed Loop Error
+    SmartDashboard.putNumber("Drivetrain Left Closed Loop Error Inches", getLeftClosedLoopErrorInches());
+    SmartDashboard.putNumber("Drivetrain Right Closed Loop Error Inches", getRightClosedLoopErrorInches());
+    SmartDashboard.putNumber("Drivetrain Average Closed Loop Error Inches", getAverageClosedLoopErrorInches());
   }
 }

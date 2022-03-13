@@ -85,6 +85,7 @@ public class RobotContainer {
 
   // Shooter Commands
   private final PushCargoToShooter com_pushCargoToShooter = new PushCargoToShooter(sub_shooter, sub_transfer);
+  private final PushCargoWithDelay com_pushCargoWithDelay = new PushCargoWithDelay(sub_shooter, sub_transfer);
   private final SpinFlywheelVelocity com_spinFlywheelVelocity = new SpinFlywheelVelocity(sub_shooter);
   private final SpinFlywheelPercentOutput com_FlywheelPercentOutput = new SpinFlywheelPercentOutput(
       sub_shooter);
@@ -127,6 +128,7 @@ public class RobotContainer {
   private final InstantCommand com_pivotClimberBackward = new InstantCommand(sub_climber::pivotAngled);
   private final InstantCommand com_hookClimberUp = new InstantCommand(sub_climber::hookUp);
   private final InstantCommand com_hookClimberDown = new InstantCommand(sub_climber::hookDown);
+  private final RunSpool com_runSpool = new RunSpool(sub_climber);
 
   private final PrepClimb com_prepClimb = new PrepClimb(sub_turret, sub_hood, sub_climber);
 
@@ -138,6 +140,9 @@ public class RobotContainer {
     configureButtonBindings();
     configureDashboardButtons();
     sub_drivetrain.setDefaultCommand(com_drive);
+    sub_climber.setDefaultCommand(com_runSpool);
+    com_setUpperHubGoal.initialize(); // upper hub needs to be set as goal
+    com_presetFender.initialize(); // before setting fender as the preset
   }
 
   /**
@@ -150,34 +155,38 @@ public class RobotContainer {
 
     // Driver Stick
 
-    DriverStick.btn_B.whileHeld(com_pivotClimberForward);
-    DriverStick.btn_A.whileHeld(com_pivotClimberBackward);
+    DriverStick.btn_B.whenPressed(com_pivotClimberForward);
+    DriverStick.btn_A.whenPressed(com_pivotClimberBackward);
 
-    DriverStick.btn_Y.whileHeld(com_hookClimberUp);
-    DriverStick.btn_X.whileHeld(com_hookClimberDown);
-
-    // DriverStick.btn_Start.whileHeld(com_magicClimb);
-    // DriverStick.btn_LTrig.whileHeld(com_runSpoolBackward);
-    // DriverStick.btn_RTrig.whileHeld(com_runSpoolForward);
+    DriverStick.btn_Y.whenPressed(com_hookClimberUp);
+    DriverStick.btn_X.whenPressed(com_hookClimberDown);
 
     // DriverStick.btn_Y.whileHeld(com_highHub);
     // DriverStick.btn_X.whileHeld(com_lowHub);
 
-    DriverStick.btn_Back.whileHeld(com_prepClimb);
+    DriverStick.btn_Back.whenPressed(com_prepClimb);
+    DriverStick.btn_Start.whileHeld(com_magicClimb);
 
     // coDriver Stick
 
-    coDriverStick.btn_RTrig.whileHeld(com_pushCargoToShooter);
-    coDriverStick.btn_RTrig.whileHeld(com_spinFlywheelVelocity);
+    coDriverStick.btn_RTrig.whileHeld(com_pushCargoWithDelay);
+    coDriverStick.btn_RTrig.whileHeld(com_spinFlywheelGoalRPM);
+    coDriverStick.btn_RBump.whenPressed(com_spinFlywheelGoalRPM);
 
-    coDriverStick.btn_Back.whileHeld(com_retractIntake);
+    coDriverStick.btn_A.whileHeld(com_pushCargoToShooter);
+    coDriverStick.btn_B.whileHeld(com_spinFlywheelGoalRPM);
+    coDriverStick.btn_X.whenPressed(com_setLowerHubGoal);
+    coDriverStick.btn_Y.whenPressed(com_setUpperHubGoal);
 
+    coDriverStick.btn_Back.whenPressed(com_retractIntake);
     coDriverStick.btn_LTrig.whileHeld(com_collect);
 
-    // coDriverStick.POV_North.whileHeld(com_fenderPreset);
-    // coDriverStick.POV_East.whileHeld(com_tarmacPreset);
-    // coDriverStick.POV_South.whileHeld(com_launchPadPreset);
-    // coDriverStick.POV_West.whileHeld(com_unusedPreset);
+    coDriverStick.POV_North.whenPressed(com_presetFender);
+    coDriverStick.POV_East.whenPressed(com_presetTarmacUpper);
+    coDriverStick.POV_South.whenPressed(com_presetLaunchpadUpper);
+    coDriverStick.POV_West.whenPressed(com_presetTerminalUpper);
+
+    coDriverStick.btn_LBump.whileHeld(com_moveTurret);
 
   }
 
@@ -235,6 +244,12 @@ public class RobotContainer {
     SmartDashboard.putData("Pivot Climber Backward", com_pivotClimberBackward);
     SmartDashboard.putData("Hook Climber Forward", com_hookClimberUp);
     SmartDashboard.putData("Hook Climber Backwards", com_hookClimberDown);
+
+    SmartDashboard.putData("Steepen Hood", com_steepenHood);
+    SmartDashboard.putData("Shallow Hood", com_shallowHood);
+
+    SmartDashboard.putData("Deplay Intake", com_deployIntake);
+    SmartDashboard.putData("Retract Intake", com_retractIntake);
   }
 
   /**
