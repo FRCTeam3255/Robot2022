@@ -5,9 +5,11 @@
 package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.Drivetrain.DriveDistance;
 import frc.robot.commands.Drivetrain.DriveMotionProfile;
 import frc.robot.commands.Intake.CollectCargo;
 import frc.robot.commands.Transfer.AutoPushCargoToShooter;
+import frc.robot.commands.Transfer.PushCargoSimple;
 import frc.robot.commands.Turret.SetTurretPosition;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hood;
@@ -16,6 +18,8 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Transfer;
 import frc.robot.subsystems.Turret;
 import static frc.robot.RobotPreferences.AutoPrefs.TwoCargoA.*;
+
+import com.frcteam3255.preferences.SN_DoublePreference;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -29,16 +33,17 @@ public class AutoTwoCargoA extends SequentialCommandGroup {
   Transfer transfer;
   Intake intake;
 
-  DriveMotionProfile driveToOneOrThree;
+  DriveDistance driveToOneOrThree;
   SetShooterRPM setShooterRPM;
   SetTurretPosition setTurretPosition;
   SetHoodPosition setHoodPosition;
   CollectCargo collectCargo;
-  AutoPushCargoToShooter shootBall;
+  PushCargoSimple pushCargoSimple;
 
   /** Creates a new AutoTwoCargoA. */
   public AutoTwoCargoA(Drivetrain sub_drivetrain, Shooter sub_shooter, Turret sub_turret, Hood sub_hood,
-      Transfer sub_transfer, Intake sub_intake, String a_leftPath, String a_rightPath) {
+      Transfer sub_transfer, Intake sub_intake, SN_DoublePreference a_inchsToDrive,
+      SN_DoublePreference a_peakPercentOutput) {
 
     drivetrain = sub_drivetrain;
     shooter = sub_shooter;
@@ -47,19 +52,23 @@ public class AutoTwoCargoA extends SequentialCommandGroup {
     transfer = sub_transfer;
     intake = sub_intake;
 
-    driveToOneOrThree = new DriveMotionProfile(drivetrain, a_leftPath, a_rightPath);
+    driveToOneOrThree = new DriveDistance(sub_drivetrain, a_inchsToDrive, a_peakPercentOutput);
     setShooterRPM = new SetShooterRPM(shooter, auto1shooterRPM);
     setTurretPosition = new SetTurretPosition(turret, auto1turretAngle);
     setHoodPosition = new SetHoodPosition(hood, auto1hoodSteep);
     collectCargo = new CollectCargo(intake, transfer);
-    shootBall = new AutoPushCargoToShooter(shooter, transfer);
+    pushCargoSimple = new PushCargoSimple(shooter, transfer);
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        collectCargo.perpetually(),
-        setShooterRPM.perpetually(),
-        parallel(driveToOneOrThree, setTurretPosition, setHoodPosition),
-        shootBall);
+        parallel(
+            collectCargo.until(transfer::isTopBallCollected),
+            driveToOneOrThree,
+            setTurretPosition,
+            setHoodPosition),
+
+        parallel(
+            setShooterRPM, pushCargoSimple));
   }
 }

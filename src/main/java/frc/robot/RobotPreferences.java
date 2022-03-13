@@ -66,6 +66,11 @@ public final class RobotPreferences {
         "driveNegSlewRateLimit", 2);
     public static final SN_BooleanPreference driveSquaredInputs = new SN_BooleanPreference("driveSquaredInputs", true);
 
+    public static final SN_DoublePreference driveOpenLoopSpeed = new SN_DoublePreference("driveOpenLoopSpeed", .3);
+    public static final SN_DoublePreference driveOpenLoopSpeedN = new SN_DoublePreference("driveOpenLoopSpeedN", -.3);
+
+    public static final SN_DoublePreference driveOpenLoopCounts = new SN_DoublePreference("driveOpenLoopCounts", 44444);
+
   }
 
   public static final class HoodPrefs {
@@ -264,6 +269,15 @@ public final class RobotPreferences {
       public static final SN_DoublePreference auto3turretAngle2 = new SN_DoublePreference("auto3turretAngle2", 0);
       public static final SN_BooleanPreference auto3hoodSteep2 = new SN_BooleanPreference("auto3hoodSteep2", true);
 
+    }
+
+    // auto4
+    public static final class OpenLoopTwoBall {
+      public static final SN_DoublePreference auto4shooterRPM = new SN_DoublePreference("auto4shooterRPM", 3100);
+      public static final SN_BooleanPreference auto4hoodSteep = new SN_BooleanPreference("auto4hoodSteep", false);
+      public static final SN_DoublePreference auto4dist1 = new SN_DoublePreference("auto4dist1", 44444);
+      public static final SN_DoublePreference auto4dist2 = new SN_DoublePreference("auto4dist2", -82000);
+      public static final SN_DoublePreference auto4turretAngle = new SN_DoublePreference("auto4turretAngle", 340);
     }
   }
 }
