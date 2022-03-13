@@ -180,7 +180,7 @@ public class RobotContainer {
     coDriverStick.btn_RBump.whenPressed(com_spinFlywheelGoalRPM);
 
     coDriverStick.btn_A.whileHeld(com_visionAimTurret);
-    coDriverStick.btn_B.whileHeld(com_spinFlywheelGoalRPM);
+    coDriverStick.btn_B.whileHeld(com_reverseTransfer);
     coDriverStick.btn_X.whenPressed(com_setLowerHubGoal);
     coDriverStick.btn_Y.whenPressed(com_setUpperHubGoal);
 
