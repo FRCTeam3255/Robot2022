@@ -4,27 +4,21 @@
 
 package frc.robot;
 
-import java.sql.Driver;
-
 import com.frcteam3255.joystick.SN_DualActionStick;
 import com.frcteam3255.joystick.SN_F310Gamepad;
 import com.frcteam3255.joystick.SN_SwitchboardStick;
-import com.frcteam3255.preferences.SN_DoublePreference;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Drivetrain.*;
 import frc.robot.commands.Hood.*;
 import frc.robot.commands.Turret.*;
 import frc.robot.commands.Intake.*;
 import frc.robot.commands.Shooter.*;
 import frc.robot.commands.Transfer.*;
-import frc.robot.RobotPreferences.AutoPrefs;
-import frc.robot.RobotPreferences.ClimberPrefs;
 import frc.robot.RobotPreferences.DrivetrainPrefs;
 import frc.robot.RobotPreferences.HoodPrefs;
 import frc.robot.RobotPreferences.ShooterPrefs;
@@ -166,25 +160,25 @@ public class RobotContainer {
 
     // Driver Stick
 
-    DriverStick.btn_B.whenPressed(com_pivotClimberForward);
     DriverStick.btn_A.whenPressed(com_pivotClimberBackward);
-
-    DriverStick.btn_Y.whenPressed(com_hookClimberUp);
+    DriverStick.btn_B.whenPressed(com_pivotClimberForward);
     DriverStick.btn_X.whenPressed(com_hookClimberDown);
+    DriverStick.btn_Y.whenPressed(com_hookClimberUp);
 
     // DriverStick.btn_Y.whileHeld(com_highHub);
     // DriverStick.btn_X.whileHeld(com_lowHub);
 
-    DriverStick.btn_RBump.toggleWhenPressed(com_collect);
-
-    DriverStick.btn_Back.whenPressed(com_prepClimb);
     DriverStick.btn_Start.whileHeld(com_magicClimb);
+    DriverStick.btn_Back.whenPressed(com_prepClimb);
 
     // coDriver Stick
 
     coDriverStick.btn_RTrig.whileHeld(com_pushCargoSimple);
     coDriverStick.btn_RTrig.whileHeld(com_spinFlywheelGoalRPM);
+    coDriverStick.btn_LTrig.whileHeld(com_collect);
+
     coDriverStick.btn_RBump.whenPressed(com_spinFlywheelGoalRPM);
+    coDriverStick.btn_LBump.whileHeld(com_moveTurret);
 
     coDriverStick.btn_A.whileHeld(com_visionAimTurret);
     coDriverStick.btn_B.whileHeld(com_reverseTransfer);
@@ -192,14 +186,11 @@ public class RobotContainer {
     coDriverStick.btn_Y.whenPressed(com_setUpperHubGoal);
 
     coDriverStick.btn_Back.whenPressed(com_retractIntake);
-    coDriverStick.btn_LTrig.whileHeld(com_collect);
 
     coDriverStick.POV_North.whenPressed(com_presetFender);
     coDriverStick.POV_East.whenPressed(com_presetTarmacUpper);
     coDriverStick.POV_South.whenPressed(com_presetLaunchpadUpper);
     coDriverStick.POV_West.whenPressed(com_presetTerminalUpper);
-
-    coDriverStick.btn_LBump.whileHeld(com_moveTurret);
 
   }
 
