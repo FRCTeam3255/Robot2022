@@ -155,6 +155,10 @@ public final class RobotPreferences {
     // 133120 / 360 = 370
     public static final SN_DoublePreference turretEncoderCountsPerDegrees = new SN_DoublePreference(
         "turretEncoderCountsPerDegrees", 370);
+
+    public static final SN_DoublePreference turretLaunchPadDegreesTurned = new SN_DoublePreference(
+        "turretLaunchPadDegreesTurned", turretEncoderCountsPerDegrees.getValue() * 45);
+
     public static final SN_DoublePreference turretMaxAllowableErrorDegrees = new SN_DoublePreference(
         "turretMaxAllowableErrorDegrees",
         1);

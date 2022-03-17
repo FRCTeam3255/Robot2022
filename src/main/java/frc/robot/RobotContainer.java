@@ -88,6 +88,8 @@ public class RobotContainer {
   private final VisionNavXAimTurret com_visionHoldAimTurret = new VisionNavXAimTurret(sub_turret, sub_vision,
       sub_navX);
 
+  private final LaunchPadTurnPreset com_launchPadTurnPreset = new LaunchPadTurnPreset(sub_turret);
+
   // Shooter Commands
   private final PushCargoToShooter com_pushCargoToShooter = new PushCargoToShooter(sub_shooter, sub_transfer);
   private final PushCargoWithDelay com_pushCargoWithDelay = new PushCargoWithDelay(sub_shooter, sub_transfer);
@@ -198,6 +200,7 @@ public class RobotContainer {
     coDriverStick.POV_North.whenPressed(com_presetFender);
     coDriverStick.POV_East.whenPressed(com_presetTarmacUpper);
     coDriverStick.POV_South.whenPressed(com_presetLaunchpadUpper);
+    coDriverStick.POV_South.whenPressed(com_launchPadTurnPreset);
     coDriverStick.POV_West.whenPressed(com_presetTerminalUpper);
 
     coDriverStick.btn_RStick.whenPressed(com_presetForward);
