@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
+import frc.robot.RobotPreferences;
 import frc.robot.RobotMap.*;
 import static frc.robot.RobotPreferences.*;
 
@@ -66,12 +67,20 @@ public class Climber extends SubsystemBase {
     climberHookPiston.setInverted(ClimberPrefs.climberHookPistonInvert.getValue());
   }
 
+  public boolean isClimberAtBottom() {
+    return !climberBottomSafetySwitch.get();
+  }
+
   // Method controls CLimb Motor Speed
   public void setClimberSpeed(double a_speed) {
     double speed = a_speed;
 
     if (isHookDeployed()) {
       climbMotor.set(ControlMode.PercentOutput, speed);
+    }
+
+    if (isClimberAtBottom()) {
+      climbMotor.set(ControlMode.PercentOutput, zeroDoublePref.getValue());
     }
   }
 
@@ -125,11 +134,6 @@ public class Climber extends SubsystemBase {
 
   public boolean isHookDeployed() {
     return climberHookPiston.isDeployed();
-  }
-
-  // TODO: change when location of mag switch is (ex: isClimberRaised)
-  public boolean isClimberAtBottom() {
-    return !climberBottomSafetySwitch.get();
   }
 
   public double getClimberClosedLoopError() {
