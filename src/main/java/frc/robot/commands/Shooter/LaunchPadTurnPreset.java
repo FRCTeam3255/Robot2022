@@ -17,12 +17,13 @@ public class LaunchPadTurnPreset extends InstantCommand {
 
   Turret turret;
   double currentTurretPosition;
-  SN_DoublePreference launchpadDegrees;
+  SN_DoublePreference launchPadZeroDegreesTurned;
+  SN_DoublePreference launchPadOneEightyDegreesTurned;
 
   public LaunchPadTurnPreset(Turret sub_turret) {
     turret = sub_turret;
-    launchpadDegrees = TurretPrefs.turretLaunchPadDegreesTurned;
-    currentTurretPosition = turret.getTurretAngle();
+    launchPadZeroDegreesTurned = TurretPrefs.turretLaunchPadZeroDegreesTurned;
+    launchPadOneEightyDegreesTurned = TurretPrefs.turretLaunchPadOneEightyDegreesTurned;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(turret);
   }
@@ -31,7 +32,18 @@ public class LaunchPadTurnPreset extends InstantCommand {
   @Override
   public void initialize() {
     double newTurretAngle;
-    newTurretAngle = launchpadDegrees.getValue() + currentTurretPosition;
+    currentTurretPosition = turret.getTurretAngle();
+    newTurretAngle = 0;
+
+    if (currentTurretPosition <= 45) {
+      // if we are at 0, turn to 341
+      newTurretAngle = launchPadZeroDegreesTurned.getValue();
+
+    } else {
+      // if we are at 180, turn to 168
+      newTurretAngle = launchPadOneEightyDegreesTurned.getValue();
+    }
+
     turret.setTurretAngle(newTurretAngle);
   }
 }

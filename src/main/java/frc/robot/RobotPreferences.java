@@ -156,8 +156,11 @@ public final class RobotPreferences {
     public static final SN_DoublePreference turretEncoderCountsPerDegrees = new SN_DoublePreference(
         "turretEncoderCountsPerDegrees", 370);
 
-    public static final SN_DoublePreference turretLaunchPadDegreesTurned = new SN_DoublePreference(
-        "turretLaunchPadDegreesTurned", turretEncoderCountsPerDegrees.getValue() * 45);
+    public static final SN_DoublePreference turretLaunchPadZeroDegreesTurned = new SN_DoublePreference(
+        "turretLaunchPadDegreesTurned", turretEncoderCountsPerDegrees.getValue() * 168);
+
+    public static final SN_DoublePreference turretLaunchPadOneEightyDegreesTurned = new SN_DoublePreference(
+        "turretLaunchPadDegreesTurned", turretEncoderCountsPerDegrees.getValue() * 316);
 
     public static final SN_DoublePreference turretMaxAllowableErrorDegrees = new SN_DoublePreference(
         "turretMaxAllowableErrorDegrees",
