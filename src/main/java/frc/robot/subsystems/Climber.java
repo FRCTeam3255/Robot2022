@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 import frc.robot.RobotMap;
-import frc.robot.RobotPreferences;
 import frc.robot.RobotMap.*;
 import static frc.robot.RobotPreferences.*;
 
@@ -56,7 +56,6 @@ public class Climber extends SubsystemBase {
 
     // Set the Soft Limit for Forward Throttle
     climbMotor.configForwardSoftLimitThreshold(ClimberPrefs.climberMaxEncoderCountPerpendicular.getValue());
-    climbMotor.configReverseSoftLimitThreshold(ClimberPrefs.climberMinEncoderCount.getValue());
     climbMotor.configForwardSoftLimitEnable(true);
     climbMotor.configReverseSoftLimitEnable(true);
 
@@ -75,13 +74,16 @@ public class Climber extends SubsystemBase {
   public void setClimberSpeed(double a_speed) {
     double speed = a_speed;
 
-    if (isHookDeployed()) {
-      climbMotor.set(ControlMode.PercentOutput, speed);
+    if (RobotContainer.switchBoard.btn_10.get()) {
+      speed = 0;
     }
 
     if (isClimberAtBottom()) {
-      climbMotor.set(ControlMode.PercentOutput, zeroDoublePref.getValue());
+      speed = 0;
+      resetClimberEncoderCount();
     }
+
+    climbMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void setClimberPosition(SN_DoublePreference a_position) {

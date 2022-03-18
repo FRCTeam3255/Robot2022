@@ -223,8 +223,6 @@ public final class RobotPreferences {
         "climberMaxEncoderCount", 150000);
     public static final SN_DoublePreference climberMaxEncoderCountAngled = new SN_DoublePreference(
         "climberMaxEncoderCountPivoted", 200000);
-    public static final SN_DoublePreference climberMinEncoderCount = new SN_DoublePreference(
-        "climberMinEncoderCount", 0);
 
     // Climbing Up/Down Positions
     public static final SN_DoublePreference climberUpPosition = new SN_DoublePreference("climberUpPosition", 32555);
