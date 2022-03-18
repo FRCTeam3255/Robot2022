@@ -57,9 +57,9 @@ public class Climber extends SubsystemBase {
     // Set the Soft Limit for Forward Throttle
     climbMotor.configForwardSoftLimitThreshold(ClimberPrefs.climberMaxEncoderCountPerpendicular.getValue());
     climbMotor.configForwardSoftLimitEnable(true);
-    climbMotor.configReverseSoftLimitEnable(true);
 
     climbMotor.setNeutralMode(NeutralMode.Brake);
+    climbMotor.setInverted(true);
 
     climberLockPiston.setInverted(ClimberPrefs.climberLockPistonInvert.getValue());
     climberPivotPiston.setInverted(ClimberPrefs.climberPivotPistonInvert.getValue());
@@ -78,7 +78,7 @@ public class Climber extends SubsystemBase {
       speed = 0;
     }
 
-    if (isClimberAtBottom()) {
+    if (isClimberAtBottom() && speed < 0) {
       speed = 0;
       resetClimberEncoderCount();
     }
