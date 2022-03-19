@@ -79,8 +79,10 @@ public class Climber extends SubsystemBase {
     }
 
     if (isClimberAtBottom() && speed < 0) {
-      speed = 0;
       resetClimberEncoderCount();
+      if (speed < 0) {
+        speed = 0;
+      }
     }
 
     climbMotor.set(ControlMode.PercentOutput, speed);

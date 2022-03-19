@@ -100,7 +100,7 @@ public final class RobotPreferences {
     public static final SN_DoublePreference shooterTargetRPM = new SN_DoublePreference(
         "shooterTargetRPM", 5000);
     public static final SN_DoublePreference shooterAcceptableErrorRPM = new SN_DoublePreference(
-        "shooterAcceptableErrorRPM", 100);
+        "shooterAcceptableErrorRPM", 15);
 
     public static final SN_BooleanPreference shooterInvert = new SN_BooleanPreference(
         "shooterInvert", false);

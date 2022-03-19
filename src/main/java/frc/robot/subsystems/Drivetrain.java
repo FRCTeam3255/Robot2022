@@ -219,6 +219,22 @@ public class Drivetrain extends SubsystemBase {
     return (getLeftClosedLoopErrorInches() + getRightClosedLoopErrorInches()) / 2;
   }
 
+  public void setBrakeMode() {
+    leftFollowMotor.setNeutralMode(NeutralMode.Brake);
+    leftLeadMotor.setNeutralMode(NeutralMode.Brake);
+
+    rightFollowMotor.setNeutralMode(NeutralMode.Brake);
+    rightLeadMotor.setNeutralMode(NeutralMode.Brake);
+  }
+
+  public void setCoastMode() {
+    leftFollowMotor.setNeutralMode(NeutralMode.Coast);
+    leftLeadMotor.setNeutralMode(NeutralMode.Coast);
+
+    rightFollowMotor.setNeutralMode(NeutralMode.Coast);
+    rightLeadMotor.setNeutralMode(NeutralMode.Coast);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

@@ -198,7 +198,8 @@ public class RobotContainer {
     coDriverStick.POV_North.whenPressed(com_presetFender);
     coDriverStick.POV_East.whenPressed(com_presetTarmacUpper);
     coDriverStick.POV_South.whenPressed(com_presetLaunchpadUpper);
-    coDriverStick.POV_West.whenPressed(com_presetTerminalUpper);
+    coDriverStick.POV_South.whenPressed(new SetTurretPosition(sub_turret, TurretPrefs.turretMaxAngleDegrees));
+    coDriverStick.POV_West.whenPressed(com_presetTarmacUpper);
 
     coDriverStick.btn_RStick.whenPressed(com_presetBackward);
     coDriverStick.btn_LStick.whenPressed(com_presetForward);
@@ -276,6 +277,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new OpenLoopTwoBall(sub_drivetrain, sub_shooter, sub_turret, sub_hood, sub_transfer, sub_intake);
+    return new OpenLoopTwoBall(sub_drivetrain, sub_shooter, sub_turret, sub_hood, sub_transfer, sub_intake,
+        sub_climber);
   }
 }
