@@ -281,7 +281,7 @@ public final class RobotPreferences {
 
     // auto4
     public static final class OpenLoopTwoBall {
-      public static final SN_DoublePreference auto4shooterRPM = new SN_DoublePreference("auto4shooterRPM", 3100);
+      public static final SN_DoublePreference auto4shooterRPM = new SN_DoublePreference("auto4shooterRPM", 3000);
       public static final SN_BooleanPreference auto4hoodSteep = new SN_BooleanPreference("auto4hoodSteep", false);
       public static final SN_DoublePreference auto4dist1 = new SN_DoublePreference("auto4dist1", 44444);
       public static final SN_DoublePreference auto4dist2 = new SN_DoublePreference("auto4dist2", -82000);
