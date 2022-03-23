@@ -58,7 +58,7 @@ public class OpenLoopTwoBall extends SequentialCommandGroup {
         parallel(
             new DriveDistanceOpenLoop(drivetrain, AutoPrefs.OpenLoopTwoBall.auto4dist1,
                 DrivetrainPrefs.driveOpenLoopSpeedForward),
-            (new CollectCargo(intake, transfer)).perpetually().until(transfer::isBottomBallCollected)),
+            (new CollectCargo(intake, transfer, shooter)).perpetually().until(transfer::isBottomBallCollected)),
         new DriveDistanceOpenLoop(drivetrain, AutoPrefs.OpenLoopTwoBall.auto4dist2,
             DrivetrainPrefs.driveOpenLoopSpeedReverse),
         new WaitCommand(2),

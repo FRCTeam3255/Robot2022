@@ -54,7 +54,7 @@ public class AutoTwoCargoA extends SequentialCommandGroup {
     setShooterRPM = new SetShooterRPM(shooter, auto1shooterRPM);
     setTurretPosition = new SetTurretPosition(turret, auto1turretAngle);
     setHoodPosition = new SetHoodPosition(hood, auto1hoodSteep);
-    collectCargo = new CollectCargo(intake, transfer);
+    collectCargo = new CollectCargo(intake, transfer, shooter);
     pushCargoSimple = new PushCargoSimple(shooter, transfer);
 
     // Add your commands in the addCommands() call, e.g.

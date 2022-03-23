@@ -140,7 +140,7 @@ public class RobotContainer {
 
   // Intake Commands
   private final CollectCargo com_collect = new CollectCargo(sub_intake,
-      sub_transfer);
+      sub_transfer, sub_shooter);
   private final RetractIntake com_retractIntake = new RetractIntake(sub_intake);
   private final DeployIntake com_deployIntake = new DeployIntake(sub_intake);
 

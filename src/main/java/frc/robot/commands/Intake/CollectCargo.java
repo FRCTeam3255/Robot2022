@@ -6,7 +6,9 @@ package frc.robot.commands.Intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotPreferences;
+import frc.robot.commands.Shooter.SpinFlywheelGoalRPM;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Transfer;
 import frc.robot.subsystems.Transfer.TransferState;
 
@@ -17,6 +19,7 @@ import com.frcteam3255.preferences.SN_DoublePreference;
 public class CollectCargo extends CommandBase {
   Intake intake;
   Transfer transfer;
+  Shooter shooter;
 
   // When a wrong colored ball comes into the robot, you can't just run in reverse
   // while you see the ball, because as soon as you don't see a ball anymore you
@@ -39,9 +42,10 @@ public class CollectCargo extends CommandBase {
   boolean stateOverride;
 
   /** Creates a new CollectBall. */
-  public CollectCargo(Intake sub_intake, Transfer sub_transfer) {
+  public CollectCargo(Intake sub_intake, Transfer sub_transfer, Shooter sub_shooter) {
     intake = sub_intake;
     transfer = sub_transfer;
+    shooter = sub_shooter;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(intake);
@@ -70,6 +74,8 @@ public class CollectCargo extends CommandBase {
         outputEntranceSpeed = RobotPreferences.zeroDoublePref;
         outputBottomBeltSpeed = RobotPreferences.zeroDoublePref;
         intake.retractIntake();
+        // SpinFlywheelGoalRPM
+        shooter.setShooterRPM(shooter.getGoalRPM() * ShooterPrefs.shooterGoalRPMMultiplier.getValue());
       }
     }
 

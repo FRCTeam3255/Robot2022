@@ -86,7 +86,7 @@ public class AutoFiveCargoA extends SequentialCommandGroup {
     setTurretPosition3 = new SetTurretPosition(turret, auto2turretAngle3);
     setHoodPosition3 = new SetHoodPosition(hood, auto2hoodSteep3);
 
-    collectCargo = new CollectCargo(intake, transfer);
+    collectCargo = new CollectCargo(intake, transfer, shooter);
     shootBall = new AutoPushCargoToShooter(shooter, transfer);
 
     // Add your commands in the addCommands() call, e.g.
