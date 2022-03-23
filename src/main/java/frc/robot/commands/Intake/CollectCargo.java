@@ -68,14 +68,14 @@ public class CollectCargo extends CommandBase {
 
     if (transfer.isTopBallCollected()) {
       outputTopBeltSpeed = RobotPreferences.zeroDoublePref;
+      // SpinFlywheelGoalRPM
+      shooter.setShooterRPM(shooter.getGoalRPM() * ShooterPrefs.shooterGoalRPMMultiplier.getValue());
       // If top AND bottom are collected, turn everything else off as well
       if (transfer.isBottomBallCollected()) {
         outputIntakeSpeed = RobotPreferences.zeroDoublePref;
         outputEntranceSpeed = RobotPreferences.zeroDoublePref;
         outputBottomBeltSpeed = RobotPreferences.zeroDoublePref;
         intake.retractIntake();
-        // SpinFlywheelGoalRPM
-        shooter.setShooterRPM(shooter.getGoalRPM() * ShooterPrefs.shooterGoalRPMMultiplier.getValue());
       }
     }
 
