@@ -14,7 +14,10 @@ import com.frcteam3255.preferences.SN_DoublePreference;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.RobotPreferences;
@@ -28,14 +31,36 @@ public class Drivetrain extends SubsystemBase {
   private TalonFX rightLeadMotor;
   private TalonFX leftFollowMotor;
   private TalonFX rightFollowMotor;
-
   private TalonFXConfiguration config;
+
+  // For Shuffleboard
+  private ShuffleboardTab tab;
+  private ShuffleboardLayout encoderCountsLayout;
+  private ShuffleboardLayout motorPercentOutputLayout;
+  private ShuffleboardLayout feetDrivenLayout;
+  private ShuffleboardLayout feetPerSecondLayout;
+  private ShuffleboardLayout encoderCountsPer100msLayout;
+  private ShuffleboardLayout closedLoopErrorLayout;
+
+  private int shuffleboardWidgetWidth;
+  private int shuffleboardWidgetHeight;
 
   public SlewRateLimiter posSlewRateLimiter;
   public SlewRateLimiter negSlewRateLimiter;
 
   // Initializes Variables for Drivetrain
   public Drivetrain() {
+    tab = Shuffleboard.getTab("Drivetrain");
+    encoderCountsLayout = tab.getLayout("Encoder Counts", BuiltInLayouts.kList).withSize(2, 2);
+    motorPercentOutputLayout = tab.getLayout("Motor Percent Output", BuiltInLayouts.kList).withSize(2, 2);
+    feetDrivenLayout = tab.getLayout("Feet Driven", BuiltInLayouts.kList).withSize(2, 2);
+    feetPerSecondLayout = tab.getLayout("Feet Per Second", BuiltInLayouts.kList).withSize(2, 2);
+    encoderCountsPer100msLayout = tab.getLayout("Encoder Counts per 100ms", BuiltInLayouts.kList).withSize(2, 2);
+    closedLoopErrorLayout = tab.getLayout("Closed Loop Error", BuiltInLayouts.kList).withSize(2, 2);
+
+    shuffleboardWidgetWidth = 2;
+    shuffleboardWidgetHeight = 1;
+
     leftLeadMotor = new TalonFX(DrivetrainMap.LEFT_LEAD_MOTOR_CAN);
     rightLeadMotor = new TalonFX(DrivetrainMap.RIGHT_LEAD_MOTOR_CAN);
     leftFollowMotor = new TalonFX(DrivetrainMap.LEFT_FOLLOW_MOTOR_CAN);
@@ -224,37 +249,60 @@ public class Drivetrain extends SubsystemBase {
     // This method will be called once per scheduler run
 
     // Encoder Counts
-    SmartDashboard.putNumber("Drivetrain Left Encoder", getLeftEncoderCount());
-    SmartDashboard.putNumber("Drivetrain Right Encoder", getRightEncoderCount());
-    SmartDashboard.putNumber("Drivetrain Average Encoder", getAverageEncoderCount());
+    encoderCountsLayout.add("Drivetrain Left Encoder", getLeftEncoderCount()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    encoderCountsLayout.add("Drivetrain Right Encoder", getRightEncoderCount()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    encoderCountsLayout.add("Drivetrain Average Encoder", getAverageEncoderCount()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
 
     // Motion Profile
-    SmartDashboard.putBoolean("Is Drivetrain Motion Profile Finished", isMotionProfileFinished());
+    tab.add("Is Drivetrain Motion Profile Finished", isMotionProfileFinished());
 
     // Motor Percent Output
-    SmartDashboard.putNumber("Drivetrain Left Lead Motor Speed", leftLeadMotor.getMotorOutputPercent());
-    SmartDashboard.putNumber("Drivetrain Right Lead Motor Speed", rightLeadMotor.getMotorOutputPercent());
-    SmartDashboard.putNumber("Drivetrain Left Follow Motor Speed", leftFollowMotor.getMotorOutputPercent());
-    SmartDashboard.putNumber("Drivetrain Right Follow Motor Speed", rightFollowMotor.getMotorOutputPercent());
+    motorPercentOutputLayout.add("Drivetrain Left Lead Motor Speed", leftLeadMotor.getMotorOutputPercent()).withSize(
+        shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    motorPercentOutputLayout.add("Drivetrain Right Lead Motor Speed", rightLeadMotor.getMotorOutputPercent())
+        .withSize(shuffleboardWidgetWidth, shuffleboardWidgetHeight);
+    motorPercentOutputLayout.add("Drivetrain Left Follow Motor Speed", leftFollowMotor.getMotorOutputPercent())
+        .withSize(shuffleboardWidgetWidth, shuffleboardWidgetHeight);
+    motorPercentOutputLayout.add("Drivetrain Right Follow Motor Speed", rightFollowMotor.getMotorOutputPercent())
+        .withSize(shuffleboardWidgetWidth, shuffleboardWidgetHeight);
 
     // Feet Driven
-    SmartDashboard.putNumber("Drivetrain Left Feet Driven", getLeftFeetDriven());
-    SmartDashboard.putNumber("Drivetrain Right Feet Driven", getRightFeetDriven());
-    SmartDashboard.putNumber("Drivetrain Average Feet Driven", getAverageFeetDriven());
+    feetDrivenLayout.add("Drivetrain Left Feet Driven", getLeftFeetDriven()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    feetDrivenLayout.add("Drivetrain Right Feet Driven", getRightFeetDriven()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    feetDrivenLayout.add("Drivetrain Average Feet Driven", getAverageFeetDriven()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
 
     // Feet Per Second
-    SmartDashboard.putNumber("Drivetrain Left Feet Per Second", getLeftFeetPerSecond());
-    SmartDashboard.putNumber("Drivetrain Right Feet Per Second", getRightFeetPerSecond());
-    SmartDashboard.putNumber("Drivetrain Average Feet Per Second", getAverageFeetPerSecond());
+    feetPerSecondLayout.add("Drivetrain Left Feet Per Second", getLeftFeetPerSecond()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    feetPerSecondLayout.add("Drivetrain Right Feet Per Second", getRightFeetPerSecond()).withSize(
+        shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    feetPerSecondLayout.add("Drivetrain Average Feet Per Second", getAverageFeetPerSecond()).withSize(
+        shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
 
     // Encoder Counts per 100ms
-    SmartDashboard.putNumber("Drivetrain Left Velocity", getLeftVelocity());
-    SmartDashboard.putNumber("Drivetrain Right Velocity", getRightVelocity());
-    SmartDashboard.putNumber("Drivetrain Average Velocity", getAverageVelocity());
+    encoderCountsPer100msLayout.add("Drivetrain Left Velocity", getLeftVelocity()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    encoderCountsPer100msLayout.add("Drivetrain Right Velocity", getRightVelocity()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    encoderCountsPer100msLayout.add("Drivetrain Average Velocity", getAverageVelocity()).withSize(
+        shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
 
     // Closed Loop Error
-    SmartDashboard.putNumber("Drivetrain Left Closed Loop Error Inches", getLeftClosedLoopErrorInches());
-    SmartDashboard.putNumber("Drivetrain Right Closed Loop Error Inches", getRightClosedLoopErrorInches());
-    SmartDashboard.putNumber("Drivetrain Average Closed Loop Error Inches", getAverageClosedLoopErrorInches());
+    closedLoopErrorLayout.add("Drivetrain Left Closed Loop Error Inches", getLeftClosedLoopErrorInches())
+        .withSize(3, shuffleboardWidgetHeight);
+    closedLoopErrorLayout.add("Drivetrain Right Closed Loop Error Inches", getRightClosedLoopErrorInches())
+        .withSize(3, shuffleboardWidgetHeight);
+    closedLoopErrorLayout.add("Drivetrain Average Closed Loop Error Inches", getAverageClosedLoopErrorInches())
+        .withSize(3, shuffleboardWidgetHeight);
   }
 }

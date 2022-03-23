@@ -13,7 +13,10 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.frcteam3255.preferences.SN_DoublePreference;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap.*;
 
@@ -33,10 +36,24 @@ public class Transfer extends SubsystemBase {
   private DigitalInput transferTopRightLimitSwitch;
   private DigitalInput transferBottomRightLimitSwitch;
 
+  // For Shuffleboard
+  private ShuffleboardTab tab;
+  private ShuffleboardLayout ballCollectedLayout;
+  private ShuffleboardLayout speedLayout;
+
+  private int shuffleboardWidgetWidth;
+  private int shuffleboardWidgetHeight;
+
   TransferState state;
 
   // Initializes Transfer Variables
   public Transfer() {
+    tab = Shuffleboard.getTab("Transfer");
+    ballCollectedLayout = tab.getLayout("Collected Balls", BuiltInLayouts.kList).withSize(2, 2);
+    speedLayout = tab.getLayout("Speed", BuiltInLayouts.kList).withSize(2, 2);
+
+    shuffleboardWidgetWidth = 2;
+    shuffleboardWidgetHeight = 1;
 
     topBeltMotor = new TalonFX(TransferMap.TOP_BELT_MOTOR_CAN);
     bottomBeltMotor = new TalonFX(TransferMap.BOTTOM_BELT_MOTOR_CAN);
@@ -114,11 +131,25 @@ public class Transfer extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putBoolean("Top Ball Collected", isTopBallCollected());
-    SmartDashboard.putBoolean("Bottom Ball Collected", isBottomBallCollected());
-    SmartDashboard.getNumber("Top Belt Motor Speed", topBeltMotor.getMotorOutputPercent());
-    SmartDashboard.getNumber("Bottom Belt Motor Speed", bottomBeltMotor.getMotorOutputPercent());
-    SmartDashboard.getNumber("Entrance Belt Motor Speed", entranceBeltMotor.getMotorOutputPercent());
+
+    // Ball Collected
+    ballCollectedLayout.add("Top Ball Collected", isTopBallCollected()).withSize(
+        shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    ballCollectedLayout.add("Bottom Ball Collected", isBottomBallCollected()).withSize(
+        shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+
+    // Speed
+    speedLayout.add("Top Belt Motor Speed", topBeltMotor.getMotorOutputPercent()).withSize(
+        shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    speedLayout.add("Bottom Belt Motor Speed", bottomBeltMotor.getMotorOutputPercent()).withSize(
+        shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    speedLayout.add("Entrance Belt Motor Speed", entranceBeltMotor.getMotorOutputPercent()).withSize(
+        shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
 
   }
 }

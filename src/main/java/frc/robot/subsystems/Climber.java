@@ -12,6 +12,8 @@ import com.frcteam3255.preferences.SN_DoublePreference;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
@@ -29,7 +31,14 @@ public class Climber extends SubsystemBase {
   // ok
   private SN_DoubleSolenoid climberHookPiston;
 
+  private ShuffleboardTab tab;
+  private int shuffleboardWidgetWidth;
+  private int shuffleboardWidgetHeight;
+
   public Climber() {
+    tab = Shuffleboard.getTab("Climber");
+    shuffleboardWidgetWidth = 2;
+    shuffleboardWidgetHeight = 1;
 
     climberBottomSafetySwitch = new DigitalInput(ClimberMap.BOTTOM_SAFETY_MAG_SWITCH_DIO);
     climbMotor = new TalonFX(ClimberMap.CLIMBER_MOTOR_CAN);
@@ -143,13 +152,21 @@ public class Climber extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Climber Encoder Counts", getClimberEncoderCount());
-    SmartDashboard.putNumber("Climber Closed Loop Error", getClimberClosedLoopError());
-    SmartDashboard.putBoolean("Is Climber At Bottom", isClimberAtBottom());
-    SmartDashboard.putBoolean("Is Climber Locked", isClimberLocked());
-    SmartDashboard.putBoolean("Is Climber Angled", isClimberAngled());
-    SmartDashboard.putBoolean("Is Climber Hooked", isHookDeployed());
-    SmartDashboard.putBoolean("Is Climber Error Acceptable", isClimberClosedLoopErrorAcceptable());
-    SmartDashboard.putNumber("Climber Motor Speed", climbMotor.getMotorOutputPercent());
+    tab.add("Climber Encoder Counts", getClimberEncoderCount()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    tab.add("Climber Closed Loop Error", getClimberClosedLoopError()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    tab.add("Is Climber At Bottom", isClimberAtBottom()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    tab.add("Is Climber Locked", isClimberLocked()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    tab.add("Is Climber Angled", isClimberAngled()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    tab.add("Is Climber Hooked", isHookDeployed()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    tab.add("Is Climber Error Acceptable", isClimberClosedLoopErrorAcceptable()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    tab.add("Climber Motor Speed", climbMotor.getMotorOutputPercent()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
   }
 }

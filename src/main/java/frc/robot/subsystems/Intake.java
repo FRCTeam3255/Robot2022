@@ -14,7 +14,10 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.RobotMap.*;
@@ -28,8 +31,23 @@ public class Intake extends SubsystemBase {
   private ColorSensorV3 intakeColorSensorV3;
   private final I2C.Port i2cPort = I2C.Port.kMXP;
 
+  // For Shuffleboard
+  private ShuffleboardTab tab;
+  private ShuffleboardLayout intakeComponentsLayout;
+  private ShuffleboardLayout colorSensorLayout;
+
+  private int shuffleboardWidgetWidth;
+  private int shuffleboardWidgetHeight;
+
   // Initializes Intake Variables
   public Intake() {
+    tab = Shuffleboard.getTab("Intake");
+    intakeComponentsLayout = tab.getLayout("Intake Components", BuiltInLayouts.kList).withSize(2, 2);
+    colorSensorLayout = tab.getLayout("Color Sensor", BuiltInLayouts.kList).withSize(2, 2);
+
+    shuffleboardWidgetWidth = 2;
+    shuffleboardWidgetHeight = 1;
+
     intakeMotor = new TalonFX(IntakeMap.INTAKE_MOTOR_CAN);
     intakePiston = new SN_DoubleSolenoid(RobotMap.PRIMARY_PCM, PneumaticsModuleType.CTREPCM,
         IntakeMap.INTAKE_SOLENOID_PCM_A,
@@ -150,16 +168,27 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Intake Motor", getIntakeMotorCount());
-    SmartDashboard.putNumber("IntakeMotorOutputPercent", intakeMotor.getMotorOutputPercent());
-    SmartDashboard.putBoolean("Intake Solenoid", isIntakeDeployed());
 
-    SmartDashboard.putNumber("Color Sensor Blue", getBlue());
-    SmartDashboard.putNumber("Color Sensor Red", getRed());
-    SmartDashboard.putNumber("Color Sensor Prox", getProximity());
-    SmartDashboard.putBoolean("Is Ball Blue", isBallBlue());
-    SmartDashboard.putBoolean("Is Alliance Blue", isAllianceBlue());
-    SmartDashboard.putBoolean("Ball Color Matches Alliance", ballColorMatchesAlliance());
-    SmartDashboard.putBoolean("Is Proximity", isBallNearIntake());
+    // Intake Components
+    intakeComponentsLayout.add("Intake Motor", getIntakeMotorCount()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    intakeComponentsLayout.add("IntakeMotorOutputPercent", intakeMotor.getMotorOutputPercent()).withSize(
+        shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    intakeComponentsLayout.add("Intake Solenoid", isIntakeDeployed()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+
+    // Color Sensor
+    colorSensorLayout.add("Color Sensor Blue", getBlue()).withSize(shuffleboardWidgetWidth, shuffleboardWidgetHeight);
+    colorSensorLayout.add("Color Sensor Red", getRed()).withSize(shuffleboardWidgetWidth, shuffleboardWidgetHeight);
+    colorSensorLayout.add("Color Sensor Prox", getProximity()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    colorSensorLayout.add("Is Ball Blue", isBallBlue()).withSize(shuffleboardWidgetWidth, shuffleboardWidgetHeight);
+    colorSensorLayout.add("Is Alliance Blue", isAllianceBlue()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    colorSensorLayout.add("Ball Color Matches Alliance", ballColorMatchesAlliance()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    colorSensorLayout.add("Is Proximity", isBallNearIntake()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
   }
 }

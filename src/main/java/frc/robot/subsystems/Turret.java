@@ -9,6 +9,8 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.RobotPreferences.*;
@@ -20,10 +22,15 @@ public class Turret extends SubsystemBase {
   private TalonFX turretMotor;
   private TalonFXConfiguration config;
 
+  // For Shuffleboard
+  private ShuffleboardTab tab;
+
   // LINKS TO ROBOT MAP
   public Turret() {
     // Creates Turret Variables
     turretMotor = new TalonFX(TurretMap.TURRET_MOTOR_CAN);
+    tab = Shuffleboard.getTab("Turret");
+
     config = new TalonFXConfiguration();
 
     configure();

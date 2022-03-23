@@ -6,15 +6,20 @@ package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class NavX extends SubsystemBase {
 
   public AHRS navx;
+  private ShuffleboardTab tab;
 
   /** Creates a new NavX. */
   public NavX() {
+    tab = Shuffleboard.getTab("NavX");
+
     navx = new AHRS();
   }
 

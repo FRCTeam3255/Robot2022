@@ -8,6 +8,8 @@ import com.frcteam3255.components.SN_Limelight;
 import com.frcteam3255.components.SN_Limelight.LEDMode;
 
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -17,9 +19,11 @@ public class Vision extends SubsystemBase {
 
   // timer exists because it would flash on and off cause periodic
   private int timer;
+  private ShuffleboardTab tab;
 
   /** Creates a new Vision. */
   public Vision() {
+    tab = Shuffleboard.getTab("Turret");
     limelight = new SN_Limelight();
   }
 
