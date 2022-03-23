@@ -151,8 +151,6 @@ public class RobotContainer {
   // private final Climb com_climb = new Climb(sub_climber);
   private final MagicClimb com_magicClimb = new MagicClimb(sub_climber);
   // private final ResetClimber com_resetClimber = new ResetClimber(sub_climber);
-  private final InstantCommand com_lockClimber = new InstantCommand(sub_climber::lockClimber);
-  private final InstantCommand com_unlockClimber = new InstantCommand(sub_climber::unlockClimber);
   private final InstantCommand com_pivotClimberPerpendicular = new InstantCommand(sub_climber::pivotPerpendicular);
   private final InstantCommand com_pivotClimberAngled = new InstantCommand(sub_climber::pivotAngled);
   private final InstantCommand com_hookClimberUp = new InstantCommand(sub_climber::hookUp);
@@ -270,8 +268,6 @@ public class RobotContainer {
     SmartDashboard.putData("Configure All Subsystems", new ConfigureSubsystems(sub_climber, sub_drivetrain,
         sub_intake, sub_shooter, sub_transfer, sub_turret));
 
-    SmartDashboard.putData("Lock Climber", com_lockClimber);
-    SmartDashboard.putData("Unlock Climber", com_unlockClimber);
     SmartDashboard.putData("Pivot Climber Perpendicular", com_pivotClimberPerpendicular);
     SmartDashboard.putData("Pivot Climber Angled", com_pivotClimberAngled);
     SmartDashboard.putData("Hook Climber Forward", com_hookClimberUp);
