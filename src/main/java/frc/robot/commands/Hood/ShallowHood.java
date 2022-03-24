@@ -18,6 +18,6 @@ public class ShallowHood extends InstantCommand {
 
   @Override
   public void initialize() {
-    hood.shallowHood();
+    hood.fenderHood();
   }
 }

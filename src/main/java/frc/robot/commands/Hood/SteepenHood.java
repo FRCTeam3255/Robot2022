@@ -18,6 +18,6 @@ public class SteepenHood extends InstantCommand {
 
   @Override
   public void initialize() {
-    hood.steepenHood();
+    hood.launchpadHood();
   }
 }

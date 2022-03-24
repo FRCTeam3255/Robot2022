@@ -16,6 +16,7 @@ public class Hood extends SubsystemBase {
 
   // Creates Hood Variables
   private DoubleSolenoid angleHoodSolenoid;
+  private DoubleSolenoid angleHoodLowerSolenoid;
   private DoubleSolenoid.Value shallowAngleHoodValue = Value.kReverse;
   private DoubleSolenoid.Value steepAngleHoodValue = Value.kForward;
 
@@ -24,6 +25,9 @@ public class Hood extends SubsystemBase {
     angleHoodSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,
         HoodMap.HOOD_SOLENOID_STEEP_ANGLE_PCM_A,
         HoodMap.HOOD_SOLENOID_SHALLOW_ANGLE_PCM_B);
+    angleHoodLowerSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,
+        HoodMap.LOWER_HOOD_SOLENOID_STEEP_ANGLE_PCM_A,
+        HoodMap.LOWER_HOOD_SOLENOID_SHALLOW_ANGLE_PCM_B);
     // configure is not needed since this is a solenoid
   }
 
@@ -43,13 +47,25 @@ public class Hood extends SubsystemBase {
   // solenoid methods
   // Sets hood angle to the given value
 
-  public void steepenHood() {
+  public void launchpadHood() {
     angleHoodSolenoid.set(steepAngleHoodValue);
-
+    angleHoodLowerSolenoid.set(steepAngleHoodValue);
   }
 
-  public void shallowHood() {
+  // NOTE TO SELF - CLARIFY WHAT TO NAME THESE B)
+  public void kindaUp() {
+    angleHoodSolenoid.set(steepAngleHoodValue);
+    angleHoodLowerSolenoid.set(shallowAngleHoodValue);
+  }
+
+  public void kindaDown() {
     angleHoodSolenoid.set(shallowAngleHoodValue);
+    angleHoodLowerSolenoid.set(steepAngleHoodValue);
+  }
+
+  public void fenderHood() {
+    angleHoodSolenoid.set(shallowAngleHoodValue);
+    angleHoodLowerSolenoid.set(shallowAngleHoodValue);
   }
 
   // Method constantly runs
