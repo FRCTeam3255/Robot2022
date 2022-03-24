@@ -7,8 +7,8 @@ package frc.robot.commands.Transfer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotPreferences.TransferPrefs;
 import frc.robot.subsystems.Transfer;
-import static frc.robot.RobotPreferences.*;
 import frc.robot.subsystems.Intake;
+import static frc.robot.RobotPreferences.*;
 
 public class ReverseTransfer extends CommandBase {
 
@@ -20,7 +20,7 @@ public class ReverseTransfer extends CommandBase {
     transfer = sub_transfer;
     intake = sub_intake;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(transfer);
+    addRequirements(transfer, intake);
   }
 
   // Called when the command is initially scheduled.
