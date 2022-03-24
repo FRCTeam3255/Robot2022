@@ -15,17 +15,17 @@ public class Hood extends SubsystemBase {
   /** Creates a new Hood. */
 
   // Creates Hood Variables
-  private DoubleSolenoid angleHoodSolenoid;
-  private DoubleSolenoid angleHoodLowerSolenoid;
+  private DoubleSolenoid longHoodPiston;
+  private DoubleSolenoid shortHoodPiston;
   private DoubleSolenoid.Value shallowAngleHoodValue = Value.kReverse;
   private DoubleSolenoid.Value steepAngleHoodValue = Value.kForward;
 
   // Initializes Hood Variables
   public Hood() {
-    angleHoodSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,
+    longHoodPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,
         HoodMap.HOOD_SOLENOID_STEEP_ANGLE_PCM_A,
         HoodMap.HOOD_SOLENOID_SHALLOW_ANGLE_PCM_B);
-    angleHoodLowerSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,
+    shortHoodPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,
         HoodMap.LOWER_HOOD_SOLENOID_STEEP_ANGLE_PCM_A,
         HoodMap.LOWER_HOOD_SOLENOID_SHALLOW_ANGLE_PCM_B);
     // configure is not needed since this is a solenoid
@@ -33,7 +33,7 @@ public class Hood extends SubsystemBase {
 
   // Method checks if solenoid is extended
   public boolean isHoodSteep() {
-    Value hoodSolenoidStatus = angleHoodSolenoid.get();
+    Value hoodSolenoidStatus = longHoodPiston.get();
     boolean isHoodSteep = false;
 
     if (hoodSolenoidStatus == DoubleSolenoid.Value.kForward) {
@@ -47,24 +47,28 @@ public class Hood extends SubsystemBase {
   // solenoid methods
   // Sets hood angle to the given value
 
-  public void launchpadHood() {
-    angleHoodSolenoid.set(steepAngleHoodValue);
-    angleHoodLowerSolenoid.set(steepAngleHoodValue);
+  // Both are on
+  public void hoodHighTilt() {
+    longHoodPiston.set(steepAngleHoodValue);
+    shortHoodPiston.set(steepAngleHoodValue);
   }
 
-  public void pointHoodUpward() {
-    angleHoodSolenoid.set(steepAngleHoodValue);
-    angleHoodLowerSolenoid.set(shallowAngleHoodValue);
+  // Old is on, new is off
+  public void hoodMediumTilt() {
+    longHoodPiston.set(steepAngleHoodValue);
+    shortHoodPiston.set(shallowAngleHoodValue);
   }
 
-  public void pointHoodDownward() {
-    angleHoodSolenoid.set(shallowAngleHoodValue);
-    angleHoodLowerSolenoid.set(steepAngleHoodValue);
+  // Old is off, new is on
+  public void hoodLowTilt() {
+    longHoodPiston.set(shallowAngleHoodValue);
+    shortHoodPiston.set(steepAngleHoodValue);
   }
 
-  public void fenderHood() {
-    angleHoodSolenoid.set(shallowAngleHoodValue);
-    angleHoodLowerSolenoid.set(shallowAngleHoodValue);
+  // Both are off
+  public void hood0Tilt() {
+    longHoodPiston.set(shallowAngleHoodValue);
+    shortHoodPiston.set(shallowAngleHoodValue);
   }
 
   // Method constantly runs

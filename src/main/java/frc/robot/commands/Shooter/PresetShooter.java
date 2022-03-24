@@ -44,18 +44,18 @@ public class PresetShooter extends InstantCommand {
       shooter.setGoalRPM(shooterRPMUpper.getValue());
 
       if (hoodSteepUpper.getValue()) {
-        hood.launchpadHood();
+        hood.hoodHighTilt();
       } else {
-        hood.fenderHood();
+        hood.hood0Tilt();
       }
     } else {
 
       shooter.setGoalRPM(shooterRPMLower.getValue());
 
       if (hoodSteepLower.getValue()) {
-        hood.launchpadHood();
+        hood.hoodHighTilt();
       } else {
-        hood.fenderHood();
+        hood.hood0Tilt();
       }
 
     }

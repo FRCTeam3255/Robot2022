@@ -206,7 +206,7 @@ public class RobotContainer {
     coDriverStick.btn_B.whileHeld(com_reverseTransfer);
     coDriverStick.btn_X.whileHeld(com_setGoalRPM);
     coDriverStick.btn_Y.whenPressed(com_setUpperHubGoal);
-    coDriverStick.btn_Y.whenPressed(new InstantCommand(sub_hood::launchpadHood, sub_hood));
+    coDriverStick.btn_Y.whenPressed(new InstantCommand(sub_hood::hoodHighTilt, sub_hood));
 
     coDriverStick.btn_Back.whenPressed(com_retractIntake);
 
