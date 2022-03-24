@@ -52,13 +52,12 @@ public class Hood extends SubsystemBase {
     angleHoodLowerSolenoid.set(steepAngleHoodValue);
   }
 
-  // NOTE TO SELF - CLARIFY WHAT TO NAME THESE B)
-  public void kindaUp() {
+  public void pointHoodUpward() {
     angleHoodSolenoid.set(steepAngleHoodValue);
     angleHoodLowerSolenoid.set(shallowAngleHoodValue);
   }
 
-  public void kindaDown() {
+  public void pointHoodDownward() {
     angleHoodSolenoid.set(shallowAngleHoodValue);
     angleHoodLowerSolenoid.set(steepAngleHoodValue);
   }
