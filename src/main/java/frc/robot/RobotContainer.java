@@ -7,6 +7,7 @@ package frc.robot;
 import com.frcteam3255.joystick.SN_DualActionStick;
 import com.frcteam3255.joystick.SN_F310Gamepad;
 import com.frcteam3255.joystick.SN_SwitchboardStick;
+import com.frcteam3255.utils.SN_InstantCommand;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -14,7 +15,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.Drivetrain.*;
-import frc.robot.commands.Hood.*;
 import frc.robot.commands.Turret.*;
 import frc.robot.commands.Vision.SetGoalRPM;
 import frc.robot.commands.Intake.*;
@@ -66,8 +66,10 @@ public class RobotContainer {
   // DrivetrainPrefs.driveOpenLoopSpeedForward);
 
   // Hood Commands
-  private final ShallowHood com_shallowHood = new ShallowHood(sub_hood);
-  private final SteepenHood com_steepenHood = new SteepenHood(sub_hood);
+  private final InstantCommand com_hoodHighTilt = new InstantCommand(sub_hood::hoodHighTilt);
+  private final InstantCommand com_hoodMediumTilt = new InstantCommand(sub_hood::hoodMediumTilt);
+  private final InstantCommand com_hoodLowTilt = new InstantCommand(sub_hood::hoodLowTilt);
+  private final InstantCommand com_hoodZeroTilt = new InstantCommand(sub_hood::hoodZeroTilt);
 
   // private final DriveMotionProfile com_driveTestPath = new
   // DriveMotionProfile(sub_drivetrain,
@@ -136,7 +138,7 @@ public class RobotContainer {
       TurretPrefs.turretSnapBackwards);
 
   // Transfer Commands
-  private final ReverseTransfer com_reverseTransfer = new ReverseTransfer(sub_transfer);
+  private final ReverseTransfer com_reverseTransfer = new ReverseTransfer(sub_transfer, sub_intake);
 
   // Intake Commands
   private final CollectCargo com_collect = new CollectCargo(sub_intake,
@@ -151,8 +153,6 @@ public class RobotContainer {
   // private final Climb com_climb = new Climb(sub_climber);
   private final MagicClimb com_magicClimb = new MagicClimb(sub_climber);
   // private final ResetClimber com_resetClimber = new ResetClimber(sub_climber);
-  private final InstantCommand com_lockClimber = new InstantCommand(sub_climber::lockClimber);
-  private final InstantCommand com_unlockClimber = new InstantCommand(sub_climber::unlockClimber);
   private final InstantCommand com_pivotClimberPerpendicular = new InstantCommand(sub_climber::pivotPerpendicular);
   private final InstantCommand com_pivotClimberAngled = new InstantCommand(sub_climber::pivotAngled);
   private final InstantCommand com_hookClimberUp = new InstantCommand(sub_climber::hookUp);
@@ -208,7 +208,7 @@ public class RobotContainer {
     coDriverStick.btn_B.whileHeld(com_reverseTransfer);
     coDriverStick.btn_X.whileHeld(com_setGoalRPM);
     coDriverStick.btn_Y.whenPressed(com_setUpperHubGoal);
-    coDriverStick.btn_Y.whenPressed(new InstantCommand(sub_hood::steepenHood, sub_hood));
+    coDriverStick.btn_Y.whenPressed(new InstantCommand(sub_hood::hoodHighTilt, sub_hood));
 
     coDriverStick.btn_Back.whenPressed(com_retractIntake);
 
@@ -228,16 +228,16 @@ public class RobotContainer {
   private void configureDashboardButtons() {
     // Reset Encoders
     SmartDashboard.putData("Reset Climber Encoders",
-        new InstantCommand(sub_climber::resetClimberEncoderCount, sub_climber));
+        new SN_InstantCommand(sub_climber::resetClimberEncoderCount, true, sub_climber));
     SmartDashboard.putData("Reset Drivetrain Encoders",
-        new InstantCommand(sub_drivetrain::resetDrivetrainEncodersCount,
+        new SN_InstantCommand(sub_drivetrain::resetDrivetrainEncodersCount, true,
             sub_drivetrain));
     SmartDashboard.putData("Reset Intake Encoders",
-        new InstantCommand(sub_intake::resetIntakeEncoderCount, sub_intake));
+        new SN_InstantCommand(sub_intake::resetIntakeEncoderCount, true, sub_intake));
     SmartDashboard.putData("Reset Turret Encoders",
-        new InstantCommand(sub_turret::resetTurretEncoderCounts, sub_turret));
+        new SN_InstantCommand(sub_turret::resetTurretEncoderCounts, true, sub_turret));
     SmartDashboard.putData("Reset Shooter Encoders",
-        new InstantCommand(sub_shooter::resetShooterEncoderCounts, sub_shooter));
+        new SN_InstantCommand(sub_shooter::resetShooterEncoderCounts, true, sub_shooter));
     SmartDashboard.putData("Reset NavX Heading",
         new InstantCommand(sub_navX::resetHeading, sub_navX));
 
@@ -270,15 +270,15 @@ public class RobotContainer {
     SmartDashboard.putData("Configure All Subsystems", new ConfigureSubsystems(sub_climber, sub_drivetrain,
         sub_intake, sub_shooter, sub_transfer, sub_turret));
 
-    SmartDashboard.putData("Lock Climber", com_lockClimber);
-    SmartDashboard.putData("Unlock Climber", com_unlockClimber);
     SmartDashboard.putData("Pivot Climber Perpendicular", com_pivotClimberPerpendicular);
     SmartDashboard.putData("Pivot Climber Angled", com_pivotClimberAngled);
     SmartDashboard.putData("Hook Climber Forward", com_hookClimberUp);
     SmartDashboard.putData("Hook Climber Backwards", com_hookClimberDown);
 
-    SmartDashboard.putData("Steepen Hood", com_steepenHood);
-    SmartDashboard.putData("Shallow Hood", com_shallowHood);
+    SmartDashboard.putData("Hood High Tilt", com_hoodHighTilt);
+    SmartDashboard.putData("Hood Medium Tilt", com_hoodMediumTilt);
+    SmartDashboard.putData("Hood Low Tilt", com_hoodLowTilt);
+    SmartDashboard.putData("Hood Zero Tilt", com_hoodZeroTilt);
 
     SmartDashboard.putData("Deplay Intake", com_deployIntake);
     SmartDashboard.putData("Retract Intake", com_retractIntake);
