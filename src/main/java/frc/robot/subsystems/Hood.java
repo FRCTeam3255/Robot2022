@@ -23,25 +23,12 @@ public class Hood extends SubsystemBase {
   // Initializes Hood Variables
   public Hood() {
     longHoodPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,
-        HoodMap.HOOD_SOLENOID_STEEP_ANGLE_PCM_A,
-        HoodMap.HOOD_SOLENOID_SHALLOW_ANGLE_PCM_B);
+        HoodMap.LONG_HOOD_SOLENOID_STEEP_ANGLE_PCM_A,
+        HoodMap.LONG_HOOD_SOLENOID_SHALLOW_ANGLE_PCM_B);
     shortHoodPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,
-        HoodMap.LOWER_HOOD_SOLENOID_STEEP_ANGLE_PCM_A,
-        HoodMap.LOWER_HOOD_SOLENOID_SHALLOW_ANGLE_PCM_B);
+        HoodMap.SHORT_HOOD_SOLENOID_STEEP_ANGLE_PCM_A,
+        HoodMap.SHORT_HOOD_SOLENOID_SHALLOW_ANGLE_PCM_B);
     // configure is not needed since this is a solenoid
-  }
-
-  // Method checks if solenoid is extended
-  public boolean isHoodSteep() {
-    Value hoodSolenoidStatus = longHoodPiston.get();
-    boolean isHoodSteep = false;
-
-    if (hoodSolenoidStatus == DoubleSolenoid.Value.kForward) {
-      isHoodSteep = true;
-    } else {
-      isHoodSteep = false;
-    }
-    return isHoodSteep;
   }
 
   // solenoid methods
@@ -66,7 +53,7 @@ public class Hood extends SubsystemBase {
   }
 
   // Both are off
-  public void hood0Tilt() {
+  public void hoodZeroTilt() {
     longHoodPiston.set(shallowAngleHoodValue);
     shortHoodPiston.set(shallowAngleHoodValue);
   }
@@ -75,6 +62,5 @@ public class Hood extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putBoolean("Hood Solenoid", isHoodSteep());
   }
 }

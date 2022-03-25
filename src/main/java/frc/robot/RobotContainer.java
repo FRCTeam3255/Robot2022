@@ -66,8 +66,10 @@ public class RobotContainer {
   // DrivetrainPrefs.driveOpenLoopSpeedForward);
 
   // Hood Commands
-  private final ShallowHood com_shallowHood = new ShallowHood(sub_hood);
-  private final SteepenHood com_steepenHood = new SteepenHood(sub_hood);
+  private final InstantCommand com_hoodHighTilt = new InstantCommand(sub_hood::hoodHighTilt);
+  private final InstantCommand com_hoodMediumTilt = new InstantCommand(sub_hood::hoodMediumTilt);
+  private final InstantCommand com_hoodLowTilt = new InstantCommand(sub_hood::hoodLowTilt);
+  private final InstantCommand com_hoodZeroTilt = new InstantCommand(sub_hood::hoodZeroTilt);
 
   // private final DriveMotionProfile com_driveTestPath = new
   // DriveMotionProfile(sub_drivetrain,
@@ -273,8 +275,10 @@ public class RobotContainer {
     SmartDashboard.putData("Hook Climber Forward", com_hookClimberUp);
     SmartDashboard.putData("Hook Climber Backwards", com_hookClimberDown);
 
-    SmartDashboard.putData("Steepen Hood", com_steepenHood);
-    SmartDashboard.putData("Shallow Hood", com_shallowHood);
+    SmartDashboard.putData("Hood High Tilt", com_hoodHighTilt);
+    SmartDashboard.putData("Hood Medium Tilt", com_hoodMediumTilt);
+    SmartDashboard.putData("Hood Low Tilt", com_hoodLowTilt);
+    SmartDashboard.putData("Hood Zero Tilt", com_hoodZeroTilt);
 
     SmartDashboard.putData("Deplay Intake", com_deployIntake);
     SmartDashboard.putData("Retract Intake", com_retractIntake);

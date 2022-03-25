@@ -46,7 +46,7 @@ public class PresetShooter extends InstantCommand {
       if (hoodSteepUpper.getValue()) {
         hood.hoodHighTilt();
       } else {
-        hood.hood0Tilt();
+        hood.hoodZeroTilt();
       }
     } else {
 
@@ -55,7 +55,7 @@ public class PresetShooter extends InstantCommand {
       if (hoodSteepLower.getValue()) {
         hood.hoodHighTilt();
       } else {
-        hood.hood0Tilt();
+        hood.hoodZeroTilt();
       }
 
     }
