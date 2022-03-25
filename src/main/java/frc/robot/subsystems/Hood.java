@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotMap;
 import frc.robot.RobotMap.*;
 
 public class Hood extends SubsystemBase {
@@ -25,7 +26,7 @@ public class Hood extends SubsystemBase {
     longHoodPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,
         HoodMap.LONG_HOOD_SOLENOID_STEEP_ANGLE_PCM_A,
         HoodMap.LONG_HOOD_SOLENOID_SHALLOW_ANGLE_PCM_B);
-    shortHoodPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,
+    shortHoodPiston = new DoubleSolenoid(RobotMap.CLIMBER_PCM, PneumaticsModuleType.CTREPCM,
         HoodMap.SHORT_HOOD_SOLENOID_STEEP_ANGLE_PCM_A,
         HoodMap.SHORT_HOOD_SOLENOID_SHALLOW_ANGLE_PCM_B);
     // configure is not needed since this is a solenoid
