@@ -109,13 +109,13 @@ public final class RobotPreferences {
     public static final SN_DoublePreference shooterEncoderCountsPerDegrees = new SN_DoublePreference(
         "shooterEncoderCountsPerDegrees", 84);
 
-    public static final SN_DoublePreference shooterF = new SN_DoublePreference("shooterF", 0.05);
+    public static final SN_DoublePreference shooterF = new SN_DoublePreference("shooterF", 0);
     public static final SN_DoublePreference shooterP = new SN_DoublePreference("shooterP", 0.005);
     public static final SN_DoublePreference shooterI = new SN_DoublePreference("shooterI", 0.0001);
     public static final SN_DoublePreference shooterD = new SN_DoublePreference("shooterD", 0);
 
     public static final SN_DoublePreference shooterPresetUpperFenderRPM = new SN_DoublePreference(
-        "shooterPresetUpperFenderRPM", 3100);
+        "shooterPresetUpperFenderRPM", 3400);
     public static final SN_DoublePreference shooterPresetUpperTarmacRPM = new SN_DoublePreference(
         "shooterPresetUpperTarmacRPM", 3400);
     public static final SN_DoublePreference shooterPresetUpperLaunchpadRPM = new SN_DoublePreference(
@@ -162,9 +162,9 @@ public final class RobotPreferences {
     public static final SN_DoublePreference turretClosedLoopPeakOutput = new SN_DoublePreference(
         "turretClosedLoopPeakOutput", 1);
     public static final SN_DoublePreference turretF = new SN_DoublePreference("turretF", 0);
-    public static final SN_DoublePreference turretP = new SN_DoublePreference("turretP", 1);
+    public static final SN_DoublePreference turretP = new SN_DoublePreference("turretP", 0.5);
     public static final SN_DoublePreference turretI = new SN_DoublePreference("turretI", 0);
-    public static final SN_DoublePreference turretD = new SN_DoublePreference("turretD", 0);
+    public static final SN_DoublePreference turretD = new SN_DoublePreference("turretD", 5);
 
     public static final SN_IntPreference turretLoopsToFinish = new SN_IntPreference("turretLoopsToFinish", 25);
 
