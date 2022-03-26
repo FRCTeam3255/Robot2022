@@ -6,16 +6,35 @@ package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//Shuffleboard imports
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 public class NavX extends SubsystemBase {
 
   public AHRS navx;
 
+  private ShuffleboardLayout navxLayout;
+  private ShuffleboardTab tab;
+
+  private int shuffleboardWidgetHeight;
+  private int shuffleboardWidgetWidth;
+
   /** Creates a new NavX. */
   public NavX() {
     navx = new AHRS();
+    navxLayout = tab.getLayout("isNavxConnected", BuiltInLayouts.kList).withSize(3, 3).withPosition(0, 0);
+    tab = Shuffleboard.getTab("NavX");
+
+    // Shuffleboard Layout Width
+    shuffleboardWidgetWidth = 2;
+
+    // Shuffleboard Layout Height
+    shuffleboardWidgetHeight = 1;
+
   }
 
   public void resetHeading() {
@@ -26,10 +45,21 @@ public class NavX extends SubsystemBase {
     navx.calibrate();
   }
 
+  // isNavxConnected
+  public boolean isNavxConnected() {
+    return isNavxConnected();
+  }
+
+  // getNavYaw
+  public int getNavYaw() {
+    return getNavYaw();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putBoolean("is navx connected", navx.isConnected());
-    SmartDashboard.putNumber("navx yaw", navx.getYaw());
+
+    navxLayout.add("Is Navx Connected", isNavxConnected()).withSize(shuffleboardWidgetWidth, shuffleboardWidgetHeight);
+    navxLayout.add("Get Nav Yaw", getNavYaw()).withSize(shuffleboardWidgetWidth, shuffleboardWidgetHeight);
   }
 }
