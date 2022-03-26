@@ -284,7 +284,7 @@ public class Drivetrain extends SubsystemBase {
     encoderCountsLayout.add("Drivetrain Average Encoder", getAverageEncoderCount()).withSize(shuffleboardWidgetWidth,
         shuffleboardWidgetHeight);
 
-    // Motion Profile
+    // Motion Profile (Boolean)
     tab.add("Is Drivetrain Motion Profile Finished", isMotionProfileFinished()).withSize(4, 2).withPosition(0, 4);
 
     // Motor Percent Output

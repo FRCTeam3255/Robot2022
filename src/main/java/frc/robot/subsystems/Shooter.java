@@ -10,7 +10,9 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.frcteam3255.utils.SN_Math;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap.*;
 import static frc.robot.RobotPreferences.*;
@@ -26,6 +28,16 @@ public class Shooter extends SubsystemBase {
   double goalRPM;
   boolean isHighHub;
 
+  // Shuffleboard
+  private ShuffleboardTab tab;
+  private ShuffleboardLayout shooterRPMShuffleboardLayout;
+  private ShuffleboardLayout shooterShuffleboardBooleansLayout;
+  private ShuffleboardLayout shooterShuffleboardMotorsLayout;
+  private ShuffleboardLayout shooterShuffleboardMotorsEncodersLayout;
+
+  private int shuffleboardWidgetWidth;
+  private int shuffleboardWidgetHeight;
+
   /**
    * Creates new shooter
    */
@@ -38,6 +50,12 @@ public class Shooter extends SubsystemBase {
     configure();
 
     goalRPM = 0;
+
+    tab = Shuffleboard.getTab("Shooter");
+    shooterShuffleboardBooleansLayout = tab.getLayout("Shooter Booleans").withSize(8, 2).withPosition(0, 4);
+    shooterShuffleboardMotorsLayout = tab.getLayout("Shooter Motors").withSize(3, 4).withPosition(0, 0);
+    shooterShuffleboardMotorsEncodersLayout = tab.getLayout("Shooter Encoders").withSize(3, 3).withPosition(4, 0);
+    shooterRPMShuffleboardLayout = tab.getLayout("Shooter RPM").withSize(4, 4).withPosition(7, 0);
   }
 
   /**
@@ -145,16 +163,32 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    // SmartDashboard.putNumber("Shooter Left Motor", getShooterEncoderCount());
-    // SmartDashboard.putNumber("Shooter Goal RPM", getGoalRPM());
-    // SmartDashboard.putNumber("Shooter RPM", getShooterRPM());
-    // SmartDashboard.putNumber("Shooter Error RPM", getErrorRPM());
-    // SmartDashboard.putBoolean("Is Shooter Up To Speed", isShooterUpToSpeed());
-    SmartDashboard.putBoolean("Is Shooter Goal High Hub", isGoalHighHub());
-    // SmartDashboard.putNumber("ShooterLeadMotorSpeed",
-    // leadMotor.getMotorOutputPercent());
-    // SmartDashboard.putNumber("ShooterFollowMotorSpeed",
-    // followMotor.getMotorOutputPercent());
+
+    // Shuffleboard
+
+    // Shooter Booleans
+    shooterShuffleboardBooleansLayout.add("Is Shooter Goal High Hub", isGoalHighHub()).withSize(3, 2).withPosition(0,
+        4);
+    shooterShuffleboardBooleansLayout.add("Is Shooter Up to Speed", isShooterUpToSpeed()).withSize(3, 2).withPosition(4,
+        4);
+
+    // Shooter Motors
+    shooterShuffleboardMotorsLayout.add("ShooterFollowMotorSpeed", followMotor.getMotorOutputPercent())
+        .withSize(shuffleboardWidgetWidth, shuffleboardWidgetHeight);
+    shooterShuffleboardMotorsLayout.add("ShooterLeadMotorSpeed", leadMotor.getMotorOutputPercent())
+        .withSize(shuffleboardWidgetWidth, shuffleboardWidgetHeight);
+
+    // Shooter Motor Encoder Counts
+    shooterShuffleboardMotorsEncodersLayout.add("Shooter Motor Encoder Count", getShooterEncoderCount())
+        .withSize(shuffleboardWidgetWidth, shuffleboardWidgetHeight);
+
+    // Shooter RPM
+    shooterRPMShuffleboardLayout.add("Shooter Error RPM", getErrorRPM()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    shooterRPMShuffleboardLayout.add("Shooter Goal RPM", getGoalRPM()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
+    shooterRPMShuffleboardLayout.add("Shooter RPM", getShooterRPM()).withSize(shuffleboardWidgetWidth,
+        shuffleboardWidgetHeight);
 
   }
 }
