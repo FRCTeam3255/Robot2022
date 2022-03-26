@@ -115,13 +115,13 @@ public final class RobotPreferences {
     public static final SN_DoublePreference shooterD = new SN_DoublePreference("shooterD", 0);
 
     public static final SN_DoublePreference shooterPresetUpperFenderRPM = new SN_DoublePreference(
-        "shooterPresetUpperFenderRPM", 3100);
+        "shooterPresetUpperFenderRPM", 3000);
     public static final SN_DoublePreference shooterPresetUpperTarmacRPM = new SN_DoublePreference(
-        "shooterPresetUpperTarmacRPM", 3400);
+        "shooterPresetUpperTarmacRPM", 3255);
     public static final SN_DoublePreference shooterPresetUpperLaunchpadRPM = new SN_DoublePreference(
-        "shooterPresetUpperLaunchpadRPM", 4700);
+        "shooterPresetUpperLaunchpadRPM", 3925);
     public static final SN_DoublePreference shooterPresetUpperTerminalRPM = new SN_DoublePreference(
-        "shooterPresetUpperTerminalRPM", 5000);
+        "shooterPresetUpperTerminalRPM", 4550);
 
     public static final SN_DoublePreference shooterPresetLowerFenderRPM = new SN_DoublePreference(
         "shooterPresetLowerFenderRPM", 2000);
