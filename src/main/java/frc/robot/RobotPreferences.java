@@ -115,7 +115,7 @@ public final class RobotPreferences {
     public static final SN_DoublePreference shooterD = new SN_DoublePreference("shooterD", 0);
 
     public static final SN_DoublePreference shooterPresetUpperFenderRPM = new SN_DoublePreference(
-        "shooterPresetUpperFenderRPM", 3400);
+        "shooterPresetUpperFenderRPM", 3100);
     public static final SN_DoublePreference shooterPresetUpperTarmacRPM = new SN_DoublePreference(
         "shooterPresetUpperTarmacRPM", 3400);
     public static final SN_DoublePreference shooterPresetUpperLaunchpadRPM = new SN_DoublePreference(
@@ -146,9 +146,9 @@ public final class RobotPreferences {
 
   public static final class TurretPrefs {
     public static final SN_DoublePreference turretMaxAngleDegrees = new SN_DoublePreference("turretMaxAngleDegrees",
-        360);
+        -270);
     public static final SN_DoublePreference turretMinAngleDegrees = new SN_DoublePreference("turretMinAngleDegrees",
-        0);
+        110);
     public static final SN_DoublePreference turretSnapForwards = new SN_DoublePreference("turretSnapForwards", 0);
     public static final SN_DoublePreference turretSnapBackwards = new SN_DoublePreference("turretSnapBackwards", 180);
 
