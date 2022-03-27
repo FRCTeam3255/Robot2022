@@ -149,8 +149,10 @@ public final class RobotPreferences {
 
     public static final SN_DoublePreference turretTwoBallAutoDegrees = new SN_DoublePreference(
         "turretTwoBallAutoDegrees", 84);
-    public static final SN_DoublePreference turretMaxAngleDegrees = new SN_DoublePreference("turretMaxAngleDegrees",
+    public static final SN_DoublePreference turretThreeBallAutoDegrees = new SN_DoublePreference(
+        "turretThreeBallAutoDegrees", 69);
 
+    public static final SN_DoublePreference turretMaxAngleDegrees = new SN_DoublePreference("turretMaxAngleDegrees",
         110);
     public static final SN_DoublePreference turretMinAngleDegrees = new SN_DoublePreference("turretMinAngleDegrees",
         -270);
