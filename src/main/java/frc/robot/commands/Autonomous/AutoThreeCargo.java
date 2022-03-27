@@ -4,12 +4,15 @@
 
 package frc.robot.commands.Autonomous;
 
+import java.util.concurrent.atomic.AtomicStampedReference;
+
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotPreferences;
 import frc.robot.RobotPreferences.AutoPrefs;
 import frc.robot.RobotPreferences.DrivetrainPrefs;
+// import frc.robot.RobotPreferences.AutoPrefs.AutoThreeCargo;
 import frc.robot.commands.Drivetrain.DriveMotionProfile;
 import frc.robot.commands.Intake.CollectCargo;
 import frc.robot.commands.Shooter.PresetShooter;
@@ -60,6 +63,8 @@ public class AutoThreeCargo extends SequentialCommandGroup {
         new InstantCommand(climber::pivotAngled),
         new PresetShooter(shooter, hood, AutoPrefs.OpenLoopTwoBall.auto4shooterRPM,
             AutoPrefs.OpenLoopTwoBall.auto4hoodSteep, null, null),
+        // new SetShooterRPM(shooter,
+        // AutoPrefs.AutoThreeCargo.autoThreeCargoShooterRPM),
 
         // parallel(
         // new DriveDistanceOpenLoop(drivetrain, AutoPrefs.OpenLoopTwoBall.auto4dist1,
@@ -68,21 +73,19 @@ public class AutoThreeCargo extends SequentialCommandGroup {
         // (new CollectCargo(intake,
         // transfer)).perpetually().until(transfer::isBottomBallCollected)),
         // // new DriveDistanceOpenLoop(drivetrain,
-        // AutoPrefs.OpenLoopTwoBall.auto4dist2,
+        // // AutoPrefs.OpenLoopTwoBall.auto4dist2,
         // // DrivetrainPrefs.driveOpenLoopSpeedReverse),
         // // new WaitCommand(2),
         // new SetTurretPosition(turret,
         // RobotPreferences.TurretPrefs.turretTwoBallAutoDegrees).withTimeout(0.5),
-        // parallel(new SpinFlywheelGoalRPM(shooter), new PushCargoSimple(shooter,
-        // transfer)).withTimeout(2),
+        // parallel(new PushCargoSimple(shooter, transfer)).withTimeout(2),
 
         // parallel(AutoThreeCargo,
         // (new CollectCargo(intake,
         // transfer)).perpetually().until(transfer::isBottomBallCollected)),
         // new SetTurretPosition(turret,
         // RobotPreferences.TurretPrefs.turretTwoBallAutoDegrees).withTimeout(0.5),
-        // parallel(new SpinFlywheelGoalRPM(shooter), new PushCargoSimple(shooter,
-        // transfer)).withTimeout(2));
+        // parallel(new PushCargoSimple(shooter, transfer)).withTimeout(2));
 
         AutoThreeCargo);
   }

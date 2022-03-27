@@ -150,7 +150,7 @@ public final class RobotPreferences {
     public static final SN_DoublePreference turretTwoBallAutoDegrees = new SN_DoublePreference(
         "turretTwoBallAutoDegrees", 84);
     public static final SN_DoublePreference turretThreeBallAutoDegrees = new SN_DoublePreference(
-        "turretThreeBallAutoDegrees", 69);
+        "turretThreeBallAutoDegrees", -14);
 
     public static final SN_DoublePreference turretMaxAngleDegrees = new SN_DoublePreference("turretMaxAngleDegrees",
         110);
@@ -254,7 +254,7 @@ public final class RobotPreferences {
 
     // auto1
     public static final class TwoCargoA {
-      public static final SN_DoublePreference auto1shooterRPM = new SN_DoublePreference("auto1shooterRPM", 3000);
+      public static final SN_DoublePreference auto1shooterRPM = new SN_DoublePreference("auto1shooterRPM", 3255);
       public static final SN_DoublePreference auto1turretAngle = new SN_DoublePreference("auto1turretAngle", 0);
       public static final SN_BooleanPreference auto1hoodSteep = new SN_BooleanPreference("auto1hoodSteep", true);
     }
@@ -293,6 +293,11 @@ public final class RobotPreferences {
       public static final SN_DoublePreference auto4dist1 = new SN_DoublePreference("auto4dist1", 44444);
       public static final SN_DoublePreference auto4dist2 = new SN_DoublePreference("auto4dist2", -82000);
       public static final SN_DoublePreference auto4turretAngle = new SN_DoublePreference("auto4turretAngle", 340);
+    }
+
+    public static final class AutoThreeCargo {
+      public static final SN_DoublePreference autoThreeCargoShooterRPM = new SN_DoublePreference(
+          "autoThreeCargoShooterRPM", 3255);
     }
   }
 }
