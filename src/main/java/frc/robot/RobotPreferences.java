@@ -111,9 +111,9 @@ public final class RobotPreferences {
         "shooterEncoderCountsPerDegrees", 84);
 
     public static final SN_DoublePreference shooterF = new SN_DoublePreference("shooterF", 0);
-    public static final SN_DoublePreference shooterP = new SN_DoublePreference("shooterP", 0.005);
-    public static final SN_DoublePreference shooterI = new SN_DoublePreference("shooterI", 0.0001);
-    public static final SN_DoublePreference shooterD = new SN_DoublePreference("shooterD", 0);
+    public static final SN_DoublePreference shooterP = new SN_DoublePreference("shooterP", 0.02);
+    public static final SN_DoublePreference shooterI = new SN_DoublePreference("shooterI", 0.0002);
+    public static final SN_DoublePreference shooterD = new SN_DoublePreference("shooterD", 0.0088);
 
     public static final SN_DoublePreference shooterPresetUpperFenderRPM = new SN_DoublePreference(
         "shooterPresetUpperFenderRPM", 3000);
