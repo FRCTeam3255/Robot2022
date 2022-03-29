@@ -72,21 +72,21 @@ public class AutoThreeCargo extends SequentialCommandGroup {
             new DriveDistanceOpenLoop(drivetrain, AutoPrefs.OpenLoopTwoBall.auto4dist1,
                 DrivetrainPrefs.driveOpenLoopSpeedForward),
             new InstantCommand(hood::hoodMediumTilt),
+            new SetTurretPosition(turret,
+                RobotPreferences.TurretPrefs.turretTwoBallAutoDegrees).withTimeout(0.5),
             (new CollectCargo(intake,
                 transfer)).perpetually().until(transfer::isBottomBallCollected)),
         // new DriveDistanceOpenLoop(drivetrain,
         // AutoPrefs.OpenLoopTwoBall.auto4dist2,
         // DrivetrainPrefs.driveOpenLoopSpeedReverse),
         // new WaitCommand(2),
-        new SetTurretPosition(turret,
-            RobotPreferences.TurretPrefs.turretTwoBallAutoDegrees).withTimeout(0.5),
-        parallel(new PushCargoSimple(shooter, transfer)).withTimeout(1.5),
+        parallel(new PushCargoSimple(shooter, transfer)).withTimeout(1.25),
 
         parallel(AutoThreeCargo,
+            new SetTurretPosition(turret,
+                RobotPreferences.TurretPrefs.turretThreeBallAutoDegrees).withTimeout(0.5),
             (new CollectCargo(intake,
                 transfer)).perpetually().until(transfer::isBottomBallCollected)),
-        new SetTurretPosition(turret,
-            RobotPreferences.TurretPrefs.turretThreeBallAutoDegrees).withTimeout(0.5),
         parallel(new PushCargoSimple(shooter, transfer)).withTimeout(2));
 
     // AutoThreeCargo);
