@@ -79,8 +79,8 @@ public class AutoThreeCargo extends SequentialCommandGroup {
         // DrivetrainPrefs.driveOpenLoopSpeedReverse),
         // new WaitCommand(2),
         new SetTurretPosition(turret,
-            RobotPreferences.TurretPrefs.turretTwoBallAutoDegrees).withTimeout(2),
-        parallel(new PushCargoSimple(shooter, transfer)).withTimeout(2),
+            RobotPreferences.TurretPrefs.turretTwoBallAutoDegrees).withTimeout(0.5),
+        parallel(new PushCargoSimple(shooter, transfer)).withTimeout(1.5),
 
         parallel(AutoThreeCargo,
             (new CollectCargo(intake,
