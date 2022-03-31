@@ -21,13 +21,13 @@ public class PrepClimb extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        // Zero Turret
-        new SetTurretPosition(sub_turret, RobotPreferences.TurretPrefs.turretSnapAwayIntake),
         // Retract hood
         new InstantCommand(sub_hood::hoodZeroTilt, sub_hood),
         // Deploy stationary hooks
         new InstantCommand(sub_climber::hookUp, sub_climber),
         // Angle climber
-        new InstantCommand(sub_climber::pivotAngled, sub_climber));
+        new InstantCommand(sub_climber::pivotPerpendicular, sub_climber),
+        // Zero Turret
+        new SetTurretPosition(sub_turret, RobotPreferences.TurretPrefs.turretSnapAwayIntake).withTimeout(0.5));
   }
 }

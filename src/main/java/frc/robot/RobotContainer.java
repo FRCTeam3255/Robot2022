@@ -54,7 +54,7 @@ public class RobotContainer {
   private final Turret sub_turret = new Turret();
   private final Intake sub_intake = new Intake();
   private final Shooter sub_shooter = new Shooter();
-  private final Climber sub_climber = new Climber();
+  public final Climber sub_climber = new Climber();
   private final Transfer sub_transfer = new Transfer();
   private final NavX sub_navX = new NavX();
   private final Vision sub_vision = new Vision();
