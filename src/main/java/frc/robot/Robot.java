@@ -40,9 +40,9 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     DriverStation.silenceJoystickConnectionWarning(true);
-    PortForwarder.add(5800, "limelight.local", 5800);
-    PortForwarder.add(5801, "limelight.local", 5801);
-    PortForwarder.add(5805, "limelight.local", 5805);
+    PortForwarder.add(5800, "10.32.55.11", 5800);
+    PortForwarder.add(5801, "10.32.55.11", 5801);
+    PortForwarder.add(5805, "10.32.55.11", 5805);
 
     // Intake camera
     CameraServer.startAutomaticCapture();

@@ -161,7 +161,7 @@ public class RobotContainer {
   private final InstantCommand com_hookClimberDown = new InstantCommand(sub_climber::hookDown);
   private final RunSpool com_runSpool = new RunSpool(sub_climber);
 
-  private final PrepClimb com_prepClimb = new PrepClimb(sub_turret, sub_hood, sub_climber);
+  private final PrepClimb com_prepClimb = new PrepClimb(sub_turret, sub_hood, sub_climber, sub_intake);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
