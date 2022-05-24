@@ -212,9 +212,13 @@ public class RobotContainer {
     coDriverStick.btn_B.whileHeld(com_reverseTransfer);
     // Just Setting Angle (X Axis)
     coDriverStick.btn_X.whileHeld(com_visionSpinTurret);
+
+    // NOTE - THIS SEEMS TO BREAK THE TARMAC PRESET SOMEHOW, I HAVE NO CLUE HOW LOL
+    // B)
     // Just Setting RPM (Y Axis)
-    coDriverStick.btn_Y.whenPressed(com_setGoalRPM);
-    coDriverStick.btn_Y.whenPressed(new InstantCommand(sub_hood::hoodMediumTilt, sub_hood));
+    // coDriverStick.btn_Y.whenPressed(com_setGoalRPM);
+    // coDriverStick.btn_Y.whenPressed(new InstantCommand(sub_hood::hoodMediumTilt,
+    // sub_hood));
 
     coDriverStick.btn_Back.whenPressed(com_retractIntake);
 

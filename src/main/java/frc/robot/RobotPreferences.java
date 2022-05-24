@@ -30,7 +30,7 @@ public final class RobotPreferences {
       "encoderCountsPerTalonFXRotation", 2048);
 
   public static final class DrivetrainPrefs {
-    public static final SN_DoublePreference arcadeSpeed = new SN_DoublePreference("arcadeSpeed", 0.65);
+    public static final SN_DoublePreference arcadeSpeed = new SN_DoublePreference("arcadeSpeed", 0.4);
     public static final SN_DoublePreference arcadeTurn = new SN_DoublePreference("arcadeTurn", .5);
     public static final SN_DoublePreference arcadeLowSpeed = new SN_DoublePreference("arcadeLowSpeed", 0.4);
     public static final SN_DoublePreference arcadeHighSpeed = new SN_DoublePreference("arcadeHighSpeed", 1.5);
@@ -117,8 +117,11 @@ public final class RobotPreferences {
 
     public static final SN_DoublePreference shooterPresetUpperFenderRPM = new SN_DoublePreference(
         "shooterPresetUpperFenderRPM", 3000);
+    // public static final SN_DoublePreference shooterPresetUpperTarmacRPM = new
+    // SN_DoublePreference(
+    // "shooterPresetUpperTarmacRPM", 3255);
     public static final SN_DoublePreference shooterPresetUpperTarmacRPM = new SN_DoublePreference(
-        "shooterPresetUpperTarmacRPM", 3255);
+        "shooterPresetUpperTarmacRPM", 2250);
     public static final SN_DoublePreference shooterPresetUpperLaunchpadRPM = new SN_DoublePreference(
         "shooterPresetUpperLaunchpadRPM", 3925);
     public static final SN_DoublePreference shooterPresetUpperTerminalRPM = new SN_DoublePreference(
