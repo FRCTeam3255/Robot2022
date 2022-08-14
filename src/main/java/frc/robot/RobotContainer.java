@@ -207,14 +207,16 @@ public class RobotContainer {
     coDriverStick.btn_LBump.whileHeld(com_moveTurret);
 
     // Limelight Commands
-    coDriverStick.btn_A.whileHeld(com_visionAimTurret);
-    coDriverStick.btn_A.whenPressed(new InstantCommand(sub_hood::hoodMediumTilt, sub_hood));
+    // coDriverStick.btn_A.whileHeld(com_visionAimTurret);
+    // coDriverStick.btn_A.whenPressed(new InstantCommand(sub_hood::hoodMediumTilt,
+    // sub_hood));
     coDriverStick.btn_B.whileHeld(com_reverseTransfer);
     // Just Setting Angle (X Axis)
-    coDriverStick.btn_X.whileHeld(com_visionSpinTurret);
+    // coDriverStick.btn_X.whileHeld(com_visionSpinTurret);
     // Just Setting RPM (Y Axis)
-    coDriverStick.btn_Y.whenPressed(com_setGoalRPM);
-    coDriverStick.btn_Y.whenPressed(new InstantCommand(sub_hood::hoodMediumTilt, sub_hood));
+    // coDriverStick.btn_Y.whenPressed(com_setGoalRPM);
+    // coDriverStick.btn_Y.whenPressed(new InstantCommand(sub_hood::hoodMediumTilt,
+    // sub_hood));
 
     coDriverStick.btn_Back.whenPressed(com_retractIntake);
 
@@ -233,8 +235,8 @@ public class RobotContainer {
     coDriverStick.POV_West.whenPressed(new InstantCommand(sub_hood::hoodMediumTilt, sub_hood));
 
     // Foward = Facing Intake
-    coDriverStick.btn_RStick.whenPressed(com_presetToIntake);
-    coDriverStick.btn_LStick.whenPressed(com_presetAwayIntake);
+    // coDriverStick.btn_RStick.whenPressed(com_presetToIntake);
+    // coDriverStick.btn_LStick.whenPressed(com_presetAwayIntake);
   }
 
   /**
