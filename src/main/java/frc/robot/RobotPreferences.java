@@ -320,6 +320,13 @@ public final class RobotPreferences {
           "hoodLevel1_6", 0);
       public static final SN_DoublePreference turretAngle1_6 = new SN_DoublePreference(
           "turretAngle1_6", TurretPrefs.turretSnapToIntake.getValue());
+
+      public static final SN_DoublePreference shooterRPM2_6 = new SN_DoublePreference(
+          "shooterRPM2_6", 420);
+      public static final SN_IntPreference hoodLevel2_6 = new SN_IntPreference(
+          "hoodLevel2_6", 666);
+      public static final SN_DoublePreference turretAngle2_6 = new SN_DoublePreference(
+          "turretAngle2_6", 69);
     }
   }
 }

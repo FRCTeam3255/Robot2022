@@ -77,19 +77,29 @@ public class AutoThreeCargoPP extends SequentialCommandGroup {
         drivetrain);
 
     addCommands(
+        new InstantCommand(drivetrain::setBrakeMode), // config drivetrain
 
+        // shoot first ball
         parallel(
-            new InstantCommand(drivetrain::setBrakeMode), // set drivetrain
             new SetShooterRPM(shooter, ThreeCargo.shooterRPM1_6), // set shooter
             new SetTurretPosition(turret, ThreeCargo.turretAngle1_6).withTimeout(.5), // set turret
             new InstantCommand(() -> hood.setHood(ThreeCargo.hoodLevel1_6.getValue())), // set hood
-            new CollectCargo(intake, transfer).until(transfer::isTopBallCollected), // collect
             new PushCargoSimple(shooter, transfer).withTimeout(3)), // shoot
 
-        new InstantCommand(() -> drivetrain.resetOdometry(trajectory.getInitialPose())),
-        driveTo1Then2,
-        new InstantCommand(() -> drivetrain.driveSpeed(0, 0)));
+        // drive and collect
+        new InstantCommand(() -> drivetrain.resetOdometry(trajectory.getInitialPose())), //
+        parallel(
+            driveTo1Then2.andThen(new InstantCommand(() -> drivetrain.driveSpeed(0, 0))), // drive then stop
+            new CollectCargo(intake, transfer).until(transfer::areTopAndBottomBallCollected)), // collect
 
+        // shoot
+        parallel(
+            new SetShooterRPM(shooter, ThreeCargo.shooterRPM2_6), // set shooter
+            new SetTurretPosition(turret, ThreeCargo.turretAngle2_6).withTimeout(.5), // set turret
+            new InstantCommand(() -> hood.setHood(ThreeCargo.hoodLevel2_6.getValue())), // set hood
+            new PushCargoSimple(shooter, transfer).withTimeout(3) // shoot
+
+        ));
   }
 }
 
