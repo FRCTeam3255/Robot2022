@@ -5,7 +5,6 @@ import com.frcteam3255.preferences.SN_DoublePreference;
 import com.frcteam3255.preferences.SN_IntPreference;
 import com.frcteam3255.preferences.SN_ZeroDoublePreference;
 import com.frcteam3255.preferences.SN_ZeroIntPreference;
-import com.frcteam3255.utils.SN_Debug;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 
