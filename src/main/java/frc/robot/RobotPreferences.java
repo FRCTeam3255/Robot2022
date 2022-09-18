@@ -7,6 +7,8 @@ import com.frcteam3255.preferences.SN_ZeroDoublePreference;
 import com.frcteam3255.preferences.SN_ZeroIntPreference;
 import com.frcteam3255.utils.SN_Debug;
 
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+
 public final class RobotPreferences {
 
   // when mechanical builds stuff, it's almost always (and should be) designed to
@@ -44,7 +46,11 @@ public final class RobotPreferences {
         "driveAllowableClosedLoopErrorInches", 2);
     public static final SN_DoublePreference driveClosedLoopPeakOutput = new SN_DoublePreference(
         "driveClosedLoopPeakOutput", 1);
+    public static final SN_DoublePreference driveClosedLoopRamp = new SN_DoublePreference("driveClosedLoopRamp", .3);
     public static final SN_DoublePreference driveLoopsToFinish = new SN_DoublePreference("driveLoopsToFinish", 25);
+    public static final SN_DoublePreference driveWheelCircumference = new SN_DoublePreference("driveWheelCircumference",
+        4 * Math.PI);
+    public static final SN_DoublePreference driveGearRatio = new SN_DoublePreference("driveGearRatio", 6);
 
     // drivetrain gear ratio: 10:60 aka motor rotates once, wheel rotates 1/6
     // 2048 counts per motor rotation, * 6 is 12288 counts per wheel rotation
@@ -73,6 +79,13 @@ public final class RobotPreferences {
         "driveOpenLoopSpeedReverse", -.3);
 
     public static final SN_DoublePreference driveOpenLoopCounts = new SN_DoublePreference("driveOpenLoopCounts", 44444);
+
+    public static final SN_DoublePreference testMPS = new SN_DoublePreference("testMPS", 1);
+
+    public static final SN_DoublePreference driveWidth = new SN_DoublePreference("driveWidth", 0.55); // meters
+    public static final SN_DoublePreference driveLength = new SN_DoublePreference("driveLength", 0.67); // meters
+    public static final DifferentialDriveKinematics driveKinematics = new DifferentialDriveKinematics(
+        driveWidth.getValue());
 
   }
 
@@ -298,6 +311,16 @@ public final class RobotPreferences {
     public static final class AutoThreeCargo {
       public static final SN_DoublePreference autoThreeCargoShooterRPM = new SN_DoublePreference(
           "autoThreeCargoShooterRPM", 3255);
+    }
+
+    // auto 6
+    public static final class ThreeCargo {
+      public static final SN_DoublePreference shooterRPM1_6 = new SN_DoublePreference(
+          "shooterRPM1_6", ShooterPrefs.shooterPresetUpperFenderRPM.getValue());
+      public static final SN_IntPreference hoodLevel1_6 = new SN_IntPreference(
+          "hoodLevel1_6", 0);
+      public static final SN_DoublePreference turretAngle1_6 = new SN_DoublePreference(
+          "turretAngle1_6", TurretPrefs.turretSnapToIntake.getValue());
     }
   }
 }
