@@ -20,14 +20,11 @@ import frc.robot.commands.Vision.SetGoalRPM;
 import frc.robot.commands.Intake.*;
 import frc.robot.commands.Shooter.*;
 import frc.robot.commands.Transfer.*;
-// import frc.robot.RobotPreferences.DrivetrainPrefs;
 import frc.robot.RobotPreferences.HoodPrefs;
 import frc.robot.RobotPreferences.ShooterPrefs;
 import frc.robot.RobotPreferences.TurretPrefs;
 import frc.robot.commands.ConfigureSubsystems;
-import frc.robot.commands.Autonomous.AutoThreeCargo;
-// import frc.robot.commands.Autonomous.DriveDistanceOpenLoop;
-import frc.robot.commands.Autonomous.OpenLoopTwoBall;
+import frc.robot.commands.Autonomous.AutoThreeCargoPP;
 import frc.robot.commands.Climber.*;
 import frc.robot.subsystems.*;
 
@@ -65,6 +62,7 @@ public class RobotContainer {
   // DriveDistanceOpenLoop(
   // sub_drivetrain, DrivetrainPrefs.driveOpenLoopCounts,
   // DrivetrainPrefs.driveOpenLoopSpeedForward);
+  private final DriveSpeed com_driveSpeed = new DriveSpeed(sub_drivetrain);
 
   // Hood Commands
   private final InstantCommand com_hoodHighTilt = new InstantCommand(sub_hood::hoodHighTilt);
@@ -186,16 +184,20 @@ public class RobotContainer {
 
     // Driver Stick
 
-    DriverStick.btn_A.whenPressed(com_pivotClimberAngled);
-    DriverStick.btn_B.whenPressed(com_pivotClimberPerpendicular);
-    DriverStick.btn_X.whenPressed(com_hookClimberDown);
-    DriverStick.btn_Y.whenPressed(com_hookClimberUp);
+    DriverStick.btn_A.whileHeld(com_driveSpeed);
+    DriverStick.btn_X.whenPressed(() -> sub_drivetrain.configure());
 
+    // only commented these out for ramsete-testing, uncomment before merging branch
+    // DriverStick.btn_A.whenPressed(com_pivotClimberAngled);
+    // DriverStick.btn_B.whenPressed(com_pivotClimberPerpendicular);
+    // DriverStick.btn_X.whenPressed(com_hookClimberDown);
+    // DriverStick.btn_Y.whenPressed(com_hookClimberUp);
+    // DriverStick.btn_Start.whileHeld(com_magicClimb);
+    // DriverStick.btn_Back.whenPressed(com_prepClimb);
+
+    // leave these commented out
     // DriverStick.btn_Y.whileHeld(com_highHub);
     // DriverStick.btn_X.whileHeld(com_lowHub);
-
-    DriverStick.btn_Start.whileHeld(com_magicClimb);
-    DriverStick.btn_Back.whenPressed(com_prepClimb);
 
     // coDriver Stick
 
@@ -309,12 +311,18 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    if (switchBoard.btn_1.get()) {
-      return new AutoThreeCargo(sub_drivetrain, sub_shooter, sub_turret, sub_hood, sub_transfer, sub_intake,
-          sub_climber);
-    } else {
-      return new OpenLoopTwoBall(sub_drivetrain, sub_shooter, sub_turret, sub_hood, sub_transfer, sub_intake,
-          sub_climber);
-    }
+    // if (switchBoard.btn_1.get()) {
+    // return new AutoThreeCargo(sub_drivetrain, sub_shooter, sub_turret, sub_hood,
+    // sub_transfer, sub_intake,
+    // sub_climber);
+    // } else {
+    // return new OpenLoopTwoBall(sub_drivetrain, sub_shooter, sub_turret, sub_hood,
+    // sub_transfer, sub_intake,
+    // sub_climber);
+    // }
+
+    return new AutoThreeCargoPP(
+        sub_drivetrain, sub_shooter, sub_turret, sub_hood, sub_transfer, sub_intake, sub_climber);
+
   }
 }
