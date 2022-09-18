@@ -11,9 +11,14 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.frcteam3255.preferences.SN_DoublePreference;
+import com.frcteam3255.utils.SN_Math;
+import com.kauailabs.navx.frc.AHRS;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
@@ -34,6 +39,10 @@ public class Drivetrain extends SubsystemBase {
   public SlewRateLimiter posSlewRateLimiter;
   public SlewRateLimiter negSlewRateLimiter;
 
+  AHRS navx = new AHRS();
+
+  DifferentialDriveOdometry odometry;
+
   // Initializes Variables for Drivetrain
   public Drivetrain() {
     leftLeadMotor = new TalonFX(DrivetrainMap.LEFT_LEAD_MOTOR_CAN);
@@ -46,6 +55,8 @@ public class Drivetrain extends SubsystemBase {
     posSlewRateLimiter = new SlewRateLimiter(DrivetrainPrefs.drivePosSlewRateLimit.getValue());
     negSlewRateLimiter = new SlewRateLimiter(DrivetrainPrefs.driveNegSlewRateLimit.getValue());
 
+    odometry = new DifferentialDriveOdometry(navx.getRotation2d());
+
     configure();
   }
 
@@ -57,6 +68,8 @@ public class Drivetrain extends SubsystemBase {
     config.slot0.kP = DrivetrainPrefs.driveP.getValue();
     config.slot0.kI = DrivetrainPrefs.driveI.getValue();
     config.slot0.kD = DrivetrainPrefs.driveD.getValue();
+
+    config.closedloopRamp = DrivetrainPrefs.driveClosedLoopRamp.getValue();
 
     // Left
     leftLeadMotor.configFactoryDefault();
@@ -161,6 +174,18 @@ public class Drivetrain extends SubsystemBase {
     return fps;
   }
 
+  public double getLeftMPS() {
+    return SN_Math.falconToMPS(getLeftVelocity(),
+        Units.inchesToMeters(DrivetrainPrefs.driveWheelCircumference.getValue()),
+        DrivetrainPrefs.driveGearRatio.getValue());
+  }
+
+  public double getRightMPS() {
+    return SN_Math.falconToMPS(getRightVelocity(),
+        Units.inchesToMeters(DrivetrainPrefs.driveWheelCircumference.getValue()),
+        DrivetrainPrefs.driveGearRatio.getValue());
+  }
+
   // Method controls Drivetrain Motor speeds
   public void arcadeDrive(double a_speed, double a_turn) {
     double speed = a_speed * DrivetrainPrefs.arcadeSpeed.getValue();
@@ -211,6 +236,27 @@ public class Drivetrain extends SubsystemBase {
     rightLeadMotor.set(ControlMode.Position, position);
   }
 
+  public void driveSpeed(double a_leftMPS, double a_rightMPS) {
+    double leftVelocity = SN_Math.MPSToFalcon(
+        a_leftMPS, Units.inchesToMeters(DrivetrainPrefs.driveWheelCircumference.getValue()),
+        DrivetrainPrefs.driveGearRatio.getValue());
+    double rightVelocity = SN_Math.MPSToFalcon(
+        a_rightMPS, Units.inchesToMeters(DrivetrainPrefs.driveWheelCircumference.getValue()),
+        DrivetrainPrefs.driveGearRatio.getValue());
+
+    leftLeadMotor.set(ControlMode.Velocity, leftVelocity);
+    rightLeadMotor.set(ControlMode.Velocity, rightVelocity);
+  }
+
+  public Pose2d getPose() {
+    return odometry.getPoseMeters();
+  }
+
+  public void resetOdometry(Pose2d pose) {
+    resetDrivetrainEncodersCount();
+    odometry.resetPosition(pose, navx.getRotation2d());
+  }
+
   public double getLeftClosedLoopErrorInches() {
     return leftLeadMotor.getClosedLoopError() * (DrivetrainPrefs.driveEncoderCountsPerFoot.getValue() / 12);
   }
@@ -243,7 +289,10 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
 
-    if (RobotContainer.switchBoard.btn_7.get()) {
+    odometry.update(navx.getRotation2d(), Units.feetToMeters(getLeftFeetDriven()),
+        Units.feetToMeters(getRightFeetDriven()));
+
+    if (/* RobotContainer.switchBoard.btn_7.get() */ true) {
       // Encoder Counts
       SmartDashboard.putNumber("Drivetrain Left Encoder", getLeftEncoderCount());
       SmartDashboard.putNumber("Drivetrain Right Encoder", getRightEncoderCount());
@@ -292,6 +341,15 @@ public class Drivetrain extends SubsystemBase {
           getRightClosedLoopErrorInches());
       SmartDashboard.putNumber("Drivetrain Average Closed Loop Error Inches",
           getAverageClosedLoopErrorInches());
+
+      // MPS
+      SmartDashboard.putNumber("Drivetrain Left MPS", getLeftMPS());
+      SmartDashboard.putNumber("Drivetrain Right MPS", getRightMPS());
+
+      // pose
+      SmartDashboard.putNumber("Drivetrain Pose X", getPose().getX());
+      SmartDashboard.putNumber("Drivetrain Pose Y", getPose().getY());
+      SmartDashboard.putNumber("Drivetrain Pose Heading", getPose().getRotation().getDegrees());
     }
 
   }

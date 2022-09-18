@@ -59,6 +59,25 @@ public class Hood extends SubsystemBase {
     shortHoodPiston.set(shallowAngleHoodValue);
   }
 
+  /**
+   * Set the hood position based off an int
+   * 
+   * 0 is shallowest angle, 3 is steepest
+   * 
+   * @param level
+   */
+  public void setHood(int level) {
+    if (level == 0) {
+      hoodZeroTilt();
+    } else if (level == 1) {
+      hoodLowTilt();
+    } else if (level == 2) {
+      hoodMediumTilt();
+    } else if (level == 3) {
+      hoodHighTilt();
+    }
+  }
+
   // Method constantly runs
   @Override
   public void periodic() {
