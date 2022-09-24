@@ -38,7 +38,7 @@ public class AutoThreeCargoPP extends SequentialCommandGroup {
   Intake intake;
   Climber climber;
 
-  String trajectoryJSON = "paths/j.wpilib.json";
+  String trajectoryJSON = "paths/driveTo1Then2.wpilib.json";
   Trajectory trajectory = new Trajectory();
 
   RamseteCommand driveTo1Then2;
