@@ -227,7 +227,8 @@ public class Drivetrain extends SubsystemBase {
   public void closedLoopArcadeDrive(double a_speed, double a_turn) {
     double speed = a_speed * DrivetrainPrefs.driveClosedLoopPeakOutput.getValue();
     speed = SN_Math.MPSToFalcon(
-        speed, DrivetrainPrefs.driveWheelCircumference.getValue(), DrivetrainPrefs.driveGearRatio.getValue());
+        speed, Units.inchesToMeters(DrivetrainPrefs.driveWheelCircumference.getValue()),
+        DrivetrainPrefs.driveGearRatio.getValue());
     double turn = a_turn * DrivetrainPrefs.arcadeTurn.getValue();
 
     leftLeadMotor.set(ControlMode.Velocity, speed, DemandType.ArbitraryFeedForward, turn);
@@ -332,8 +333,8 @@ public class Drivetrain extends SubsystemBase {
       Path driveFrom4And5To2JSONPath = Filesystem.getDeployDirectory().toPath().resolve(driveFrom4And5To2JSON);
 
       driveTo1Then2Traj = TrajectoryUtil.fromPathweaverJson(driveTo1Then2JSONPath);
-      driveFrom2To4And5Traj = TrajectoryUtil.fromPathweaverJson(driveFrom4And5To2JSONPath);
-      driveFrom4and5To2Traj = TrajectoryUtil.fromPathweaverJson(driveTo1Then2JSONPath);
+      driveFrom2To4And5Traj = TrajectoryUtil.fromPathweaverJson(driveFrom2To4And5JSONPath);
+      driveFrom4and5To2Traj = TrajectoryUtil.fromPathweaverJson(driveFrom4And5To2JSONPath);
     } catch (IOException ex) {
       DriverStation.reportError("Unable to open trajectory. Error: ", ex.getStackTrace());
     }
