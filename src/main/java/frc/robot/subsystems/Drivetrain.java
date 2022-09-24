@@ -18,7 +18,9 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
@@ -42,6 +44,7 @@ public class Drivetrain extends SubsystemBase {
   AHRS navx = new AHRS();
 
   DifferentialDriveOdometry odometry;
+  Field2d field = new Field2d();
 
   // Initializes Variables for Drivetrain
   public Drivetrain() {
@@ -301,6 +304,9 @@ public class Drivetrain extends SubsystemBase {
 
     odometry.update(navx.getRotation2d(), Units.feetToMeters(getLeftFeetDriven()),
         Units.feetToMeters(getRightFeetDriven()));
+
+    field.setRobotPose(getPose());
+    SmartDashboard.putData(field);
 
     if (/* RobotContainer.switchBoard.btn_7.get() */ true) {
       // Encoder Counts
