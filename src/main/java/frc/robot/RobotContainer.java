@@ -9,6 +9,8 @@ import com.frcteam3255.joystick.SN_F310Gamepad;
 import com.frcteam3255.joystick.SN_SwitchboardStick;
 import com.frcteam3255.utils.SN_InstantCommand;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -189,6 +191,7 @@ public class RobotContainer {
 
     DriverStick.btn_A.whileHeld(com_driveSpeed);
     DriverStick.btn_X.whenPressed(() -> sub_drivetrain.configure());
+    DriverStick.btn_B.whenPressed(() -> sub_drivetrain.resetOdometry(new Pose2d(0, 0, new Rotation2d())));
 
     // only commented these out for ramsete-testing, uncomment before merging branch
     // DriverStick.btn_A.whenPressed(com_pivotClimberAngled);
