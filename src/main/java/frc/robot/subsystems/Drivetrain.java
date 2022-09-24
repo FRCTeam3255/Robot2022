@@ -55,12 +55,20 @@ public class Drivetrain extends SubsystemBase {
   Field2d field = new Field2d();
 
   String driveTo1Then2JSON = "paths/driveTo1Then2.wpilib.json";
-  String driveFrom2To4And5JSON = "driveFrom2To4And5.wpilib.json";
-  String driveFrom4And5To2JSON = "driveFrom4And5To2.wpilib.json";
+  String driveFrom2To4And5JSON = "paths/driveFrom2To4And5.wpilib.json";
+  String driveFrom4And5To2JSON = "paths/driveFrom4And5To2.wpilib.json";
+
+  String fenderTo1Then2JSON = "paths/json/fenderTo1Then2.wpilib.json";
+  String from2ToTerminalJSON = "paths/json/from2ToTerminal.wpilib.json";
+  String terminalTo2JSON = "paths/json/terminalTo2.wpilib.json";
 
   public Trajectory driveTo1Then2Traj = new Trajectory();
   public Trajectory driveFrom2To4And5Traj = new Trajectory();
   public Trajectory driveFrom4and5To2Traj = new Trajectory();
+
+  public Trajectory fenderTo1Then2Traj = new Trajectory();
+  public Trajectory from2ToTerminalTraj = new Trajectory();
+  public Trajectory terminalTo2Traj = new Trajectory();
 
   // Initializes Variables for Drivetrain
   public Drivetrain() {
@@ -317,6 +325,9 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public RamseteCommand getRamseteCommand(Trajectory trajectory) {
+    System.out.println(this);
+    resetOdometry(trajectory.getInitialPose());
+
     return new RamseteCommand(
         trajectory,
         this::getPose,
@@ -332,9 +343,17 @@ public class Drivetrain extends SubsystemBase {
       Path driveFrom2To4And5JSONPath = Filesystem.getDeployDirectory().toPath().resolve(driveFrom2To4And5JSON);
       Path driveFrom4And5To2JSONPath = Filesystem.getDeployDirectory().toPath().resolve(driveFrom4And5To2JSON);
 
+      Path fenderTo1Then2JSONPath = Filesystem.getDeployDirectory().toPath().resolve(fenderTo1Then2JSON);
+      Path from2ToTerminalJSONPath = Filesystem.getDeployDirectory().toPath().resolve(from2ToTerminalJSON);
+      Path terminalTo2JSONPath = Filesystem.getDeployDirectory().toPath().resolve(terminalTo2JSON);
+
       driveTo1Then2Traj = TrajectoryUtil.fromPathweaverJson(driveTo1Then2JSONPath);
       driveFrom2To4And5Traj = TrajectoryUtil.fromPathweaverJson(driveFrom2To4And5JSONPath);
       driveFrom4and5To2Traj = TrajectoryUtil.fromPathweaverJson(driveFrom4And5To2JSONPath);
+
+      fenderTo1Then2Traj = TrajectoryUtil.fromPathweaverJson(fenderTo1Then2JSONPath);
+      from2ToTerminalTraj = TrajectoryUtil.fromPathweaverJson(from2ToTerminalJSONPath);
+      terminalTo2Traj = TrajectoryUtil.fromPathweaverJson(terminalTo2JSONPath);
     } catch (IOException ex) {
       DriverStation.reportError("Unable to open trajectory. Error: ", ex.getStackTrace());
     }
