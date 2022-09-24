@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
 import com.ctre.phoenix.motion.BufferedTrajectoryPointStream;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
@@ -15,13 +18,18 @@ import com.frcteam3255.utils.SN_Math;
 import com.kauailabs.navx.frc.AHRS;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
+import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.RobotPreferences;
@@ -46,6 +54,14 @@ public class Drivetrain extends SubsystemBase {
   DifferentialDriveOdometry odometry;
   Field2d field = new Field2d();
 
+  String driveTo1Then2JSON = "paths/driveTo1Then2.wpilib.json";
+  String driveFrom2To4And5JSON = "driveFrom2To4And5.wpilib.json";
+  String driveFrom4And5To2JSON = "driveFrom4And5To2.wpilib.json";
+
+  public Trajectory driveTo1Then2Traj = new Trajectory();
+  public Trajectory driveFrom2To4And5Traj = new Trajectory();
+  public Trajectory driveFrom4and5To2Traj = new Trajectory();
+
   // Initializes Variables for Drivetrain
   public Drivetrain() {
     leftLeadMotor = new TalonFX(DrivetrainMap.LEFT_LEAD_MOTOR_CAN);
@@ -61,6 +77,7 @@ public class Drivetrain extends SubsystemBase {
     odometry = new DifferentialDriveOdometry(navx.getRotation2d());
 
     configure();
+    initializeTrajectories();
   }
 
   // Sets Drivetrain Variable's Default Settings
@@ -296,6 +313,30 @@ public class Drivetrain extends SubsystemBase {
 
     rightFollowMotor.setNeutralMode(NeutralMode.Coast);
     rightLeadMotor.setNeutralMode(NeutralMode.Coast);
+  }
+
+  public RamseteCommand getRamseteCommand(Trajectory trajectory) {
+    return new RamseteCommand(
+        trajectory,
+        this::getPose,
+        new RamseteController(),
+        DrivetrainPrefs.driveKinematics,
+        this::driveSpeed,
+        this);
+  }
+
+  private void initializeTrajectories() {
+    try {
+      Path driveTo1Then2JSONPath = Filesystem.getDeployDirectory().toPath().resolve(driveTo1Then2JSON);
+      Path driveFrom2To4And5JSONPath = Filesystem.getDeployDirectory().toPath().resolve(driveFrom2To4And5JSON);
+      Path driveFrom4And5To2JSONPath = Filesystem.getDeployDirectory().toPath().resolve(driveFrom4And5To2JSON);
+
+      driveTo1Then2Traj = TrajectoryUtil.fromPathweaverJson(driveTo1Then2JSONPath);
+      driveFrom2To4And5Traj = TrajectoryUtil.fromPathweaverJson(driveFrom4And5To2JSONPath);
+      driveFrom4and5To2Traj = TrajectoryUtil.fromPathweaverJson(driveTo1Then2JSONPath);
+    } catch (IOException ex) {
+      DriverStation.reportError("Unable to open trajectory. Error: ", ex.getStackTrace());
+    }
   }
 
   @Override
