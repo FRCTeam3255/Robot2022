@@ -327,8 +327,19 @@ public class RobotContainer {
     // sub_climber);
     // }
 
-    return new AutoThreeCargoPP(
-        sub_drivetrain, sub_shooter, sub_turret, sub_hood, sub_transfer, sub_intake, sub_climber);
+    switch (RobotPreferences.auto.getValue()) {
+
+      case 1:
+        return sub_drivetrain.getRamseteCommand(sub_drivetrain.fenderTo1Then2Traj);
+      case 2:
+        return sub_drivetrain.getRamseteCommand(sub_drivetrain.from2ToTerminalTraj);
+      case 3:
+        return sub_drivetrain.getRamseteCommand(sub_drivetrain.terminalTo2Traj);
+
+      default:
+        return null;
+
+    }
 
   }
 }
