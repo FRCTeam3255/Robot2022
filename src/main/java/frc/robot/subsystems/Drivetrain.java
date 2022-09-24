@@ -204,6 +204,16 @@ public class Drivetrain extends SubsystemBase {
     rightLeadMotor.set(ControlMode.PercentOutput, speed * multiplier, DemandType.ArbitraryFeedForward, -turn);
   }
 
+  public void closedLoopArcadeDrive(double a_speed, double a_turn) {
+    double speed = a_speed * DrivetrainPrefs.driveClosedLoopPeakOutput.getValue();
+    speed = SN_Math.MPSToFalcon(
+        speed, DrivetrainPrefs.driveWheelCircumference.getValue(), DrivetrainPrefs.driveGearRatio.getValue());
+    double turn = a_turn * DrivetrainPrefs.arcadeTurn.getValue();
+
+    leftLeadMotor.set(ControlMode.Velocity, speed, DemandType.ArbitraryFeedForward, turn);
+    rightLeadMotor.set(ControlMode.Velocity, speed, DemandType.ArbitraryFeedForward, -turn);
+  }
+
   // starts motion profile using seperate left and right trajectories, and ctre
   // ControlMode.MotionProfile
   public void startMotionProfile(BufferedTrajectoryPointStream pointsLeft, BufferedTrajectoryPointStream pointsRight) {

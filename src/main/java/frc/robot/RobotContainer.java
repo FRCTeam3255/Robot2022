@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.commands.Drivetrain.*;
 import frc.robot.commands.Turret.*;
 import frc.robot.commands.Vision.SetGoalRPM;
@@ -58,10 +59,6 @@ public class RobotContainer {
 
   // Drivetrain Commands
   private final Drive com_drive = new Drive(sub_drivetrain);
-  // private final DriveDistanceOpenLoop com_driveOpenLoop = new
-  // DriveDistanceOpenLoop(
-  // sub_drivetrain, DrivetrainPrefs.driveOpenLoopCounts,
-  // DrivetrainPrefs.driveOpenLoopSpeedForward);
   private final DriveSpeed com_driveSpeed = new DriveSpeed(sub_drivetrain);
 
   // Hood Commands
@@ -168,7 +165,13 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     configureDashboardButtons();
-    sub_drivetrain.setDefaultCommand(com_drive);
+    // sub_drivetrain.setDefaultCommand(com_drive);
+    sub_drivetrain.setDefaultCommand(
+        new RunCommand(
+            () -> sub_drivetrain.closedLoopArcadeDrive(
+                DriverStick.getArcadeMove(),
+                DriverStick.getArcadeRotate()),
+            sub_drivetrain));
     sub_climber.setDefaultCommand(com_runSpool);
     com_setUpperHubGoal.initialize(); // upper hub needs to be set as goal
     com_presetFender.initialize(); // before setting fender as the preset
