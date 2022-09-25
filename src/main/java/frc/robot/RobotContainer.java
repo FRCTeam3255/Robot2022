@@ -321,7 +321,7 @@ public class RobotContainer {
       case 1:
         return sub_drivetrain.getRamseteCommand(sub_drivetrain.fenderTo1Then2Traj);
       case 2:
-        return sub_drivetrain.getRamseteCommand(sub_drivetrain.from2ToTerminalTraj);
+        return sub_drivetrain.getRamseteCommand(sub_drivetrain.ball2ToTerminalTraj);
       case 3:
         return sub_drivetrain.getRamseteCommand(sub_drivetrain.terminalTo2Traj);
 

@@ -54,12 +54,12 @@ public class Drivetrain extends SubsystemBase {
   DifferentialDriveOdometry odometry;
   Field2d field = new Field2d();
 
-  String fenderTo1Then2JSON = "paths/json/fenderTo1Then2.wpilib.json";
-  String from2ToTerminalJSON = "paths/json/from2ToTerminal.wpilib.json";
-  String terminalTo2JSON = "paths/json/terminalTo2.wpilib.json";
+  String fenderTo1Then2JSON = "pathplanner/generatedJSON/fenderTo1Then2";
+  String ball2ToTerminalJSON = "pathplanner/generatedJSON/2ToTerminal";
+  String terminalTo2JSON = "pathplanner/generatedJSON/TerminalTo2";
 
   public Trajectory fenderTo1Then2Traj = new Trajectory();
-  public Trajectory from2ToTerminalTraj = new Trajectory();
+  public Trajectory ball2ToTerminalTraj = new Trajectory();
   public Trajectory terminalTo2Traj = new Trajectory();
 
   // Initializes Variables for Drivetrain
@@ -331,11 +331,11 @@ public class Drivetrain extends SubsystemBase {
   private void initializeTrajectories() {
     try {
       Path fenderTo1Then2JSONPath = Filesystem.getDeployDirectory().toPath().resolve(fenderTo1Then2JSON);
-      Path from2ToTerminalJSONPath = Filesystem.getDeployDirectory().toPath().resolve(from2ToTerminalJSON);
+      Path ball2ToTerminalJSONPath = Filesystem.getDeployDirectory().toPath().resolve(ball2ToTerminalJSON);
       Path terminalTo2JSONPath = Filesystem.getDeployDirectory().toPath().resolve(terminalTo2JSON);
 
       fenderTo1Then2Traj = TrajectoryUtil.fromPathweaverJson(fenderTo1Then2JSONPath);
-      from2ToTerminalTraj = TrajectoryUtil.fromPathweaverJson(from2ToTerminalJSONPath);
+      ball2ToTerminalTraj = TrajectoryUtil.fromPathweaverJson(ball2ToTerminalJSONPath);
       terminalTo2Traj = TrajectoryUtil.fromPathweaverJson(terminalTo2JSONPath);
     } catch (IOException ex) {
       DriverStation.reportError("Unable to open trajectory. Error: ", ex.getStackTrace());
