@@ -116,6 +116,10 @@ public class Transfer extends SubsystemBase {
     return isTopBallCollected() && isBottomBallCollected();
   }
 
+  public boolean areTopAndBottomBallNotCollected() {
+    return !areTopAndBottomBallCollected();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

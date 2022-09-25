@@ -2,21 +2,13 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Autonomous;
+package frc.robot.commands.Autonomous.New;
 
-import java.io.IOException;
-import java.nio.file.Path;
-
-import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryUtil;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.RobotPreferences.DrivetrainPrefs;
 import frc.robot.RobotPreferences.AutoPrefs.ThreeCargo;
+import frc.robot.commands.Autonomous.SetShooterRPM;
 import frc.robot.commands.Intake.CollectCargo;
 import frc.robot.commands.Transfer.PushCargoSimple;
 import frc.robot.commands.Turret.SetTurretPosition;
@@ -28,7 +20,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Transfer;
 import frc.robot.subsystems.Turret;
 
-public class AutoThreeCargoPP extends SequentialCommandGroup {
+public class ThreeCargoA extends SequentialCommandGroup {
 
   Drivetrain drivetrain;
   Shooter shooter;
@@ -38,13 +30,8 @@ public class AutoThreeCargoPP extends SequentialCommandGroup {
   Intake intake;
   Climber climber;
 
-  String trajectoryJSON = "paths/driveTo1Then2.wpilib.json";
-  Trajectory trajectory = new Trajectory();
-
-  RamseteCommand driveTo1Then2;
-
   /** Creates a new AutoThreeCargoPP. */
-  public AutoThreeCargoPP(
+  public ThreeCargoA(
       Drivetrain sub_drivetrain,
       Shooter sub_shooter,
       Turret sub_turret,
@@ -61,45 +48,35 @@ public class AutoThreeCargoPP extends SequentialCommandGroup {
     intake = sub_intake;
     climber = sub_climber;
 
-    try {
-      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-    } catch (IOException ex) {
-      DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
-    }
-
-    driveTo1Then2 = new RamseteCommand(
-        trajectory,
-        drivetrain::getPose,
-        new RamseteController(),
-        DrivetrainPrefs.driveKinematics,
-        drivetrain::driveSpeed,
-        drivetrain);
+    RamseteCommand fenderTo1Then2 = drivetrain.getRamseteCommand(drivetrain.fenderTo1Then2Traj);
 
     addCommands(
-        new InstantCommand(drivetrain::setBrakeMode), // config drivetrain
+        // config drivetrain
+        new InstantCommand(() -> sub_drivetrain.setBrakeMode()),
+        new InstantCommand(() -> drivetrain.resetOdometry(drivetrain.fenderTo1Then2Traj.getInitialPose())),
 
-        // shoot first ball
+        // turn on intake, stays on for all of auto
+        new CollectCargo(intake, transfer),
+
+        // config for first ball
         parallel(
             new SetShooterRPM(shooter, ThreeCargo.shooterRPM1_6), // set shooter
             new SetTurretPosition(turret, ThreeCargo.turretAngle1_6).withTimeout(.5), // set turret
-            new InstantCommand(() -> hood.setHood(ThreeCargo.hoodLevel1_6.getValue())), // set hood
-            new PushCargoSimple(shooter, transfer).withTimeout(3)), // shoot
+            new InstantCommand(() -> hood.setHood(ThreeCargo.hoodLevel1_6.getValue()))), // set hood
 
-        // drive and collect
-        new InstantCommand(() -> drivetrain.resetOdometry(trajectory.getInitialPose())), //
-        parallel(
-            driveTo1Then2.andThen(new InstantCommand(() -> drivetrain.driveSpeed(0, 0))), // drive then stop
-            new CollectCargo(intake, transfer).until(transfer::areTopAndBottomBallCollected)), // collect
+        // shoot first ball
+        new PushCargoSimple(shooter, transfer).until(transfer::areTopAndBottomBallNotCollected).withTimeout(3),
 
-        // shoot
+        // drive and configure shooter on the way
         parallel(
             new SetShooterRPM(shooter, ThreeCargo.shooterRPM2_6), // set shooter
             new SetTurretPosition(turret, ThreeCargo.turretAngle2_6).withTimeout(.5), // set turret
             new InstantCommand(() -> hood.setHood(ThreeCargo.hoodLevel2_6.getValue())), // set hood
-            new PushCargoSimple(shooter, transfer).withTimeout(3) // shoot
+            fenderTo1Then2.andThen(new InstantCommand(() -> drivetrain.driveSpeed(0, 0)))),
 
-        ));
+        new PushCargoSimple(shooter, transfer).withTimeout(3) // shoot
+
+    );
   }
 }
 
@@ -109,7 +86,6 @@ public class AutoThreeCargoPP extends SequentialCommandGroup {
  * Start at fender by cargo 1
  * shoot preloaded cargo
  * drive and collect cargo 1 and 2
- * drive back to fender
  * shoot both cargo
  *
  */

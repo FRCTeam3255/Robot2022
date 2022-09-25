@@ -30,6 +30,8 @@ public final class RobotPreferences {
   public static final SN_DoublePreference encoderCountsPerTalonFXRotation = new SN_DoublePreference(
       "encoderCountsPerTalonFXRotation", 2048);
 
+  public static final SN_IntPreference auto = new SN_IntPreference("auto", 0);
+
   public static final class DrivetrainPrefs {
     public static final SN_DoublePreference arcadeSpeed = new SN_DoublePreference("arcadeSpeed", 0.65);
     public static final SN_DoublePreference arcadeTurn = new SN_DoublePreference("arcadeTurn", .5);

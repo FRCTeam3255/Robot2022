@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
 import com.ctre.phoenix.motion.BufferedTrajectoryPointStream;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
@@ -15,13 +18,18 @@ import com.frcteam3255.utils.SN_Math;
 import com.kauailabs.navx.frc.AHRS;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
+import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.RobotPreferences;
@@ -46,6 +54,14 @@ public class Drivetrain extends SubsystemBase {
   DifferentialDriveOdometry odometry;
   Field2d field = new Field2d();
 
+  String fenderTo1Then2JSON = "paths/json/fenderTo1Then2.wpilib.json";
+  String from2ToTerminalJSON = "paths/json/from2ToTerminal.wpilib.json";
+  String terminalTo2JSON = "paths/json/terminalTo2.wpilib.json";
+
+  public Trajectory fenderTo1Then2Traj = new Trajectory();
+  public Trajectory from2ToTerminalTraj = new Trajectory();
+  public Trajectory terminalTo2Traj = new Trajectory();
+
   // Initializes Variables for Drivetrain
   public Drivetrain() {
     leftLeadMotor = new TalonFX(DrivetrainMap.LEFT_LEAD_MOTOR_CAN);
@@ -61,6 +77,7 @@ public class Drivetrain extends SubsystemBase {
     odometry = new DifferentialDriveOdometry(navx.getRotation2d());
 
     configure();
+    initializeTrajectories();
   }
 
   // Sets Drivetrain Variable's Default Settings
@@ -210,7 +227,8 @@ public class Drivetrain extends SubsystemBase {
   public void closedLoopArcadeDrive(double a_speed, double a_turn) {
     double speed = a_speed * DrivetrainPrefs.driveClosedLoopPeakOutput.getValue();
     speed = SN_Math.MPSToFalcon(
-        speed, DrivetrainPrefs.driveWheelCircumference.getValue(), DrivetrainPrefs.driveGearRatio.getValue());
+        speed, Units.inchesToMeters(DrivetrainPrefs.driveWheelCircumference.getValue()),
+        DrivetrainPrefs.driveGearRatio.getValue());
     double turn = a_turn * DrivetrainPrefs.arcadeTurn.getValue();
 
     leftLeadMotor.set(ControlMode.Velocity, speed, DemandType.ArbitraryFeedForward, turn);
@@ -296,6 +314,32 @@ public class Drivetrain extends SubsystemBase {
 
     rightFollowMotor.setNeutralMode(NeutralMode.Coast);
     rightLeadMotor.setNeutralMode(NeutralMode.Coast);
+  }
+
+  public RamseteCommand getRamseteCommand(Trajectory trajectory) {
+    System.out.println(this);
+
+    return new RamseteCommand(
+        trajectory,
+        this::getPose,
+        new RamseteController(),
+        DrivetrainPrefs.driveKinematics,
+        this::driveSpeed,
+        this);
+  }
+
+  private void initializeTrajectories() {
+    try {
+      Path fenderTo1Then2JSONPath = Filesystem.getDeployDirectory().toPath().resolve(fenderTo1Then2JSON);
+      Path from2ToTerminalJSONPath = Filesystem.getDeployDirectory().toPath().resolve(from2ToTerminalJSON);
+      Path terminalTo2JSONPath = Filesystem.getDeployDirectory().toPath().resolve(terminalTo2JSON);
+
+      fenderTo1Then2Traj = TrajectoryUtil.fromPathweaverJson(fenderTo1Then2JSONPath);
+      from2ToTerminalTraj = TrajectoryUtil.fromPathweaverJson(from2ToTerminalJSONPath);
+      terminalTo2Traj = TrajectoryUtil.fromPathweaverJson(terminalTo2JSONPath);
+    } catch (IOException ex) {
+      DriverStation.reportError("Unable to open trajectory. Error: ", ex.getStackTrace());
+    }
   }
 
   @Override
