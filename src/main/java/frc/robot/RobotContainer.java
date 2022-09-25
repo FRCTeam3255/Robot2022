@@ -27,7 +27,6 @@ import frc.robot.RobotPreferences.HoodPrefs;
 import frc.robot.RobotPreferences.ShooterPrefs;
 import frc.robot.RobotPreferences.TurretPrefs;
 import frc.robot.commands.ConfigureSubsystems;
-import frc.robot.commands.Autonomous.AutoThreeCargoPP;
 import frc.robot.commands.Climber.*;
 import frc.robot.subsystems.*;
 
