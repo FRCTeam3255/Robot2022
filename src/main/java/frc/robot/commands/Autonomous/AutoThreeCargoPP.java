@@ -47,32 +47,35 @@ public class AutoThreeCargoPP extends SequentialCommandGroup {
     intake = sub_intake;
     climber = sub_climber;
 
-    RamseteCommand driveTo1Then2 = drivetrain.getRamseteCommand(drivetrain.driveTo1Then2Traj);
+    RamseteCommand fenderTo1Then2 = drivetrain.getRamseteCommand(drivetrain.fenderTo1Then2Traj);
 
     addCommands(
-        new InstantCommand(drivetrain::setBrakeMode), // config drivetrain
+        // config drivetrain
+        new InstantCommand(() -> sub_drivetrain.setBrakeMode()),
+        new InstantCommand(() -> drivetrain.resetOdometry(drivetrain.fenderTo1Then2Traj.getInitialPose())),
 
-        // shoot first ball
+        // turn on intake, stays on for all of auto
+        new CollectCargo(intake, transfer),
+
+        // config for first ball
         parallel(
             new SetShooterRPM(shooter, ThreeCargo.shooterRPM1_6), // set shooter
             new SetTurretPosition(turret, ThreeCargo.turretAngle1_6).withTimeout(.5), // set turret
-            new InstantCommand(() -> hood.setHood(ThreeCargo.hoodLevel1_6.getValue())), // set hood
-            new PushCargoSimple(shooter, transfer).withTimeout(3)), // shoot
+            new InstantCommand(() -> hood.setHood(ThreeCargo.hoodLevel1_6.getValue()))), // set hood
 
-        // drive and collect
-        new InstantCommand(() -> drivetrain.resetOdometry(drivetrain.driveTo1Then2Traj.getInitialPose())), //
-        parallel(
-            driveTo1Then2.andThen(new InstantCommand(() -> drivetrain.driveSpeed(0, 0))), // drive then stop
-            new CollectCargo(intake, transfer).until(transfer::areTopAndBottomBallCollected)), // collect
+        // shoot first ball
+        new PushCargoSimple(shooter, transfer).until(transfer::areTopAndBottomBallNotCollected).withTimeout(3),
 
-        // shoot
+        // drive and configure shooter on the way
         parallel(
             new SetShooterRPM(shooter, ThreeCargo.shooterRPM2_6), // set shooter
             new SetTurretPosition(turret, ThreeCargo.turretAngle2_6).withTimeout(.5), // set turret
             new InstantCommand(() -> hood.setHood(ThreeCargo.hoodLevel2_6.getValue())), // set hood
-            new PushCargoSimple(shooter, transfer).withTimeout(3) // shoot
+            fenderTo1Then2.andThen(new InstantCommand(() -> drivetrain.driveSpeed(0, 0)))),
 
-        ));
+        new PushCargoSimple(shooter, transfer).withTimeout(3) // shoot
+
+    );
   }
 }
 
@@ -82,7 +85,6 @@ public class AutoThreeCargoPP extends SequentialCommandGroup {
  * Start at fender by cargo 1
  * shoot preloaded cargo
  * drive and collect cargo 1 and 2
- * drive back to fender
  * shoot both cargo
  *
  */
