@@ -54,9 +54,9 @@ public class Drivetrain extends SubsystemBase {
   DifferentialDriveOdometry odometry;
   Field2d field = new Field2d();
 
-  String fenderTo1Then2JSON = "pathplanner/generatedJSON/fenderTo1Then2";
-  String ball2ToTerminalJSON = "pathplanner/generatedJSON/2ToTerminal";
-  String terminalTo2JSON = "pathplanner/generatedJSON/TerminalTo2";
+  String fenderTo1Then2JSON = "pathplanner/generatedJSON/fenderTo1Then2.wpilib.json";
+  String ball2ToTerminalJSON = "pathplanner/generatedJSON/2ToTerminal.wpilib.json";
+  String terminalTo2JSON = "pathplanner/generatedJSON/TerminalTo2.wpilib.json";
 
   public Trajectory fenderTo1Then2Traj = new Trajectory();
   public Trajectory ball2ToTerminalTraj = new Trajectory();
@@ -318,6 +318,9 @@ public class Drivetrain extends SubsystemBase {
 
   public RamseteCommand getRamseteCommand(Trajectory trajectory) {
     System.out.println(this);
+    resetOdometry(trajectory.getInitialPose());
+
+    field.getObject("traj").setTrajectory(trajectory);
 
     return new RamseteCommand(
         trajectory,
