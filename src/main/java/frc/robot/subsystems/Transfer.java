@@ -117,7 +117,7 @@ public class Transfer extends SubsystemBase {
   }
 
   public boolean areTopAndBottomBallNotCollected() {
-    return !areTopAndBottomBallCollected();
+    return !isTopBallCollected() && !isBottomBallCollected();
   }
 
   @Override

@@ -55,20 +55,19 @@ public class ThreeCargoA extends SequentialCommandGroup {
         new InstantCommand(() -> sub_drivetrain.setBrakeMode()),
         new InstantCommand(() -> drivetrain.resetOdometry(drivetrain.fenderTo1Then2Traj.getInitialPose())),
 
-        // turn on intake, stays on for all of auto
-        new CollectCargo(intake, transfer),
-
         // config for first ball
         parallel(
+            new CollectCargo(intake, transfer).until(transfer::isTopBallCollected),
             new SetShooterRPM(shooter, ThreeCargo.shooterRPM1_6), // set shooter
             new SetTurretPosition(turret, ThreeCargo.turretAngle1_6).withTimeout(.5), // set turret
             new InstantCommand(() -> hood.setHood(ThreeCargo.hoodLevel1_6.getValue()))), // set hood
 
         // shoot first ball
-        new PushCargoSimple(shooter, transfer).until(transfer::areTopAndBottomBallNotCollected).withTimeout(3),
+        new PushCargoSimple(shooter, transfer).withTimeout(3),
 
         // drive and configure shooter on the way
         parallel(
+            new CollectCargo(intake, transfer).until(transfer::areTopAndBottomBallCollected),
             new SetShooterRPM(shooter, ThreeCargo.shooterRPM2_6), // set shooter
             new SetTurretPosition(turret, ThreeCargo.turretAngle2_6).withTimeout(.5), // set turret
             new InstantCommand(() -> hood.setHood(ThreeCargo.hoodLevel2_6.getValue())), // set hood
