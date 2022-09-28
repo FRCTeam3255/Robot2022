@@ -37,6 +37,8 @@ public final class RobotPreferences {
     public static final SN_DoublePreference arcadeTurn = new SN_DoublePreference("arcadeTurn", .5);
     public static final SN_DoublePreference arcadeLowSpeed = new SN_DoublePreference("arcadeLowSpeed", 0.4);
     public static final SN_DoublePreference arcadeHighSpeed = new SN_DoublePreference("arcadeHighSpeed", 1.5);
+    public static final SN_DoublePreference arcadeClosedLoopMaxSpeed = new SN_DoublePreference(
+        "arcadeClosedLoopMaxSpeed", 3);
 
     public static final SN_DoublePreference driveF = new SN_DoublePreference("driveF", 0.045);
     public static final SN_DoublePreference driveP = new SN_DoublePreference("driveP", 0.1);
@@ -47,7 +49,7 @@ public final class RobotPreferences {
         "driveAllowableClosedLoopErrorInches", 2);
     public static final SN_DoublePreference driveClosedLoopPeakOutput = new SN_DoublePreference(
         "driveClosedLoopPeakOutput", 1);
-    public static final SN_DoublePreference driveClosedLoopRamp = new SN_DoublePreference("driveClosedLoopRamp", .3);
+    public static final SN_DoublePreference driveClosedLoopRamp = new SN_DoublePreference("driveClosedLoopRamp", 0);
     public static final SN_DoublePreference driveLoopsToFinish = new SN_DoublePreference("driveLoopsToFinish", 25);
     public static final SN_DoublePreference driveWheelCircumference = new SN_DoublePreference("driveWheelCircumference",
         4 * Math.PI);

@@ -225,9 +225,10 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void closedLoopArcadeDrive(double a_speed, double a_turn) {
-    double speed = a_speed * DrivetrainPrefs.driveClosedLoopPeakOutput.getValue();
+    double speed = a_speed * DrivetrainPrefs.arcadeClosedLoopMaxSpeed.getValue();
+
     speed = SN_Math.MPSToFalcon(
-        speed, Units.inchesToMeters(DrivetrainPrefs.driveWheelCircumference.getValue()),
+        a_speed, Units.inchesToMeters(DrivetrainPrefs.driveWheelCircumference.getValue()),
         DrivetrainPrefs.driveGearRatio.getValue());
     double turn = a_turn * DrivetrainPrefs.arcadeTurn.getValue();
 
