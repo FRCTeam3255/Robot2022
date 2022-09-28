@@ -23,10 +23,13 @@ import frc.robot.commands.Vision.SetGoalRPM;
 import frc.robot.commands.Intake.*;
 import frc.robot.commands.Shooter.*;
 import frc.robot.commands.Transfer.*;
+import frc.robot.RobotPreferences.AutoPrefs;
 import frc.robot.RobotPreferences.HoodPrefs;
 import frc.robot.RobotPreferences.ShooterPrefs;
 import frc.robot.RobotPreferences.TurretPrefs;
+import frc.robot.RobotPreferences.AutoPrefs.ThreeCargo;
 import frc.robot.commands.ConfigureSubsystems;
+import frc.robot.commands.Autonomous.New.ThreeCargoA;
 import frc.robot.commands.Climber.*;
 import frc.robot.subsystems.*;
 
@@ -167,12 +170,7 @@ public class RobotContainer {
     configureButtonBindings();
     configureDashboardButtons();
     // sub_drivetrain.setDefaultCommand(com_drive);
-    sub_drivetrain.setDefaultCommand(
-        new RunCommand(
-            () -> sub_drivetrain.closedLoopArcadeDrive(
-                DriverStick.getArcadeMove(),
-                DriverStick.getArcadeRotate()),
-            sub_drivetrain));
+    sub_drivetrain.setDefaultCommand(new ClosedLoopDrive(sub_drivetrain));
     sub_climber.setDefaultCommand(com_runSpool);
     com_setUpperHubGoal.initialize(); // upper hub needs to be set as goal
     com_presetFender.initialize(); // before setting fender as the preset
@@ -216,7 +214,8 @@ public class RobotContainer {
     // Limelight Commands
     coDriverStick.btn_A.whileHeld(com_visionAimTurret);
     coDriverStick.btn_A.whenPressed(new InstantCommand(sub_hood::hoodMediumTilt, sub_hood));
-    coDriverStick.btn_B.whileHeld(com_reverseTransfer);
+    // coDriverStick.btn_B.whileHeld(com_reverseTransfer);
+    coDriverStick.btn_B.whileHeld(new SetTurretAngle(sub_turret, ThreeCargo.turretAngle2_6));
     // Just Setting Angle (X Axis)
     coDriverStick.btn_X.whileHeld(com_visionSpinTurret);
     // Just Setting RPM (Y Axis)
@@ -316,19 +315,21 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
 
-    switch (RobotPreferences.auto.getValue()) {
+    // switch (RobotPreferences.auto.getValue()) {
 
-      case 1:
-        return sub_drivetrain.getRamseteCommand(sub_drivetrain.fenderTo1Then2Traj);
-      case 2:
-        return sub_drivetrain.getRamseteCommand(sub_drivetrain.ball2ToTerminalTraj);
-      case 3:
-        return sub_drivetrain.getRamseteCommand(sub_drivetrain.terminalTo2Traj);
+    // case 1:
+    // return sub_drivetrain.getRamseteCommand(sub_drivetrain.fenderTo1Then2Traj);
+    // case 2:
+    // return sub_drivetrain.getRamseteCommand(sub_drivetrain.ball2ToTerminalTraj);
+    // case 3:
+    // return sub_drivetrain.getRamseteCommand(sub_drivetrain.terminalTo2Traj);
 
-      default:
-        return null;
+    // default:
+    // return null;
 
-    }
+    // }
+
+    return new ThreeCargoA(sub_drivetrain, sub_shooter, sub_turret, sub_hood, sub_transfer, sub_intake, sub_climber);
 
   }
 }

@@ -4,6 +4,7 @@
 
 package frc.robot.commands.Autonomous.New;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -11,6 +12,7 @@ import frc.robot.RobotPreferences.AutoPrefs.ThreeCargo;
 import frc.robot.commands.Autonomous.SetShooterRPM;
 import frc.robot.commands.Intake.CollectCargo;
 import frc.robot.commands.Transfer.PushCargoSimple;
+import frc.robot.commands.Turret.SetTurretAngle;
 import frc.robot.commands.Turret.SetTurretPosition;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
@@ -59,7 +61,7 @@ public class ThreeCargoA extends SequentialCommandGroup {
         parallel(
             new CollectCargo(intake, transfer).until(transfer::isTopBallCollected),
             new SetShooterRPM(shooter, ThreeCargo.shooterRPM1_6), // set shooter
-            new SetTurretPosition(turret, ThreeCargo.turretAngle1_6).withTimeout(.5), // set turret
+            new SetTurretAngle(turret, ThreeCargo.turretAngle1_6).withTimeout(.5), // set turret
             new InstantCommand(() -> hood.setHood(ThreeCargo.hoodLevel1_6.getValue()))), // set hood
 
         // shoot first ball
@@ -69,7 +71,7 @@ public class ThreeCargoA extends SequentialCommandGroup {
         parallel(
             new CollectCargo(intake, transfer).until(transfer::areTopAndBottomBallCollected),
             new SetShooterRPM(shooter, ThreeCargo.shooterRPM2_6), // set shooter
-            new SetTurretPosition(turret, ThreeCargo.turretAngle2_6).withTimeout(.5), // set turret
+            new SetTurretAngle(turret, ThreeCargo.turretAngle2_6).withTimeout(.5), // set turret
             new InstantCommand(() -> hood.setHood(ThreeCargo.hoodLevel2_6.getValue())), // set hood
             fenderTo1Then2.andThen(new InstantCommand(() -> drivetrain.driveSpeed(0, 0)))),
 

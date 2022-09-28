@@ -87,8 +87,10 @@ public class Turret extends SubsystemBase {
 
   // sets the turret angle in degrees
   public void setTurretAngle(double a_degrees) {
+    SmartDashboard.putNumber("Turret Desired Angle", a_degrees);
     double position = a_degrees * TurretPrefs.turretEncoderCountsPerDegrees.getValue();
     turretMotor.set(ControlMode.Position, position);
+
   }
 
   // gets the difference between where the motor wants to be, and where it is, in
@@ -101,7 +103,7 @@ public class Turret extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
 
-    if (RobotContainer.switchBoard.btn_7.get()) {
+    if (/* RobotContainer.switchBoard.btn_7.get() */ true) {
       SmartDashboard.putNumber("Turret Encoder", getTurretMotorEncoderCounts());
       SmartDashboard.putNumber("Turret Angle", getTurretAngle());
       SmartDashboard.putNumber("Turret Closed Loop Error",
