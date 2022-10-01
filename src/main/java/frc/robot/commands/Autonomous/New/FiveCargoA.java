@@ -21,7 +21,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Transfer;
 import frc.robot.subsystems.Turret;
 
-public class ThreeCargoB extends SequentialCommandGroup {
+public class FiveCargoA extends SequentialCommandGroup {
 
   Drivetrain drivetrain;
   Shooter shooter;
@@ -32,7 +32,7 @@ public class ThreeCargoB extends SequentialCommandGroup {
   Climber climber;
 
   /** Creates a new AutoThreeCargoPP. */
-  public ThreeCargoB(
+  public FiveCargoA(
       Drivetrain sub_drivetrain,
       Shooter sub_shooter,
       Turret sub_turret,
@@ -66,10 +66,9 @@ public class ThreeCargoB extends SequentialCommandGroup {
 
         new PushCargoSimple(shooter, transfer).withTimeout(5), // shoot
 
-        // zero stuff
-        new SetShooterRPM(shooter, RobotPreferences.zeroDoublePref)
+        parallel(
 
-    );
+        ));
   }
 }
 
