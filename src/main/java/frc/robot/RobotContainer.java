@@ -30,6 +30,7 @@ import frc.robot.RobotPreferences.TurretPrefs;
 import frc.robot.RobotPreferences.AutoPrefs.ThreeCargo;
 import frc.robot.commands.ConfigureSubsystems;
 import frc.robot.commands.Autonomous.New.ThreeCargoA;
+import frc.robot.commands.Autonomous.New.ThreeCargoB;
 import frc.robot.commands.Climber.*;
 import frc.robot.subsystems.*;
 
@@ -329,7 +330,7 @@ public class RobotContainer {
 
     // }
 
-    return new ThreeCargoA(sub_drivetrain, sub_shooter, sub_turret, sub_hood, sub_transfer, sub_intake, sub_climber);
+    return new ThreeCargoB(sub_drivetrain, sub_shooter, sub_turret, sub_hood, sub_transfer, sub_intake, sub_climber);
 
   }
 }

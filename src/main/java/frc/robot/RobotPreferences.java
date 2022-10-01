@@ -330,7 +330,7 @@ public final class RobotPreferences {
       public static final SN_IntPreference hoodLevel2_6 = new SN_IntPreference(
           "hoodLevel2_6", 3);
       public static final SN_DoublePreference turretAngle2_6 = new SN_DoublePreference(
-          "turretAngle2_6", -185);
+          "turretAngle2_6", -198);
     }
   }
 }
