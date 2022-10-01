@@ -319,7 +319,6 @@ public class Drivetrain extends SubsystemBase {
 
   public RamseteCommand getRamseteCommand(Trajectory trajectory) {
     System.out.println(this);
-    resetOdometry(trajectory.getInitialPose());
 
     field.getObject("traj").setTrajectory(trajectory);
 
