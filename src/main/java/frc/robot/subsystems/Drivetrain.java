@@ -287,6 +287,7 @@ public class Drivetrain extends SubsystemBase {
   public void resetOdometry(Pose2d pose) {
     resetDrivetrainEncodersCount();
     odometry.resetPosition(pose, navx.getRotation2d());
+    navx.setAngleAdjustment(pose.getRotation().getDegrees());
   }
 
   public double getLeftClosedLoopErrorInches() {
