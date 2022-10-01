@@ -4,7 +4,6 @@
 
 package frc.robot.commands.Autonomous.New;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -13,7 +12,6 @@ import frc.robot.commands.Autonomous.SetShooterRPM;
 import frc.robot.commands.Intake.CollectCargo;
 import frc.robot.commands.Transfer.PushCargoSimple;
 import frc.robot.commands.Turret.SetTurretAngle;
-import frc.robot.commands.Turret.SetTurretPosition;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hood;
