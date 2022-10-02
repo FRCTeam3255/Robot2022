@@ -111,5 +111,7 @@ public class Turret extends SubsystemBase {
       SmartDashboard.putNumber("Turret Motor Speed",
           turretMotor.getMotorOutputPercent());
     }
+
+    SmartDashboard.putNumber("Turret Angle", getTurretAngle());
   }
 }

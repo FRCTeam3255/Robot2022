@@ -95,11 +95,12 @@ public class RobotContainer {
   // private final HoldTurretPosition com_holdTurretPos1 = new
   // HoldTurretPosition(sub_turret, sub_navX,
   // RobotPreferences.TurretPrefs.turretPresetPos1);
-  private final VisionAimTurret com_visionAimTurret = new VisionAimTurret(sub_turret, sub_shooter, sub_vision);
-  private final VisionSpinTurret com_visionSpinTurret = new VisionSpinTurret(sub_turret, sub_shooter, sub_vision);
+  private final VisionAimTurret com_visionAimTurret = new VisionAimTurret(sub_turret, sub_shooter, sub_vision,
+      sub_navX);
+  private final VisionSpinTurret com_visionSpinTurret = new VisionSpinTurret(sub_turret, sub_shooter, sub_vision,
+      sub_navX);
   // private final VisionNavXAimTurret com_visionHoldAimTurret = new
-  // VisionNavXAimTurret(sub_turret, sub_vision,
-  // sub_navX);
+  // VisionNavXAimTurret(sub_turret, sub_vision, sub_navX);
 
   // Shooter Commands
   // private final PushCargoToShooter com_pushCargoToShooter = new
@@ -173,6 +174,7 @@ public class RobotContainer {
     // sub_drivetrain.setDefaultCommand(com_drive);
     sub_drivetrain.setDefaultCommand(new ClosedLoopDrive(sub_drivetrain));
     sub_climber.setDefaultCommand(com_runSpool);
+    sub_turret.setDefaultCommand(com_visionAimTurret);
     com_setUpperHubGoal.initialize(); // upper hub needs to be set as goal
     com_presetFender.initialize(); // before setting fender as the preset
   }
@@ -215,8 +217,7 @@ public class RobotContainer {
     // Limelight Commands
     coDriverStick.btn_A.whileHeld(com_visionAimTurret);
     coDriverStick.btn_A.whenPressed(new InstantCommand(sub_hood::hoodMediumTilt, sub_hood));
-    // coDriverStick.btn_B.whileHeld(com_reverseTransfer);
-    coDriverStick.btn_B.whileHeld(new SetTurretAngle(sub_turret, ThreeCargo.turretAngle2_6));
+    coDriverStick.btn_B.whileHeld(com_reverseTransfer);
     // Just Setting Angle (X Axis)
     coDriverStick.btn_X.whileHeld(com_visionSpinTurret);
     // Just Setting RPM (Y Axis)
