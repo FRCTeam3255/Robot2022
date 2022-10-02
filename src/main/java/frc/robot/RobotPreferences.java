@@ -332,5 +332,25 @@ public final class RobotPreferences {
       public static final SN_DoublePreference turretAngle2_6 = new SN_DoublePreference(
           "turretAngle2_6", -198);
     }
+
+    // auto 7
+    public static final class FiveCargo {
+
+      // it starts at 2 to line up with three cargo
+
+      public static final SN_DoublePreference shooterRPM2_7 = new SN_DoublePreference(
+          "shooterRPM2_7", 3500);
+      public static final SN_IntPreference hoodLevel2_7 = new SN_IntPreference(
+          "hoodLevel2_7", 3);
+      public static final SN_DoublePreference turretAngle2_7 = new SN_DoublePreference(
+          "turretAngle2_6", -198);
+
+      public static final SN_DoublePreference shooterRPM3_7 = new SN_DoublePreference(
+          "shooterRPM3_7", 3500);
+      public static final SN_IntPreference hoodLevel3_7 = new SN_IntPreference(
+          "hoodLevel3_7", 3);
+      public static final SN_DoublePreference turretAngle3_7 = new SN_DoublePreference(
+          "turretAngle3_7", -198);
+    }
   }
 }

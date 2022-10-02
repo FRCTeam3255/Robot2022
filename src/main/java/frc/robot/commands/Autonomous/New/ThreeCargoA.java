@@ -53,7 +53,6 @@ public class ThreeCargoA extends SequentialCommandGroup {
     addCommands(
         // config drivetrain
         new InstantCommand(() -> sub_drivetrain.setBrakeMode()),
-        new InstantCommand(() -> drivetrain.resetOdometry(drivetrain.fenderTo1Then2Traj.getInitialPose())),
 
         // config for first ball
         parallel(
@@ -63,7 +62,7 @@ public class ThreeCargoA extends SequentialCommandGroup {
             new InstantCommand(() -> hood.setHood(ThreeCargo.hoodLevel1_6.getValue()))), // set hood
 
         // shoot first ball
-        new PushCargoSimple(shooter, transfer).withTimeout(3),
+        new PushCargoSimple(shooter, transfer).withTimeout(1),
 
         // drive and configure shooter on the way
         parallel(
@@ -71,9 +70,11 @@ public class ThreeCargoA extends SequentialCommandGroup {
             new SetShooterRPM(shooter, ThreeCargo.shooterRPM2_6), // set shooter
             new SetTurretAngle(turret, ThreeCargo.turretAngle2_6).withTimeout(.5), // set turret
             new InstantCommand(() -> hood.setHood(ThreeCargo.hoodLevel2_6.getValue())), // set hood
-            fenderTo1Then2.andThen(new InstantCommand(() -> drivetrain.driveSpeed(0, 0)))),
+            new InstantCommand(() -> drivetrain.resetOdometry(drivetrain.fenderTo1Then2Traj.getInitialPose()))
+                .andThen(fenderTo1Then2
+                    .andThen(new InstantCommand(() -> drivetrain.driveSpeed(0, 0))))),
 
-        new PushCargoSimple(shooter, transfer).withTimeout(3) // shoot
+        new PushCargoSimple(shooter, transfer) // shoot
 
     );
   }

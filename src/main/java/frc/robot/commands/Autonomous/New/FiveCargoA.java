@@ -7,8 +7,7 @@ package frc.robot.commands.Autonomous.New;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.RobotPreferences;
-import frc.robot.RobotPreferences.AutoPrefs.ThreeCargo;
+import frc.robot.RobotPreferences.AutoPrefs.FiveCargo;
 import frc.robot.commands.Autonomous.SetShooterRPM;
 import frc.robot.commands.Intake.DumbCollect;
 import frc.robot.commands.Transfer.PushCargoSimple;
@@ -50,6 +49,7 @@ public class FiveCargoA extends SequentialCommandGroup {
     climber = sub_climber;
 
     RamseteCommand fenderTo1Then2 = drivetrain.getRamseteCommand(drivetrain.fenderTo1Then2Traj);
+    RamseteCommand ball2ToTerminal = drivetrain.getRamseteCommand(drivetrain.ball2ToTerminalTraj);
 
     addCommands(
         // config drivetrain
@@ -59,16 +59,26 @@ public class FiveCargoA extends SequentialCommandGroup {
         // drive and configure shooter on the way
         parallel(
             new DumbCollect(intake, transfer).until(() -> fenderTo1Then2.isFinished()),
-            new SetShooterRPM(shooter, ThreeCargo.shooterRPM2_6), // set shooter
-            new SetTurretAngle(turret, ThreeCargo.turretAngle2_6).withTimeout(.5), // set turret
-            new InstantCommand(() -> hood.setHood(ThreeCargo.hoodLevel2_6.getValue())), // set hood
+            new SetShooterRPM(shooter, FiveCargo.shooterRPM2_7), // set shooter
+            new SetTurretAngle(turret, FiveCargo.turretAngle2_7).withTimeout(.5), // set turret
+            new InstantCommand(() -> hood.setHood(FiveCargo.hoodLevel2_7.getValue())), // set hood
             fenderTo1Then2.andThen(new InstantCommand(() -> drivetrain.driveSpeed(0, 0)))),
 
-        new PushCargoSimple(shooter, transfer).withTimeout(5), // shoot
+        new PushCargoSimple(shooter, transfer).until(() -> transfer.areTopAndBottomBallNotCollected()), // shoot
 
         parallel(
+            new DumbCollect(intake, transfer).until(() -> transfer.areTopAndBottomBallCollected()),
+            new SetShooterRPM(shooter, FiveCargo.shooterRPM3_7),
+            new SetTurretAngle(turret, FiveCargo.turretAngle3_7).withTimeout(.5),
+            new InstantCommand(() -> hood.setHood(FiveCargo.hoodLevel3_7.getValue())),
+            new InstantCommand(() -> drivetrain.resetOdometry(drivetrain.ball2ToTerminalTraj.getInitialPose()))
+                .andThen(ball2ToTerminal
+                    .andThen(new InstantCommand(() -> drivetrain.driveSpeed(0, 0))))
 
-        ));
+        ),
+
+        new PushCargoSimple(shooter, transfer));
+
   }
 }
 
