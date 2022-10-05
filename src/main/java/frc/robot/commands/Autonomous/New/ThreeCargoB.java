@@ -72,6 +72,11 @@ public class ThreeCargoB extends SequentialCommandGroup {
 
     );
   }
+
+  @Override
+  public void end(boolean interrupted) {
+    shooter.setShooterRPM(0);
+  }
 }
 
 /*
