@@ -80,7 +80,7 @@ public class ThreeCargoA extends SequentialCommandGroup {
   }
 
   @Override
-  public void end(boolean interupted) {
+  public void end(boolean interrupted) {
     shooter.setShooterRPM(0);
   }
 
