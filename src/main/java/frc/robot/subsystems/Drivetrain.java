@@ -353,7 +353,7 @@ public class Drivetrain extends SubsystemBase {
     field.setRobotPose(getPose());
     SmartDashboard.putData(field);
 
-    if (/* RobotContainer.switchBoard.btn_7.get() */ true) {
+    if (RobotContainer.switchBoard.btn_7.get()) {
       // Encoder Counts
       SmartDashboard.putNumber("Drivetrain Left Encoder", getLeftEncoderCount());
       SmartDashboard.putNumber("Drivetrain Right Encoder", getRightEncoderCount());
