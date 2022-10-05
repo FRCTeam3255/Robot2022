@@ -318,8 +318,6 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public RamseteCommand getRamseteCommand(Trajectory trajectory) {
-    System.out.println(this);
-
     field.getObject("traj").setTrajectory(trajectory);
 
     return new RamseteCommand(
