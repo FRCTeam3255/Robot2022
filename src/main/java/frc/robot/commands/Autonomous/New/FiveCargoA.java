@@ -64,7 +64,7 @@ public class FiveCargoA extends SequentialCommandGroup {
             new InstantCommand(() -> hood.setHood(FiveCargo.hoodLevel2_7.getValue())), // set hood
             fenderTo1Then2.andThen(new InstantCommand(() -> drivetrain.driveSpeed(0, 0)))),
 
-        new PushCargoSimple(shooter, transfer).until(() -> transfer.areTopAndBottomBallNotCollected()), // shoot
+        new PushCargoSimple(shooter, transfer).until(() -> !transfer.areTopAndBottomBallCollected()), // shoot
 
         parallel(
             new DumbCollect(intake, transfer).until(() -> transfer.areTopAndBottomBallCollected()),

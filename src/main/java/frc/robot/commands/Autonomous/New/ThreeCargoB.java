@@ -65,7 +65,7 @@ public class ThreeCargoB extends SequentialCommandGroup {
                 .andThen(fenderTo1Then2
                     .andThen(new InstantCommand(() -> drivetrain.driveSpeed(0, 0))))),
 
-        new PushCargoSimple(shooter, transfer).until(() -> transfer.areTopAndBottomBallNotCollected()), // shoot
+        new PushCargoSimple(shooter, transfer).until(() -> !transfer.areTopAndBottomBallCollected()), // shoot
 
         // zero stuff
         new SetShooterRPM(shooter, RobotPreferences.zeroDoublePref)
