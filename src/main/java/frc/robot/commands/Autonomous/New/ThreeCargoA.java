@@ -56,7 +56,7 @@ public class ThreeCargoA extends SequentialCommandGroup {
 
         // config for first ball
         parallel(
-            new CollectCargo(intake, transfer).until(transfer::isTopBallCollected),
+            new CollectCargo(intake, transfer).until(() -> transfer.isTopBallCollected()),
             new SetShooterRPM(shooter, ThreeCargo.shooterRPM1_6), // set shooter
             new SetTurretAngle(turret, ThreeCargo.turretAngle1_6).withTimeout(.5), // set turret
             new InstantCommand(() -> hood.setHood(ThreeCargo.hoodLevel1_6.getValue()))), // set hood
@@ -66,7 +66,7 @@ public class ThreeCargoA extends SequentialCommandGroup {
 
         // drive and configure shooter on the way
         parallel(
-            new CollectCargo(intake, transfer).until(transfer::areTopAndBottomBallCollected),
+            new CollectCargo(intake, transfer).until(() -> transfer.areTopAndBottomBallCollected()),
             new SetShooterRPM(shooter, ThreeCargo.shooterRPM2_6), // set shooter
             new SetTurretAngle(turret, ThreeCargo.turretAngle2_6).withTimeout(.5), // set turret
             new InstantCommand(() -> hood.setHood(ThreeCargo.hoodLevel2_6.getValue())), // set hood
@@ -82,6 +82,7 @@ public class ThreeCargoA extends SequentialCommandGroup {
   @Override
   public void end(boolean interrupted) {
     shooter.setShooterRPM(0);
+    new CollectCargo(intake, transfer).end(true);
   }
 
 }

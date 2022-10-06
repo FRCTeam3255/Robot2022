@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotPreferences.AutoPrefs.ThreeCargo;
 import frc.robot.commands.Autonomous.SetShooterRPM;
+import frc.robot.commands.Intake.CollectCargo;
 import frc.robot.commands.Intake.DumbCollect;
 import frc.robot.commands.Transfer.PushCargoSimple;
 import frc.robot.commands.Turret.SetTurretAngle;
@@ -64,7 +65,7 @@ public class ThreeCargoB extends SequentialCommandGroup {
                 .andThen(fenderTo1Then2 // reset odometry then drive then stop
                     .andThen(new InstantCommand(() -> drivetrain.driveSpeed(0, 0))))),
 
-        new PushCargoSimple(shooter, transfer).until(() -> !transfer.areTopAndBottomBallCollected()) // shoot
+        new PushCargoSimple(shooter, transfer) // shoot
 
     );
   }
@@ -72,6 +73,7 @@ public class ThreeCargoB extends SequentialCommandGroup {
   @Override
   public void end(boolean interrupted) {
     shooter.setShooterRPM(0);
+    new CollectCargo(intake, transfer).end(true);
   }
 }
 
@@ -79,8 +81,7 @@ public class ThreeCargoB extends SequentialCommandGroup {
  * Plan for auto:
  * 
  * Start at fender by cargo 1
- * shoot preloaded cargo
  * drive and collect cargo 1 and 2
- * shoot both cargo
+ * shoot all three cargo
  *
  */

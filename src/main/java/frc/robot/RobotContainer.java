@@ -173,7 +173,7 @@ public class RobotContainer {
     // sub_drivetrain.setDefaultCommand(com_drive);
     sub_drivetrain.setDefaultCommand(new ClosedLoopDrive(sub_drivetrain));
     sub_climber.setDefaultCommand(com_runSpool);
-    sub_turret.setDefaultCommand(com_visionAimTurret);
+    // sub_turret.setDefaultCommand(com_visionAimTurret);
     com_setUpperHubGoal.initialize(); // upper hub needs to be set as goal
     com_presetFender.initialize(); // before setting fender as the preset
   }
