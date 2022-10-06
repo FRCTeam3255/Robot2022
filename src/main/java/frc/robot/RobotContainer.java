@@ -64,7 +64,6 @@ public class RobotContainer {
 
   // Drivetrain Commands
   private final Drive com_drive = new Drive(sub_drivetrain);
-  private final DriveSpeed com_driveSpeed = new DriveSpeed(sub_drivetrain);
 
   // Hood Commands
   private final InstantCommand com_hoodHighTilt = new InstantCommand(sub_hood::hoodHighTilt);
@@ -186,22 +185,19 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    // TODO: bind this to something on driver or co driver at some point
+    // DriverStick.btn_B.whenPressed(() -> sub_drivetrain.resetOdometry(new
+    // Pose2d(0, 0, new Rotation2d())));
 
     // Driver Stick
 
-    DriverStick.btn_A.whileHeld(com_driveSpeed);
-    DriverStick.btn_X.whenPressed(() -> sub_drivetrain.configure());
-    DriverStick.btn_B.whenPressed(() -> sub_drivetrain.resetOdometry(new Pose2d(0, 0, new Rotation2d())));
+    DriverStick.btn_A.whenPressed(com_pivotClimberAngled);
+    DriverStick.btn_B.whenPressed(com_pivotClimberPerpendicular);
+    DriverStick.btn_X.whenPressed(com_hookClimberDown);
+    DriverStick.btn_Y.whenPressed(com_hookClimberUp);
+    DriverStick.btn_Start.whileHeld(com_magicClimb);
+    DriverStick.btn_Back.whenPressed(com_prepClimb);
 
-    // only commented these out for ramsete-testing, uncomment before merging branch
-    // DriverStick.btn_A.whenPressed(com_pivotClimberAngled);
-    // DriverStick.btn_B.whenPressed(com_pivotClimberPerpendicular);
-    // DriverStick.btn_X.whenPressed(com_hookClimberDown);
-    // DriverStick.btn_Y.whenPressed(com_hookClimberUp);
-    // DriverStick.btn_Start.whileHeld(com_magicClimb);
-    // DriverStick.btn_Back.whenPressed(com_prepClimb);
-
-    // leave these commented out
     // DriverStick.btn_Y.whileHeld(com_highHub);
     // DriverStick.btn_X.whileHeld(com_lowHub);
 
