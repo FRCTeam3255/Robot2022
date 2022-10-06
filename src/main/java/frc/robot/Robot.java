@@ -69,14 +69,11 @@ public class Robot extends TimedRobot {
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
 
-    // commented this out for ramsete testing, uncomment before merge TODO
-    // if (RobotContainer.switchBoard.btn_2.get()) {
-    // SN_Preferences.usePreferences();
-    // } else {
-    // SN_Preferences.useDefaults();
-    // }
-
-    SN_Preferences.usePreferences();
+    if (RobotContainer.switchBoard.btn_2.get()) {
+      SN_Preferences.usePreferences();
+    } else {
+      SN_Preferences.useDefaults();
+    }
 
     SmartDashboard.putBoolean("Using Code Defaults for Prefs", SN_Preferences.isUsingDefaults());
     CommandScheduler.getInstance().run();
