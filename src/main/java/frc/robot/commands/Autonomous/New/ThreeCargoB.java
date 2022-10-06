@@ -7,7 +7,6 @@ package frc.robot.commands.Autonomous.New;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.RobotPreferences;
 import frc.robot.RobotPreferences.AutoPrefs.ThreeCargo;
 import frc.robot.commands.Autonomous.SetShooterRPM;
 import frc.robot.commands.Intake.DumbCollect;
@@ -57,18 +56,15 @@ public class ThreeCargoB extends SequentialCommandGroup {
 
         // drive and configure shooter on the way
         parallel(
-            new DumbCollect(intake, transfer).until(() -> fenderTo1Then2.isFinished()),
+            new DumbCollect(intake, transfer).until(() -> fenderTo1Then2.isFinished()), // collect
             new SetShooterRPM(shooter, ThreeCargo.shooterRPM2_6), // set shooter
             new SetTurretAngle(turret, ThreeCargo.turretAngle2_6).withTimeout(.5), // set turret
             new InstantCommand(() -> hood.setHood(ThreeCargo.hoodLevel2_6.getValue())), // set hood
             new InstantCommand(() -> drivetrain.resetOdometry(drivetrain.fenderTo1Then2Traj.getInitialPose()))
-                .andThen(fenderTo1Then2
+                .andThen(fenderTo1Then2 // reset odometry then drive then stop
                     .andThen(new InstantCommand(() -> drivetrain.driveSpeed(0, 0))))),
 
-        new PushCargoSimple(shooter, transfer).until(() -> !transfer.areTopAndBottomBallCollected()), // shoot
-
-        // zero stuff
-        new SetShooterRPM(shooter, RobotPreferences.zeroDoublePref)
+        new PushCargoSimple(shooter, transfer).until(() -> !transfer.areTopAndBottomBallCollected()) // shoot
 
     );
   }
