@@ -103,7 +103,7 @@ public class Turret extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
 
-    if (/* RobotContainer.switchBoard.btn_7.get() */ true) {
+    if (RobotContainer.switchBoard.btn_7.get()) {
       SmartDashboard.putNumber("Turret Encoder", getTurretMotorEncoderCounts());
       SmartDashboard.putNumber("Turret Angle", getTurretAngle());
       SmartDashboard.putNumber("Turret Closed Loop Error",
