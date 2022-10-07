@@ -9,7 +9,7 @@ import com.frcteam3255.components.SN_Limelight.LEDMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.RobotPreferences;
+import frc.robot.RobotPreferences.TurretPrefs;
 import frc.robot.subsystems.NavX;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
@@ -65,12 +65,12 @@ public class VisionAimTurret extends CommandBase {
       oldNavXPosition = navX.navx.getYaw();
       oldTargetPosition = limelightTarget;
     } else {
-      if (newTargetPosition < RobotPreferences.TurretPrefs.turretMinAngleDegrees.getValue()) {
-        oppositePosition = RobotPreferences.TurretPrefs.turretMinAngleDegrees.getValue() - newTargetPosition;
-        turret.setTurretAngle(RobotPreferences.TurretPrefs.turretMaxAngleDegrees.getValue() - oppositePosition);
-      } else if (newTargetPosition > RobotPreferences.TurretPrefs.turretMaxAngleDegrees.getValue()) {
-        oppositePosition = newTargetPosition - RobotPreferences.TurretPrefs.turretMaxAngleDegrees.getValue();
-        turret.setTurretAngle(RobotPreferences.TurretPrefs.turretMinAngleDegrees.getValue() + oppositePosition);
+      if (newTargetPosition < TurretPrefs.turretMinAngleDegrees.getValue()) {
+        oppositePosition = TurretPrefs.turretMinAngleDegrees.getValue() - newTargetPosition;
+        turret.setTurretAngle(TurretPrefs.turretMaxAngleDegrees.getValue() - oppositePosition);
+      } else if (newTargetPosition > TurretPrefs.turretMaxAngleDegrees.getValue()) {
+        oppositePosition = newTargetPosition - TurretPrefs.turretMaxAngleDegrees.getValue();
+        turret.setTurretAngle(TurretPrefs.turretMinAngleDegrees.getValue() + oppositePosition);
       } else {
         turret.setTurretAngle(newTargetPosition);
       }
