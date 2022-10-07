@@ -173,7 +173,6 @@ public class RobotContainer {
     configureDashboardButtons();
     sub_drivetrain.setDefaultCommand(com_drive);
     sub_climber.setDefaultCommand(com_runSpool);
-    sub_turret.setDefaultCommand(com_visionAimTurret);
     com_setUpperHubGoal.initialize(); // upper hub needs to be set as goal
     com_presetFender.initialize(); // before setting fender as the preset
   }
@@ -208,7 +207,8 @@ public class RobotContainer {
     coDriverStick.btn_RBump.whenPressed(com_spinFlywheelGoalRPM);
     coDriverStick.btn_LBump.whileHeld(com_moveTurret);
 
-    // Limelight Command
+    // Limelight Commands
+    switchBoard.btn_9.whileHeld(com_visionAimTurret);
     coDriverStick.btn_B.whileHeld(com_reverseTransfer);
     // Just Setting Angle (X Axis)
     coDriverStick.btn_X.whileHeld(com_visionSpinTurret);

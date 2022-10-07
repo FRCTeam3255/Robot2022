@@ -7,10 +7,11 @@ package frc.robot.subsystems;
 import com.frcteam3255.components.SN_Limelight;
 import com.frcteam3255.components.SN_Limelight.LEDMode;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.RobotPreferences;
+import frc.robot.RobotPreferences.VisionPrefs;
 
 public class Vision extends SubsystemBase {
 
@@ -52,11 +53,11 @@ public class Vision extends SubsystemBase {
   }
 
   public double limelightDistanceFromGoal() {
-    double goalAngleDegrees = RobotPreferences.VisionPrefs.limelightMountAngle.getValue() + limelight.getOffsetY();
-    double goalAngleRadians = goalAngleDegrees * (3.14159 / 180.0);
+    double goalAngleRadians = Units
+        .degreesToRadians(VisionPrefs.limelightMountAngle.getValue() + limelight.getOffsetY());
 
-    double limelightDistanceFromGoal = (RobotPreferences.VisionPrefs.highHubHeight.getValue()
-        - RobotPreferences.VisionPrefs.limelightMountHeight.getValue()) / Math.tan(goalAngleRadians);
+    double limelightDistanceFromGoal = (VisionPrefs.highHubHeight.getValue()
+        - VisionPrefs.limelightMountHeight.getValue()) / Math.tan(goalAngleRadians);
     return limelightDistanceFromGoal;
   }
 
