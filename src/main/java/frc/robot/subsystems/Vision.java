@@ -8,7 +8,6 @@ import com.frcteam3255.components.SN_Limelight;
 import com.frcteam3255.components.SN_Limelight.LEDMode;
 
 import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Vision extends SubsystemBase {
@@ -48,23 +47,5 @@ public class Vision extends SubsystemBase {
 
   public void turnLimelightOff() {
     limelight.setLEDMode(LEDMode.off);
-  }
-
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-    SmartDashboard.putBoolean("limelight has target", limelight.hasTarget());
-    SmartDashboard.putNumber("limelight x error", limelight.getOffsetX());
-    SmartDashboard.putNumber("limelight y error", limelight.getOffsetY());
-    SmartDashboard.putNumber("limelight target area", limelight.getTargetArea());
-    SmartDashboard.putNumber("limelight Ideal Upper Hub RPM", getIdealMediumHoodRPM());
-    SmartDashboard.putNumber("limelight Idead Lower Hub RPM", getIdealLowerHubRPM());
-
-    if (RobotController.getUserButton()) {
-      if (timer > 25) {
-        limelight.toggleLEDs();
-      }
-    }
-    timer++;
   }
 }

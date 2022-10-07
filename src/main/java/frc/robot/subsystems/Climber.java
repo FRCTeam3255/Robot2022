@@ -12,7 +12,6 @@ import com.frcteam3255.preferences.SN_DoublePreference;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.RobotMap;
@@ -129,18 +128,5 @@ public class Climber extends SubsystemBase {
     return Math.abs(getClimberClosedLoopError()) < ClimberPrefs.climberAcceptableClosedLoopError.getValue();
   }
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-    if (RobotContainer.switchBoard.btn_7.get()) {
-      SmartDashboard.putNumber("Climber Encoder Counts", getClimberEncoderCount());
-      SmartDashboard.putNumber("Climber Closed Loop Error", getClimberClosedLoopError());
-      SmartDashboard.putBoolean("Is Climber Error Acceptable", isClimberClosedLoopErrorAcceptable());
-      SmartDashboard.putNumber("Climber Motor Speed", climbMotor.getMotorOutputPercent());
-    }
-
-    SmartDashboard.putBoolean("Is Climber At Bottom", isClimberAtBottom());
-    SmartDashboard.putBoolean("Is Climber Angled", isClimberAngled());
-    SmartDashboard.putBoolean("Is Climber Hooked", isHookDeployed());
   }
 }

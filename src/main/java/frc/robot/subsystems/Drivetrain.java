@@ -14,7 +14,6 @@ import com.frcteam3255.preferences.SN_DoublePreference;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.RobotPreferences;
@@ -238,61 +237,6 @@ public class Drivetrain extends SubsystemBase {
     rightFollowMotor.setNeutralMode(NeutralMode.Coast);
     rightLeadMotor.setNeutralMode(NeutralMode.Coast);
   }
-
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-
-    if (RobotContainer.switchBoard.btn_7.get()) {
-      // Encoder Counts
-      SmartDashboard.putNumber("Drivetrain Left Encoder", getLeftEncoderCount());
-      SmartDashboard.putNumber("Drivetrain Right Encoder", getRightEncoderCount());
-      SmartDashboard.putNumber("Drivetrain Average Encoder",
-          getAverageEncoderCount());
-
-      // Motion Profile
-      SmartDashboard.putBoolean("Is Drivetrain Motion Profile Finished",
-          isMotionProfileFinished());
-
-      // Motor Percent Output
-      SmartDashboard.putNumber("Drivetrain Left Lead Motor Speed",
-          leftLeadMotor.getMotorOutputPercent());
-      SmartDashboard.putNumber("Drivetrain Right Lead Motor Speed",
-          rightLeadMotor.getMotorOutputPercent());
-      SmartDashboard.putNumber("Drivetrain Left Follow Motor Speed",
-          leftFollowMotor.getMotorOutputPercent());
-      SmartDashboard.putNumber("Drivetrain Right Follow Motor Speed",
-          rightFollowMotor.getMotorOutputPercent());
-
-      // Feet Driven
-      SmartDashboard.putNumber("Drivetrain Left Feet Driven", getLeftFeetDriven());
-      SmartDashboard.putNumber("Drivetrain Right Feet Driven",
-          getRightFeetDriven());
-      SmartDashboard.putNumber("Drivetrain Average Feet Driven",
-          getAverageFeetDriven());
-
-      // Feet Per Second
-      SmartDashboard.putNumber("Drivetrain Left Feet Per Second",
-          getLeftFeetPerSecond());
-      SmartDashboard.putNumber("Drivetrain Right Feet Per Second",
-          getRightFeetPerSecond());
-      SmartDashboard.putNumber("Drivetrain Average Feet Per Second",
-          getAverageFeetPerSecond());
-
-      // Encoder Counts per 100ms
-      SmartDashboard.putNumber("Drivetrain Left Velocity", getLeftVelocity());
-      SmartDashboard.putNumber("Drivetrain Right Velocity", getRightVelocity());
-      SmartDashboard.putNumber("Drivetrain Average Velocity",
-          getAverageVelocity());
-
-      // Closed Loop Error
-      SmartDashboard.putNumber("Drivetrain Left Closed Loop Error Inches",
-          getLeftClosedLoopErrorInches());
-      SmartDashboard.putNumber("Drivetrain Right Closed Loop Error Inches",
-          getRightClosedLoopErrorInches());
-      SmartDashboard.putNumber("Drivetrain Average Closed Loop Error Inches",
-          getAverageClosedLoopErrorInches());
-    }
 
   }
 }

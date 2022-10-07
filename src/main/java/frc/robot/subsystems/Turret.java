@@ -9,7 +9,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.RobotPreferences.*;
 
@@ -95,21 +94,5 @@ public class Turret extends SubsystemBase {
   // encoder counts
   public double getTurretClosedLoopErrorDegrees() {
     return turretMotor.getClosedLoopError() * TurretPrefs.turretEncoderCountsPerDegrees.getValue();
-  }
-
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-
-    if (RobotContainer.switchBoard.btn_7.get()) {
-      SmartDashboard.putNumber("Turret Encoder", getTurretMotorEncoderCounts());
-      SmartDashboard.putNumber("Turret Angle", getTurretAngle());
-      SmartDashboard.putNumber("Turret Closed Loop Error",
-          getTurretClosedLoopErrorDegrees());
-      SmartDashboard.putNumber("Turret Motor Speed",
-          turretMotor.getMotorOutputPercent());
-    }
-
-    SmartDashboard.putNumber("Turret Angle", getTurretAngle());
   }
 }

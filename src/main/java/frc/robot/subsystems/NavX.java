@@ -6,7 +6,6 @@ package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class NavX extends SubsystemBase {
@@ -24,12 +23,5 @@ public class NavX extends SubsystemBase {
 
   public void calibrate() {
     navx.calibrate();
-  }
-
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-    SmartDashboard.putBoolean("is navx connected", navx.isConnected());
-    SmartDashboard.putNumber("navx yaw", navx.getYaw());
   }
 }
