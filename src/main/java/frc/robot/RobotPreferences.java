@@ -227,6 +227,27 @@ public final class RobotPreferences {
     public static final SN_DoublePreference limelightMountHeight = new SN_DoublePreference(
         "limelightMountHeight", 42);
     public static final SN_DoublePreference limelightMountAngle = new SN_DoublePreference("limelightMountAngle", 35.6);
+
+    // Regression Variables
+
+    // TODO: heck the accuracy of these ranges
+    public static final SN_DoublePreference lowHoodMaxDistance = new SN_DoublePreference("lowHoodMaxDistance", 50);
+    public static final SN_DoublePreference midHoodMaxDistance = new SN_DoublePreference("midHoodMaxDistance", 90);
+
+    // Low Hood (Only 2 data points, may be innacurate)
+    public static final SN_DoublePreference linearLowA = new SN_DoublePreference("linearLowA", 3050);
+    public static final SN_DoublePreference linearLowB = new SN_DoublePreference("linearLowB", -7.14286);
+
+    // Mid Hood
+    public static final SN_DoublePreference regMidA = new SN_DoublePreference("regMidA", 0.0938398);
+    public static final SN_DoublePreference regMidB = new SN_DoublePreference("regMidB", -5.67137);
+    public static final SN_DoublePreference regMidC = new SN_DoublePreference("regMidC", 2896.08);
+
+    // High Hood
+    public static final SN_DoublePreference regHighA = new SN_DoublePreference("regHighA", 0.00570871);
+    public static final SN_DoublePreference regHighB = new SN_DoublePreference("regHighB", 6.51907);
+    public static final SN_DoublePreference regHighC = new SN_DoublePreference("regHighC", 2474.7);
+
   }
 
   public static final class ClimberPrefs {
