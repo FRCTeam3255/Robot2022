@@ -149,7 +149,7 @@ public class RobotContainer {
   private final DeployIntake com_deployIntake = new DeployIntake(sub_intake);
 
   // Vision Commands
-  private final SetGoalRPM com_setGoalRPM = new SetGoalRPM(sub_shooter, sub_vision);
+  private final SetGoalRPM com_setGoalRPM = new SetGoalRPM(sub_shooter, sub_vision, sub_hood);
 
   // Climber Commands
   // private final Climb com_climb = new Climb(sub_climber);
@@ -222,7 +222,6 @@ public class RobotContainer {
     coDriverStick.btn_X.whileHeld(com_visionSpinTurret);
     // Just Setting RPM (Y Axis)
     coDriverStick.btn_Y.whenPressed(com_setGoalRPM);
-    coDriverStick.btn_Y.whenPressed(new InstantCommand(sub_hood::hoodMediumTilt, sub_hood));
 
     coDriverStick.btn_Back.whenPressed(com_retractIntake);
 
