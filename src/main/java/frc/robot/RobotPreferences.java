@@ -234,8 +234,8 @@ public final class RobotPreferences {
     public static final SN_DoublePreference highHoodMaxDistance = new SN_DoublePreference("highHoodMaxDistance", 300);
 
     // Low Hood
-    public static final SN_DoublePreference linearLowA = new SN_DoublePreference("linearLowA", 3050);
-    public static final SN_DoublePreference linearLowB = new SN_DoublePreference("linearLowB", -7.14286);
+    public static final SN_DoublePreference regLowA = new SN_DoublePreference("linearLowA", 3050);
+    public static final SN_DoublePreference regLowB = new SN_DoublePreference("linearLowB", -7.14286);
 
     // Mid Hood
     public static final SN_DoublePreference regMidA = new SN_DoublePreference("regMidA", 0.0938398);

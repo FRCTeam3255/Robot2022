@@ -56,8 +56,8 @@ public class Vision extends SubsystemBase {
 
   public double limelightLowDistanceRPM() {
     double x = limelightDistanceFromGoal();
-    double a = VisionPrefs.linearLowA.getValue();
-    double b = VisionPrefs.linearLowB.getValue();
+    double a = VisionPrefs.regLowA.getValue();
+    double b = VisionPrefs.regLowB.getValue();
 
     double calculatedRPM = a + (b * x);
     return calculatedRPM;

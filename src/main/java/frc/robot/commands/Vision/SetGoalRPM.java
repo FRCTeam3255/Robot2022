@@ -5,6 +5,7 @@
 package frc.robot.commands.Vision;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotPreferences.ShooterPrefs;
 import frc.robot.RobotPreferences.VisionPrefs;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Shooter;
@@ -26,15 +27,17 @@ public class SetGoalRPM extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (vision.limelightDistanceFromGoal() < VisionPrefs.lowHoodMaxDistance.getValue()) {
-      hood.hoodLowTilt();
-      shooter.setGoalRPM(vision.limelightLowDistanceRPM());
-    } else if (vision.limelightDistanceFromGoal() < VisionPrefs.midHoodMaxDistance.getValue()) {
-      hood.hoodMediumTilt();
-      shooter.setGoalRPM(vision.limelightMidDistanceRPM());
-    } else if (vision.limelightDistanceFromGoal() < VisionPrefs.highHoodMaxDistance.getValue()) {
-      hood.hoodHighTilt();
-      shooter.setGoalRPM(vision.limelightHighDistanceRPM());
+    if (vision.limelight.hasTarget()) {
+      if (vision.limelightDistanceFromGoal() < VisionPrefs.lowHoodMaxDistance.getValue()) {
+        hood.hoodLowTilt();
+        shooter.setGoalRPM(vision.limelightLowDistanceRPM());
+      } else if (vision.limelightDistanceFromGoal() < VisionPrefs.midHoodMaxDistance.getValue()) {
+        hood.hoodMediumTilt();
+        shooter.setGoalRPM(vision.limelightMidDistanceRPM());
+      } else if (vision.limelightDistanceFromGoal() < VisionPrefs.highHoodMaxDistance.getValue()) {
+        hood.hoodHighTilt();
+        shooter.setGoalRPM(vision.limelightHighDistanceRPM());
+      }
     }
   }
 
