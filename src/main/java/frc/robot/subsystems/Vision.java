@@ -7,9 +7,11 @@ package frc.robot.subsystems;
 import com.frcteam3255.components.SN_Limelight;
 import com.frcteam3255.components.SN_Limelight.LEDMode;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotPreferences.VisionPrefs;
 
 public class Vision extends SubsystemBase {
 
@@ -50,6 +52,21 @@ public class Vision extends SubsystemBase {
     limelight.setLEDMode(LEDMode.off);
   }
 
+  public double limelightDistanceFromGoal() {
+    double goalAngleRadians = Units
+        .degreesToRadians(VisionPrefs.limelightMountAngle.getValue() + limelight.getOffsetY());
+
+    double limelightDistanceFromGoal = (VisionPrefs.highHubHeight.getValue()
+        - VisionPrefs.limelightMountHeight.getValue()) / Math.tan(goalAngleRadians);
+    return limelightDistanceFromGoal;
+  }
+
+  public double limelightDistanceRPM() {
+    double limelightDistanceFromGoal = limelightDistanceFromGoal();
+    double calculatedRPM = 0; // TODO: get actual datapoints for this calculation
+    return calculatedRPM;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -59,6 +76,7 @@ public class Vision extends SubsystemBase {
     SmartDashboard.putNumber("limelight target area", limelight.getTargetArea());
     SmartDashboard.putNumber("limelight Ideal Upper Hub RPM", getIdealMediumHoodRPM());
     SmartDashboard.putNumber("limelight Idead Lower Hub RPM", getIdealLowerHubRPM());
+    SmartDashboard.putNumber("limelight distance from hub", limelightDistanceFromGoal());
 
     if (RobotController.getUserButton()) {
       if (timer > 25) {
