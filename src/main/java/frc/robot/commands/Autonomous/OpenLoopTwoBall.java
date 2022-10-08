@@ -6,7 +6,6 @@ package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotPreferences;
 import frc.robot.RobotPreferences.AutoPrefs;
 import frc.robot.RobotPreferences.DrivetrainPrefs;
@@ -23,9 +22,6 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Transfer;
 import frc.robot.subsystems.Turret;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class OpenLoopTwoBall extends SequentialCommandGroup {
 
   Drivetrain drivetrain;

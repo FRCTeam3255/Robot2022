@@ -5,7 +5,6 @@ import com.frcteam3255.preferences.SN_DoublePreference;
 import com.frcteam3255.preferences.SN_IntPreference;
 import com.frcteam3255.preferences.SN_ZeroDoublePreference;
 import com.frcteam3255.preferences.SN_ZeroIntPreference;
-import com.frcteam3255.utils.SN_Debug;
 
 public final class RobotPreferences {
 
@@ -23,6 +22,15 @@ public final class RobotPreferences {
   // mechanisms that users control will not need to have granular control, and
   // instead should use presets (closed loop, full speed control). Eg 2020 hood,
   // 2019 cascade, etc.
+
+  // addendum: basically everything I said above isn't true. Instead of using
+  // something like a friction brake on a climber, a dog tooth gear on a cascade,
+  // or a planetary gearbox on a hood, we can just use a Falcon. The gear ratio
+  // does not have to be optimal either, runing a Falcon at a quarter power is
+  // more than enough for many lower power mechanisms. This is likely to be
+  // extremely common next year, I know it's common on the omega bot this year.
+  // Many closed loop mechanisms will benefit from running slower, especially
+  // if accuracy is involved at all.
 
   public static final SN_ZeroIntPreference zeroIntPref = new SN_ZeroIntPreference();
   public static final SN_ZeroDoublePreference zeroDoublePref = new SN_ZeroDoublePreference();

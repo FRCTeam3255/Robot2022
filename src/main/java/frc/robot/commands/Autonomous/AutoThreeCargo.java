@@ -4,19 +4,14 @@
 
 package frc.robot.commands.Autonomous;
 
-import java.util.concurrent.atomic.AtomicStampedReference;
-
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotPreferences;
 import frc.robot.RobotPreferences.AutoPrefs;
 import frc.robot.RobotPreferences.DrivetrainPrefs;
-// import frc.robot.RobotPreferences.AutoPrefs.AutoThreeCargo;
 import frc.robot.commands.Drivetrain.DriveMotionProfile;
 import frc.robot.commands.Intake.CollectCargo;
 import frc.robot.commands.Shooter.PresetShooter;
-import frc.robot.commands.Shooter.SpinFlywheelGoalRPM;
 import frc.robot.commands.Transfer.PushCargoSimple;
 import frc.robot.commands.Turret.SetTurretPosition;
 import frc.robot.subsystems.Climber;
@@ -27,9 +22,6 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Transfer;
 import frc.robot.subsystems.Turret;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutoThreeCargo extends SequentialCommandGroup {
 
   Drivetrain drivetrain;
