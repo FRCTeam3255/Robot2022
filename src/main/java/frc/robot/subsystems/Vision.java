@@ -34,7 +34,7 @@ public class Vision extends SubsystemBase {
   // }
 
   public double getIdealLowerHubRPM() {
-    return /* different regression */ limelight.getOffsetY(); // TODO: find regression
+    return /* different regression */ limelight.getOffsetY(); // we're not doing this
   }
 
   public void turnLimelightOn() {
