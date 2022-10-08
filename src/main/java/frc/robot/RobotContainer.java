@@ -57,7 +57,7 @@ public class RobotContainer {
   public final Climber sub_climber = new Climber();
   private final Transfer sub_transfer = new Transfer();
   private final NavX sub_navX = new NavX();
-  private final Vision sub_vision = new Vision();
+  private final Vision sub_vision = new Vision(sub_turret);
 
   // Drivetrain Commands
   private final Drive com_drive = new Drive(sub_drivetrain);

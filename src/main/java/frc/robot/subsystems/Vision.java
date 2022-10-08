@@ -12,17 +12,20 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotPreferences.VisionPrefs;
+import frc.robot.RobotContainer;
 
 public class Vision extends SubsystemBase {
 
   public SN_Limelight limelight;
+  public Turret turret;
 
   // timer exists because it would flash on and off cause periodic
   private int timer;
 
   /** Creates a new Vision. */
-  public Vision() {
+  public Vision(Turret sub_turret) {
     limelight = new SN_Limelight();
+    turret = sub_turret;
   }
 
   // public double getIdealUpperHubRPM() {
@@ -65,6 +68,29 @@ public class Vision extends SubsystemBase {
     double limelightDistanceFromGoal = limelightDistanceFromGoal();
     double calculatedRPM = 0; // TODO: get actual datapoints for this calculation
     return calculatedRPM;
+  }
+
+  public boolean isInLimelightDeadzone() {
+    if (turret.getTurretAngle() > VisionPrefs.hookClimberLeftDeadzoneStart.getValue()
+        && turret.getTurretAngle() < VisionPrefs.hookClimberLeftDeadzoneEnd.getValue()) {
+      return true;
+    }
+    if (turret.getTurretAngle() > VisionPrefs.pivotClimberLeftDeadzoneStart.getValue()
+        && turret.getTurretAngle() < VisionPrefs.pivotClimberLeftDeadzoneEnd.getValue()) {
+      return true;
+    }
+
+    if (turret.getTurretAngle() < VisionPrefs.pivotClimberRightDeadzoneStart.getValue()
+        && turret.getTurretAngle() > VisionPrefs.pivotClimberRightDeadzoneEnd.getValue()) {
+      return true;
+    }
+
+    if (turret.getTurretAngle() < VisionPrefs.hookClimberRightDeadzoneStart.getValue()
+        && turret.getTurretAngle() > VisionPrefs.hookClimberRightDeadzoneEnd.getValue()) {
+      return true;
+    }
+
+    return false;
   }
 
   @Override
