@@ -7,9 +7,11 @@ package frc.robot.subsystems;
 import com.frcteam3255.components.SN_Limelight;
 import com.frcteam3255.components.SN_Limelight.LEDMode;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotPreferences.VisionPrefs;
 
 public class Vision extends SubsystemBase {
 
@@ -31,13 +33,6 @@ public class Vision extends SubsystemBase {
   // return (a * (x * x)) + (b * x) + c;
   // }
 
-  public double getIdealMediumHoodRPM() {
-    double a = 3338.9172;
-    double b = 0.9929;
-    double x = limelight.getOffsetY();
-    return a * Math.pow(b, x);
-  }
-
   public double getIdealLowerHubRPM() {
     return /* different regression */ limelight.getOffsetY(); // TODO: find regression
   }
@@ -50,6 +45,44 @@ public class Vision extends SubsystemBase {
     limelight.setLEDMode(LEDMode.off);
   }
 
+  public double limelightDistanceFromGoal() {
+    double goalAngleRadians = Units
+        .degreesToRadians(VisionPrefs.limelightMountAngle.getValue() + limelight.getOffsetY());
+
+    double limelightDistanceFromGoal = (VisionPrefs.highHubHeight.getValue()
+        - VisionPrefs.limelightMountHeight.getValue()) / Math.tan(goalAngleRadians);
+    return limelightDistanceFromGoal;
+  }
+
+  public double limelightLowDistanceRPM() {
+    double x = limelightDistanceFromGoal();
+    double a = VisionPrefs.regLowA.getValue();
+    double b = VisionPrefs.regLowB.getValue();
+
+    double calculatedRPM = a + (b * x);
+    return calculatedRPM;
+  }
+
+  public double limelightMidDistanceRPM() {
+    double x = limelightDistanceFromGoal();
+    double a = VisionPrefs.regMidA.getValue();
+    double b = VisionPrefs.regMidB.getValue();
+    double c = VisionPrefs.regMidC.getValue();
+
+    double calculatedRPM = Math.pow(x, 2) * a + (b * x) + c;
+    return calculatedRPM;
+  }
+
+  public double limelightHighDistanceRPM() {
+    double x = limelightDistanceFromGoal();
+    double a = VisionPrefs.regHighA.getValue();
+    double b = VisionPrefs.regHighB.getValue();
+    double c = VisionPrefs.regHighC.getValue();
+
+    double calculatedRPM = Math.pow(x, 2) * a + (b * x) + c;
+    return calculatedRPM;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -57,8 +90,9 @@ public class Vision extends SubsystemBase {
     SmartDashboard.putNumber("limelight x error", limelight.getOffsetX());
     SmartDashboard.putNumber("limelight y error", limelight.getOffsetY());
     SmartDashboard.putNumber("limelight target area", limelight.getTargetArea());
-    SmartDashboard.putNumber("limelight Ideal Upper Hub RPM", getIdealMediumHoodRPM());
+    SmartDashboard.putNumber("limelight Ideal Upper Hub High Hood RPM", limelightHighDistanceRPM());
     SmartDashboard.putNumber("limelight Idead Lower Hub RPM", getIdealLowerHubRPM());
+    SmartDashboard.putNumber("limelight distance from hub", limelightDistanceFromGoal());
 
     if (RobotController.getUserButton()) {
       if (timer > 25) {

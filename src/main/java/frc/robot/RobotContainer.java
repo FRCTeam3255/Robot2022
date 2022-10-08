@@ -27,7 +27,6 @@ import frc.robot.RobotPreferences.HoodPrefs;
 import frc.robot.RobotPreferences.ShooterPrefs;
 import frc.robot.RobotPreferences.TurretPrefs;
 import frc.robot.commands.ConfigureSubsystems;
-import frc.robot.commands.Autonomous.AutoThreeCargoPP;
 import frc.robot.commands.Climber.*;
 import frc.robot.subsystems.*;
 
@@ -94,7 +93,8 @@ public class RobotContainer {
   // RobotPreferences.TurretPrefs.turretPresetPos1);
   private final VisionAimTurret com_visionAimTurret = new VisionAimTurret(sub_turret, sub_shooter, sub_vision,
       sub_navX);
-  private final VisionSpinTurret com_visionSpinTurret = new VisionSpinTurret(sub_turret, sub_shooter, sub_vision);
+  private final VisionSpinTurret com_visionSpinTurret = new VisionSpinTurret(sub_turret, sub_shooter, sub_vision,
+      sub_navX);
   // private final VisionNavXAimTurret com_visionHoldAimTurret = new
   // VisionNavXAimTurret(sub_turret, sub_vision, sub_navX);
 
@@ -146,7 +146,7 @@ public class RobotContainer {
   private final DeployIntake com_deployIntake = new DeployIntake(sub_intake);
 
   // Vision Commands
-  private final SetGoalRPM com_setGoalRPM = new SetGoalRPM(sub_shooter, sub_vision);
+  private final SetGoalRPM com_setGoalRPM = new SetGoalRPM(sub_shooter, sub_vision, sub_hood);
 
   // Climber Commands
   // private final Climb com_climb = new Climb(sub_climber);
@@ -215,14 +215,13 @@ public class RobotContainer {
     coDriverStick.btn_RBump.whenPressed(com_spinFlywheelGoalRPM);
     coDriverStick.btn_LBump.whileHeld(com_moveTurret);
 
-    // Limelight Command
-    coDriverStick.btn_A.whileHeld(com_visionAimTurret);
+    // Limelight Commands
+    switchBoard.btn_9.whileHeld(com_visionAimTurret);
     coDriverStick.btn_B.whileHeld(com_reverseTransfer);
     // Just Setting Angle (X Axis)
     coDriverStick.btn_X.whileHeld(com_visionSpinTurret);
     // Just Setting RPM (Y Axis)
     coDriverStick.btn_Y.whenPressed(com_setGoalRPM);
-    coDriverStick.btn_Y.whenPressed(new InstantCommand(sub_hood::hoodMediumTilt, sub_hood));
 
     coDriverStick.btn_Back.whenPressed(com_retractIntake);
 
