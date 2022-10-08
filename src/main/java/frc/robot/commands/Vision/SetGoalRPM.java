@@ -26,11 +26,6 @@ public class SetGoalRPM extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
     if (vision.limelightDistanceFromGoal() < VisionPrefs.lowHoodMaxDistance.getValue()) {
       hood.hoodLowTilt();
       shooter.setGoalRPM(vision.limelightLowDistanceRPM());
@@ -43,6 +38,11 @@ public class SetGoalRPM extends CommandBase {
     }
   }
 
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+  }
+
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
@@ -51,6 +51,6 @@ public class SetGoalRPM extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }
