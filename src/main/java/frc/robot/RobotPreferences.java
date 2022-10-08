@@ -233,6 +233,7 @@ public final class RobotPreferences {
     // TODO: heck the accuracy of these ranges
     public static final SN_DoublePreference lowHoodMaxDistance = new SN_DoublePreference("lowHoodMaxDistance", 50);
     public static final SN_DoublePreference midHoodMaxDistance = new SN_DoublePreference("midHoodMaxDistance", 90);
+    public static final SN_DoublePreference highHoodMaxDistance = new SN_DoublePreference("highHoodMaxDistance", 300);
 
     // Low Hood (Only 2 data points, may be innacurate)
     public static final SN_DoublePreference linearLowA = new SN_DoublePreference("linearLowA", 3050);

@@ -37,7 +37,7 @@ public class SetGoalRPM extends CommandBase {
     } else if (vision.limelightDistanceFromGoal() < VisionPrefs.midHoodMaxDistance.getValue()) {
       hood.hoodMediumTilt();
       shooter.setGoalRPM(vision.limelightMidDistanceRPM());
-    } else {
+    } else if (vision.limelightDistanceFromGoal() < VisionPrefs.highHoodMaxDistance.getValue()) {
       hood.hoodHighTilt();
       shooter.setGoalRPM(vision.limelightHighDistanceRPM());
     }
