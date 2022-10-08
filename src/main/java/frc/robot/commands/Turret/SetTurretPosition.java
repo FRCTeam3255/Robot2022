@@ -57,6 +57,7 @@ public class SetTurretPosition extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return loopsInTol > loopsToFinish;
+    return loopsInTol > loopsToFinish; // TODO: make this work
+    // probably don't even need these vars, this is just part of talonfx closed loop
   }
 }

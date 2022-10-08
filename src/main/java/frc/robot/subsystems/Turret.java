@@ -87,8 +87,10 @@ public class Turret extends SubsystemBase {
 
   // sets the turret angle in degrees
   public void setTurretAngle(double a_degrees) {
+    SmartDashboard.putNumber("Turret Desired Angle", a_degrees);
     double position = a_degrees * TurretPrefs.turretEncoderCountsPerDegrees.getValue();
     turretMotor.set(ControlMode.Position, position);
+
   }
 
   // gets the difference between where the motor wants to be, and where it is, in

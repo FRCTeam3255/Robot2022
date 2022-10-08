@@ -7,7 +7,6 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.RobotMap.*;
@@ -57,6 +56,25 @@ public class Hood extends SubsystemBase {
   public void hoodZeroTilt() {
     longHoodPiston.set(shallowAngleHoodValue);
     shortHoodPiston.set(shallowAngleHoodValue);
+  }
+
+  /**
+   * Set the hood position based off an int
+   * 
+   * 0 is shallowest angle, 3 is steepest
+   * 
+   * @param level
+   */
+  public void setHood(int level) {
+    if (level == 0) {
+      hoodZeroTilt();
+    } else if (level == 1) {
+      hoodLowTilt();
+    } else if (level == 2) {
+      hoodMediumTilt();
+    } else if (level == 3) {
+      hoodHighTilt();
+    }
   }
 
   // Method constantly runs

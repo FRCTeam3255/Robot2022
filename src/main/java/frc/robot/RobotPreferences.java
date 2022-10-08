@@ -5,7 +5,8 @@ import com.frcteam3255.preferences.SN_DoublePreference;
 import com.frcteam3255.preferences.SN_IntPreference;
 import com.frcteam3255.preferences.SN_ZeroDoublePreference;
 import com.frcteam3255.preferences.SN_ZeroIntPreference;
-import com.frcteam3255.utils.SN_Debug;
+
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 
 public final class RobotPreferences {
 
@@ -34,9 +35,11 @@ public final class RobotPreferences {
     public static final SN_DoublePreference arcadeTurn = new SN_DoublePreference("arcadeTurn", .5);
     public static final SN_DoublePreference arcadeLowSpeed = new SN_DoublePreference("arcadeLowSpeed", 0.4);
     public static final SN_DoublePreference arcadeHighSpeed = new SN_DoublePreference("arcadeHighSpeed", 1.5);
+    public static final SN_DoublePreference arcadeClosedLoopMaxSpeed = new SN_DoublePreference(
+        "arcadeClosedLoopMaxSpeed", 3);
 
-    public static final SN_DoublePreference driveF = new SN_DoublePreference("driveF", 0);
-    public static final SN_DoublePreference driveP = new SN_DoublePreference("driveP", 1);
+    public static final SN_DoublePreference driveF = new SN_DoublePreference("driveF", 0.045);
+    public static final SN_DoublePreference driveP = new SN_DoublePreference("driveP", 0.1);
     public static final SN_DoublePreference driveI = new SN_DoublePreference("driveI", 0);
     public static final SN_DoublePreference driveD = new SN_DoublePreference("driveD", 0);
 
@@ -44,7 +47,11 @@ public final class RobotPreferences {
         "driveAllowableClosedLoopErrorInches", 2);
     public static final SN_DoublePreference driveClosedLoopPeakOutput = new SN_DoublePreference(
         "driveClosedLoopPeakOutput", 1);
+    public static final SN_DoublePreference driveClosedLoopRamp = new SN_DoublePreference("driveClosedLoopRamp", 0);
     public static final SN_DoublePreference driveLoopsToFinish = new SN_DoublePreference("driveLoopsToFinish", 25);
+    public static final SN_DoublePreference driveWheelCircumference = new SN_DoublePreference("driveWheelCircumference",
+        4 * Math.PI);
+    public static final SN_DoublePreference driveGearRatio = new SN_DoublePreference("driveGearRatio", 6);
 
     // drivetrain gear ratio: 10:60 aka motor rotates once, wheel rotates 1/6
     // 2048 counts per motor rotation, * 6 is 12288 counts per wheel rotation
@@ -73,6 +80,13 @@ public final class RobotPreferences {
         "driveOpenLoopSpeedReverse", -.3);
 
     public static final SN_DoublePreference driveOpenLoopCounts = new SN_DoublePreference("driveOpenLoopCounts", 44444);
+
+    public static final SN_DoublePreference testMPS = new SN_DoublePreference("testMPS", 1);
+
+    public static final SN_DoublePreference driveWidth = new SN_DoublePreference("driveWidth", 0.55); // meters
+    public static final SN_DoublePreference driveLength = new SN_DoublePreference("driveLength", 0.67); // meters
+    public static final DifferentialDriveKinematics driveKinematics = new DifferentialDriveKinematics(
+        driveWidth.getValue());
 
   }
 
@@ -322,6 +336,43 @@ public final class RobotPreferences {
     public static final class AutoThreeCargo {
       public static final SN_DoublePreference autoThreeCargoShooterRPM = new SN_DoublePreference(
           "autoThreeCargoShooterRPM", 3255);
+    }
+
+    // auto 6
+    public static final class ThreeCargo {
+      public static final SN_DoublePreference shooterRPM1_6 = new SN_DoublePreference(
+          "shooterRPM1_6", ShooterPrefs.shooterPresetUpperFenderRPM.getValue());
+      public static final SN_IntPreference hoodLevel1_6 = new SN_IntPreference(
+          "hoodLevel1_6", 0);
+      public static final SN_DoublePreference turretAngle1_6 = new SN_DoublePreference(
+          "turretAngle1_6", TurretPrefs.turretSnapAwayIntake.getValue());
+
+      public static final SN_DoublePreference shooterRPM2_6 = new SN_DoublePreference(
+          "shooterRPM2_6", 3500);
+      public static final SN_IntPreference hoodLevel2_6 = new SN_IntPreference(
+          "hoodLevel2_6", 3);
+      public static final SN_DoublePreference turretAngle2_6 = new SN_DoublePreference(
+          "turretAngle2_6", -198);
+    }
+
+    // auto 7
+    public static final class FiveCargo {
+
+      // it starts at 2 to line up with three cargo
+
+      public static final SN_DoublePreference shooterRPM2_7 = new SN_DoublePreference(
+          "shooterRPM2_7", 3500);
+      public static final SN_IntPreference hoodLevel2_7 = new SN_IntPreference(
+          "hoodLevel2_7", 3);
+      public static final SN_DoublePreference turretAngle2_7 = new SN_DoublePreference(
+          "turretAngle2_6", -198);
+
+      public static final SN_DoublePreference shooterRPM3_7 = new SN_DoublePreference(
+          "shooterRPM3_7", 3500);
+      public static final SN_IntPreference hoodLevel3_7 = new SN_IntPreference(
+          "hoodLevel3_7", 3);
+      public static final SN_DoublePreference turretAngle3_7 = new SN_DoublePreference(
+          "turretAngle3_7", -198);
     }
   }
 }

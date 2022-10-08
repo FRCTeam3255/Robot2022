@@ -112,6 +112,10 @@ public class Transfer extends SubsystemBase {
     return !transferBottomRightLimitSwitch.get() || !transferBottomLeftLimitSwitch.get();
   }
 
+  public boolean areTopAndBottomBallCollected() {
+    return isTopBallCollected() && isBottomBallCollected();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
