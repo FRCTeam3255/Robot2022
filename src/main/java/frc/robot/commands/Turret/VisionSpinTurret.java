@@ -49,14 +49,20 @@ public class VisionSpinTurret extends CommandBase {
   @Override
   public void execute() {
     target = -vision.limelight.getOffsetX() + turret.getTurretAngle();
-
     changeInNavx = navX.navx.getYaw() - oldNavXPosition;
     newTargetPosition = oldTargetPosition + changeInNavx;
-
     if (vision.limelight.hasTarget()) {
-      turret.setTurretAngle(target);
-      oldNavXPosition = navX.navx.getYaw();
-      oldTargetPosition = target;
+      if (vision.isInLimelightDeadzone()) {
+        if (turret.getTurretVelocity() > 0) {
+          turret.setTurretAngle(turret.getTurretAngle() + 5);
+        } else {
+          turret.setTurretAngle(turret.getTurretAngle() - 5);
+        }
+      } else {
+        turret.setTurretAngle(target);
+        oldNavXPosition = navX.navx.getYaw();
+        oldTargetPosition = target;
+      }
     } else {
       if (newTargetPosition < RobotPreferences.TurretPrefs.turretMinAngleDegrees.getValue()) {
         oppositePosition = RobotPreferences.TurretPrefs.turretMinAngleDegrees.getValue() - newTargetPosition;
