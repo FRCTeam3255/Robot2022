@@ -7,7 +7,6 @@ package frc.robot.subsystems;
 import com.frcteam3255.components.SN_Limelight;
 import com.frcteam3255.components.SN_Limelight.LEDMode;
 
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Vision extends SubsystemBase {

@@ -12,7 +12,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.RobotPreferences.*;
 
-import frc.robot.RobotContainer;
 import frc.robot.RobotMap.*;
 
 public class Turret extends SubsystemBase {
