@@ -1,113 +1,269 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
+//ShuffleBoardContainer.java
+package frc.robot;
 
-package frc.robot; 
-
-import frc.subsystems; 
-import edu.wpilibj.shuffleboard.ShuffleBoard;
-import edu.wpilibj.shuffleboard.BuiltInLayouts;
-import edu.wpilibj.shuffleboard.ShuffleBoardLayout;
-import edu.wpilibj.shuffleboard.ShuffleBoardTab;
-import RobotContainer;
-
+import edu.wpi.first.wpilibj.shuffleboard.*;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 
 //ShuffleBoard should act similar to RobotContainer but for ShuffleBoard
 //So basically the values of ShuffleBoard Widgets will be declared here
 public class ShuffleBoardContainer {
-  
-  //The new Shuffleboard Tabs
-  private ShuffleBoardTab climberShuffleBoardTab;
-  private ShuffleBoardTab drivetrainShuffleBoardTab;
-  private ShuffleBoardTab intakeShuffleBoardTab;
-  private ShuffleBoardTab navXShuffleBoardTab;
-  private ShuffleBoardTab shooterShuffleBoardTab;
-  private ShuffleBoardTab transferShuffleboardTab;
-  private ShuffleBoardTab turretShuffleboardTab;
-  private ShuffleBoardTab visionShuffleboardTab;
 
-  //The new ShuffleBoard Widgets
-  //Commented Out for now
-  //private int climberShuffleBoardWidgetWidth;
-  
-  //Climber Subsystem
-    climberShuffleBoardTab.add("Climber Encoder Counts", getClimberEncoderCount()).withSize()withPosition();
-    climberShuffleBoardTab.add("Climber Closed Loop Error", getClimberClosedLoopError()).withSize().withPosition();
-    climberShuffleBoardTab.add("Is Climber Error Acceptable", isClimberClosedLoopErrorAcceptable()).withSize().withPosition();
-    climberShuffleBoardTab.add("Climber Motor Speed", climbMotor.getMotorOutputPercent()).withSize().withPosition();
-    climberShuffleBoardTab.add("Is Climber At Bottom", isClimberAtBottom()).withSize().withPosition();
-    climberShuffleBoardTab.add("Is Climber Angled", isClimberAngled()).withSize().withPosition();
-    climberShuffleBoardTab.add("Is Climber Hooked", isClimberHooked()).withSize().withPosition();
+  // The new Shuffleboard Tabs
+  private ShuffleboardTab climberShuffleBoardTab;
+  private ShuffleboardTab drivetrainShuffleBoardTab;
+  private ShuffleboardTab intakeShuffleBoardTab;
+  private ShuffleboardTab transferShuffleboardTab;
+  private ShuffleboardTab turretShuffleboardTab;
+  private ShuffleboardTab visionShuffleboardTab;
 
-  //Drivetrain Subsystem
-  
-    //Encoder Counts
-`   drivetrainShuffleBoardTab.add("Drivetrain Left Encoder", getLeftEncoderCount()).withSize().withPosition();
-    drivetrainShuffleBoardTab.add("Drivetrain Right Encoder", getRightEncoderCount()).withSize().withPosition();
-    drivetrainShuffleBoardTab.add("Drivetrain Average Encoder", getAverageEncoderCount()).withSize().withPosition();
+  // The new Shuffleboard Layouts
 
-    //Motion Profile
-    drivetrainShuffleBoardTab.add("Is Drivetrain Motion Profile Finished", isMotionProfileFinished()).withSize().withPosition();
+  // Climber Layouts
+  private ShuffleboardLayout climberBooleanLayout;
+  private ShuffleboardLayout climberOtherLayout;
 
-    //Motor Percent Output (MPO)
-    drivetrainShuffleBoardTab.add("Drivetrain Left Lead Motor Speed", leftLeadMotor.getMotorOutputPercent()).withSize().withPosition();
-    drivetrainShuffleBoardTab.add("Drivetrain Right Lead Motor Speed", rightLeadMotor.getMotorOutputPercent()).withSize().withPosition();
-    drivetrainShuffleBoardTab.add("Drivetrain Left Follow Motor Speed", leftFollowMotor.getMotorOutputPercent()).withSize().withPosition():
-    drivetrainShuffleBoardTab.add("Drivetrain Right Follow Motor Speed", rightFollowMotor.getMotorOutputPercent()).withSize().withPosition();
+  // Drivetrain Layouts
+  private ShuffleboardLayout drivetrainEncodersLayout;
+  private ShuffleboardLayout drivetrainMotionProfileLayout;
+  private ShuffleboardLayout drivetrainMpoLayout;
+  private ShuffleboardLayout drivetrainFtDrivenLayout;
+  private ShuffleboardLayout drivetrainFtPerSecondLayout;
+  private ShuffleboardLayout drivetrainVelocityLayout;
+  private ShuffleboardLayout drivetrainClosedLoopErrorLayout;
 
-    //Feet Driven
-    drivetrainShuffleBoardTab.add("Drivetrain Left Feet Driven", getLeftFeetDriven()).withSize().withPosition();
-    drivetrainShuffleBoardTab.add("Drivetrain Right Feet Driven", getRightFeetDriven()).withSize().withPosition();
-    drivetrainShuffleBoardTab.add("Drivetrain Average Feet Driven", getAverageFeetDriven()).withSize().withPosition();
+  // Intake Layouts
+  private ShuffleboardLayout intakeBooleansLayout;
+  {
 
-    //Feet Per Second
-    drivetrainShuffleBoardTab.add("Drivetrain Left Feet Per Second", getLeftFeetDriven()).withSize().withPosition();
-    drivetrainShuffleBoardTab.add("Drivetrain Right Feet Per Second", getRightFeetPerSecond()).withSize().withPosition();
-    drivetrainShuffleBoardTab.add("Drivetrain Average Feet Per Second", getAverageFeetPerSecond()).withSize().withPosition();
+    climberBooleanLayout = climberShuffleBoardTab.getLayout("Booleans", BuiltInLayouts.kList).withSize(8, 1)
+        .withPosition(0, 0);
+    climberOtherLayout = climberShuffleBoardTab.getLayout("Other", BuiltInLayouts.kList).withSize(6, 2).withPosition(0,
+        2);
+    // Drivetrain Layouts
+    drivetrainEncodersLayout = drivetrainShuffleBoardTab.getLayout("Encoders", BuiltInLayouts.kList).withSize(3, 3)
+        .withPosition(0, 0);
+    drivetrainMotionProfileLayout = drivetrainShuffleBoardTab.getLayout("Booleans", BuiltInLayouts.kList).withSize(1, 1)
+        .withPosition(4, 0);
+    drivetrainMpoLayout = drivetrainShuffleBoardTab.getLayout("MPO", BuiltInLayouts.kList).withSize(4, 1)
+        .withPosition(5, 0);
+    drivetrainFtDrivenLayout = drivetrainShuffleBoardTab.getLayout("Ft Driven", BuiltInLayouts.kList).withSize(1, 4)
+        .withPosition(4, 1);
+    drivetrainFtPerSecondLayout = drivetrainShuffleBoardTab.getLayout("Ft/Second", BuiltInLayouts.kList).withSize(1, 4)
+        .withPosition(5, 1);
+    drivetrainClosedLoopErrorLayout = drivetrainShuffleBoardTab.getLayout("Closed Loop Error", BuiltInLayouts.kList)
+        .withSize(1, 4).withPosition(6, 0);
 
-    //Encoder Counts Per 100ms
-    drivetrainShuffleBoardTab.add("Drivetrain Left Velocity", getLeftVelocity()).withSize().withPosition();
-    drivetrainShuffleBoardTab.add("Drivetrain Right Velocity", getRightVelocity()).withSize().withPosition();
-    drivetrainShuffleBoardTab.add("Drivetrain Average Velocity", getAverageVelocity()).withSize().withPosition();
+    // Intake Layouts
+    intakeBooleansLayout = intakeShuffleBoardTab.getLayout("Booleans", BuiltInLayouts.kList).withSize(2, 4)
+        .withPosition(0, 0);
 
-    //Closed Loop Error 
-    drivetrainShuffleBoardTab.add("Drivtrain Left Closed Loop Error Inches", getLeftClosedLoopErrorInches()).withSize().withPosition();
-    drivetrainShuffleBoardTab.add("Drivetrain Right Closed Loop Error Inches", getRightClosedLoopErrorInches()).withSize().withPosition();
-    drivetrainShuffleBoardTab.add("Drivetrain Average Closed Loop Error Inches", getAverageClosedLoopErrorInches()).withSize().withPosition();
+    // Tabs get named here :)
+    climberShuffleBoardTab = Shuffleboard.getTab("Climber");
+    drivetrainShuffleBoardTab = Shuffleboard.getTab("Drivetrain");
+    intakeShuffleBoardTab = Shuffleboard.getTab("Intake");
+    turretShuffleboardTab = Shuffleboard.getTab("Turret");
 
-  //Intake Subsystem 
-    intakeShuffleBoardTab.add("Intake Motor", getIntakeMotorCount()).withSize().withPosition();
-    intakeShuffleBoardTab.add("Intake Motor Percent Output", intakeMotor.getMotorOutputPercent()).withSize().withPosition();
-    intakeShuffleBoardTab.add("Intake Solenoid", isIntakeDeployed()).withSize().withPosition();
-    intakeShuffleBoardTab.add("Is Alliance Blue", isAllianceBlue()).withSize().withPosition();
+  }
 
-  //NavX Subsystem 
-    navXShuffleBoardTab.add("is navX connected", navX.isConnected()).withSize().withPosition();
-    navXShuffleBoardTab.add("navx yaw", navx.getYaw());
+  // The new ShuffleBoard Widgets
 
-  //Shooter Subsystem
-    //shooterShuffleBoardTab.add("Shooter")
+  // Boolean Widget ints
+  private int BooleanWidgetWidth;
+  private int BooleanWidgetHeight;
+  private int WiderBooleanWidgetWidth;
 
-  //Transfer Subsystem
-    transferShuffleboardTab.add("Is Top Ball Collected", isTopBallCollected()).withSize().withPosition();
-    transferShuffleboardTab.add("Is Bottom Ball Collected", isBottomBallCollected()).withSize().withPosition();
-    transferShuffleboardTab.add("Top Belt Motor Speed", topBeltMotor.getMotorOutputPercent()).withSize().withPosition();
-    transferShuffleboardTab.add("Bottom Belt Motor Speed", bottomBeltMotor.getMotorOutputPercent()).withSize().withPosition();
-    transferShuffleboardTab.add("Entrance Belt Motor Speed", entranceBeltMotor>getMotorOutputPercent()).withSize().withPosition();
+  // Climber Widget ints
+  private int ClimberNumWidgetWidth;
+  private int ClimberNumWidgetHeight;
 
-  //Turret Subsytem 
-    turretShuffleboardTab.add("Turret Encoder", getTurretMotorEncoderCounts()).withSize().withPosition();
-    turretShuffleboardTab.add("Turret Angle", getTurretAngle()).withSize().withPosition();
-    turretShuffleboardTab.add("Turret Closed Loop Error", getTurretClosedLoopErrorDegrees()).withSize().withPosition();
-    turretShuffleboardTab.add("Turret Motor Speed", turretMotor.getMotorOutputPercent()).withSize().withPosition();
+  // Drivetrain Widget ints
 
-  //Vison Subsystem 
-     visionShuffleboardTab.add("Limelight Has Target", limelight.hasTarget()).withSize().withPosition();
-     visionShuffleboardTab.add("Limelight X Error", limelight.getOffsetX()).withSize().withPosition();
-     visionShuffleboardTab.add("Limelight Y Error", limelight.getOffsetY()).withSize().withPosition();
-     visionShuffleboardTab.add("Limelight Target Area", limelight.getTargetedArea()).withSize().withPosition();
-     visionShuffleboardTab.add("Limelight Ideal Upper Hub RPM", getIdealUpperHubRPM()).withSize().withPosition();
-     visionShuffleboardTab.add("Limelight Ideal Lower Hub RPM", getIdealLowerHubRPM()).withSize().withPosition();
+  // Encoders
+  private int EncodersWidgetWidth;
+  private int EncodersWidgetHeight;
+
+  // MPO
+  private int MotorPercentOutputWidgetWidth;
+  private int MotorPercentOutputWidgetHeight;
+
+  // Feet Driven
+  private int FtDrivenWidgetWidth;
+  private int FtDrivenWidgetHeight;
+
+  // Feet/Second
+  private int FtPerSecondWidgetWidth;
+  private int FtPerSecondWidgetHeight;
+
+  // Velocity
+  private int VelocityWidgetWidth;
+  private int VelocityWidgetHeight;
+
+  // Closed Loop Error
+  private int ClosedLoopErrorWidgetWidth;
+  private int ClosedLoopErrorWidgetHeight;
+
+  // Intake
+  private int IntakeMotorCountWidgetWidth;
+  // Turret
+  private int TurretWidgetWidth;
+  private int TurretWidgetHeight;
+
+  // Vision
+  private int VisionWidgetWidth;
+  private int VisionWidgetHeight;
+  {
+
+    // Widget Width
+    BooleanWidgetWidth = 2;
+    WiderBooleanWidgetWidth = 3;
+    ClimberNumWidgetWidth = 3;
+    EncodersWidgetWidth = 2;
+    MotorPercentOutputWidgetWidth = 1;
+    FtDrivenWidgetWidth = 1;
+    FtPerSecondWidgetWidth = 1;
+    VelocityWidgetWidth = 1;
+    ClosedLoopErrorWidgetWidth = 1;
+    IntakeMotorCountWidgetWidth = 2;
+    TurretWidgetWidth = 2;
+    VisionWidgetWidth = 3;
+
+    // Widget Height
+    BooleanWidgetHeight = 1;
+    ClimberNumWidgetHeight = 2;
+    EncodersWidgetHeight = 1;
+    MotorPercentOutputWidgetHeight = 1;
+    FtDrivenWidgetHeight = 1;
+    FtPerSecondWidgetHeight = 1;
+    VelocityWidgetHeight = 1;
+    ClosedLoopErrorWidgetHeight = 1;
+    TurretWidgetHeight = 1;
+    VisionWidgetHeight = 1;
+
+    // Climber Subsystem
+    // Booleans
+    climberBooleanLayout
+        .add("Is Climber Error Acceptable", RobotContainer.sub_climber.isClimberClosedLoopErrorAcceptable())
+        .withSize(BooleanWidgetWidth, BooleanWidgetHeight);
+    climberBooleanLayout.add("Is Climber Angled", RobotContainer.sub_climber.isClimberAngled())
+        .withSize(BooleanWidgetWidth, BooleanWidgetHeight);
+    climberBooleanLayout.add("Is Hook Deployed", RobotContainer.sub_climber.isHookDeployed())
+        .withSize(BooleanWidgetWidth, BooleanWidgetHeight);
+    climberBooleanLayout.add("Is Climber At Bottom", RobotContainer.sub_climber.isClimberAtBottom())
+        .withSize(BooleanWidgetWidth, BooleanWidgetHeight);
+
+    // Other
+    climberOtherLayout.add("Climber Encoder Counts", RobotContainer.sub_climber.getClimberEncoderCount())
+        .withSize(ClimberNumWidgetWidth, ClimberNumWidgetHeight);
+    climberOtherLayout.add("Climber Closed Loop Error", RobotContainer.sub_climber.getClimberClosedLoopError())
+        .withSize(ClimberNumWidgetWidth, ClimberNumWidgetHeight);
+
+    // Drivetrain Subsystem
+
+    // Encoder Counts
+    drivetrainEncodersLayout.add("Drivetrain Left Encoder", RobotContainer.sub_drivetrain.getLeftEncoderCount())
+        .withSize(EncodersWidgetWidth, EncodersWidgetHeight);
+    drivetrainEncodersLayout.add("Drivetrain Right Encoder", RobotContainer.sub_drivetrain.getRightEncoderCount())
+        .withSize(EncodersWidgetWidth, EncodersWidgetHeight);
+    drivetrainEncodersLayout.add("Drivetrain Average Encoder", RobotContainer.sub_drivetrain.getAverageEncoderCount())
+        .withSize(EncodersWidgetWidth, EncodersWidgetHeight);
+
+    // Motion Profile
+    // Motion Profile Booleans
+    drivetrainMotionProfileLayout
+        .add("Is Drivetrain Motion Profile Finished", RobotContainer.sub_drivetrain.isMotionProfileFinished())
+        .withSize(BooleanWidgetWidth, BooleanWidgetHeight);
+
+    // Motor Percent Output (MPO)
+    drivetrainMpoLayout
+        .add("Drivetrain Left Lead Motor Speed", RobotContainer.sub_drivetrain.leftLeadMotor.getMotorOutputPercent())
+        .withSize(MotorPercentOutputWidgetWidth, MotorPercentOutputWidgetHeight);
+    drivetrainMpoLayout
+        .add("Drivetrain Right Lead Motor Speed", RobotContainer.sub_drivetrain.rightLeadMotor.getMotorOutputPercent())
+        .withSize(MotorPercentOutputWidgetWidth, MotorPercentOutputWidgetHeight);
+    drivetrainMpoLayout
+        .add("Drivetrain Left Follow Motor Speed",
+            RobotContainer.sub_drivetrain.leftFollowMotor.getMotorOutputPercent())
+        .withSize(MotorPercentOutputWidgetWidth, MotorPercentOutputWidgetHeight);
+    drivetrainMpoLayout
+        .add("Drivetrain Right Follow Motor Speed",
+            RobotContainer.sub_drivetrain.rightFollowMotor.getMotorOutputPercent())
+        .withSize(MotorPercentOutputWidgetWidth, MotorPercentOutputWidgetHeight);
+
+    // Feet Driven
+    drivetrainFtDrivenLayout.add("Drivetrain Left Feet Driven", RobotContainer.sub_drivetrain.getLeftFeetDriven())
+        .withSize(FtDrivenWidgetWidth, FtDrivenWidgetHeight);
+    drivetrainFtDrivenLayout.add("Drivetrain Right Feet Driven", RobotContainer.sub_drivetrain.getRightFeetDriven())
+        .withSize(FtDrivenWidgetWidth, FtDrivenWidgetHeight);
+    drivetrainFtDrivenLayout.add("Drivetrain Average Feet Driven", RobotContainer.sub_drivetrain.getAverageFeetDriven())
+        .withSize(FtDrivenWidgetWidth, FtDrivenWidgetHeight);
+
+    // Feet Per Second
+    drivetrainFtPerSecondLayout
+        .add("Drivetrain Left Feet Per Second", RobotContainer.sub_drivetrain.getLeftFeetDriven())
+        .withSize(FtPerSecondWidgetWidth, FtPerSecondWidgetHeight);
+    drivetrainFtPerSecondLayout
+        .add("Drivetrain Right Feet Per Second", RobotContainer.sub_drivetrain.getRightFeetPerSecond())
+        .withSize(FtPerSecondWidgetWidth, FtPerSecondWidgetHeight);
+    drivetrainFtPerSecondLayout
+        .add("Drivetrain Average Feet Per Second", RobotContainer.sub_drivetrain.getAverageFeetPerSecond())
+        .withSize(FtPerSecondWidgetWidth, FtPerSecondWidgetHeight);
+
+    // Encoder Counts Per 100ms
+    drivetrainVelocityLayout.add("Drivetrain Left Velocity", RobotContainer.sub_drivetrain.getLeftVelocity())
+        .withSize(VelocityWidgetWidth, VelocityWidgetHeight);
+    drivetrainVelocityLayout.add("Drivetrain Right Velocity", RobotContainer.sub_drivetrain.getRightVelocity())
+        .withSize(VelocityWidgetWidth, VelocityWidgetHeight);
+    drivetrainVelocityLayout.add("Drivetrain Average Velocity", RobotContainer.sub_drivetrain.getAverageVelocity())
+        .withSize(VelocityWidgetWidth, VelocityWidgetHeight);
+
+    // Closed Loop Error
+    drivetrainClosedLoopErrorLayout
+        .add("Drivtrain Left Closed Loop Error Inches", RobotContainer.sub_drivetrain.getLeftClosedLoopErrorInches())
+        .withSize(ClosedLoopErrorWidgetWidth, ClosedLoopErrorWidgetHeight);
+    drivetrainClosedLoopErrorLayout
+        .add("Drivetrain Right Closed Loop Error Inches", RobotContainer.sub_drivetrain.getRightClosedLoopErrorInches())
+        .withSize(ClosedLoopErrorWidgetWidth, ClosedLoopErrorWidgetHeight);
+    drivetrainClosedLoopErrorLayout
+        .add("Drivetrain Average Closed Loop Error Inches",
+            RobotContainer.sub_drivetrain.getAverageClosedLoopErrorInches())
+        .withSize(ClosedLoopErrorWidgetWidth, ClosedLoopErrorWidgetHeight);
+
+    // Intake Subsystem
+    intakeShuffleBoardTab.add("Intake Motor", RobotContainer.sub_intake.getIntakeMotorCount())
+        .withSize(IntakeMotorCountWidgetWidth, MotorPercentOutputWidgetHeight).withPosition(0, 0);
+    intakeBooleansLayout.add("Intake Solenoid", RobotContainer.sub_intake.isIntakeDeployed())
+        .withSize(BooleanWidgetWidth, BooleanWidgetHeight);
+    intakeBooleansLayout.add("Is Alliance Blue", RobotContainer.sub_intake.isAllianceBlue())
+        .withSize(BooleanWidgetWidth, BooleanWidgetHeight);
+
+    // Shooter Subsystem
+    // shooterShuffleBoardTab.add("Shooter")
+
+    // Transfer Subsystem
+    transferShuffleboardTab.add("Is Top Ball Collected", RobotContainer.sub_transfer.isTopBallCollected())
+        .withSize(WiderBooleanWidgetWidth, BooleanWidgetHeight).withPosition(0, 0);
+    transferShuffleboardTab.add("Is Bottom Ball Collected", RobotContainer.sub_transfer.isBottomBallCollected())
+        .withSize(WiderBooleanWidgetWidth, BooleanWidgetHeight).withPosition(0, 2);
+
+    // Turret Subsystem
+    turretShuffleboardTab.add("Turret Encoder", RobotContainer.sub_turret.getTurretMotorEncoderCounts())
+        .withSize(TurretWidgetWidth, TurretWidgetHeight).withPosition(0, 0);
+    turretShuffleboardTab.add("Turret Angle", RobotContainer.sub_turret.getTurretAngle())
+        .withSize(TurretWidgetWidth, TurretWidgetHeight).withPosition(2, 0);
+    turretShuffleboardTab.add("Turret Closed Loop Error", RobotContainer.sub_turret.getTurretClosedLoopErrorDegrees())
+        .withSize(TurretWidgetWidth, TurretWidgetHeight).withPosition(4, 0);
+
+    // Vison Subsystem
+    visionShuffleboardTab.add("Limelight Has Target", RobotContainer.sub_vision.limelight.hasTarget())
+        .withSize(VisionWidgetWidth, VisionWidgetHeight).withPosition(0, 0);
+    visionShuffleboardTab.add("Limelight X Error", RobotContainer.sub_vision.limelight.getOffsetX())
+        .withSize(VisionWidgetWidth, VisionWidgetHeight).withPosition(1, 0);
+    visionShuffleboardTab.add("Limelight Y Error", RobotContainer.sub_vision.limelight.getOffsetY())
+        .withSize(VisionWidgetWidth, VisionWidgetHeight).withPosition(2, 0);
+    visionShuffleboardTab.add("Limelight Ideal Lower Hub RPM", RobotContainer.sub_vision.getIdealLowerHubRPM())
+        .withSize(VisionWidgetWidth, VisionWidgetHeight).withPosition(3, 0);
 
   }
 }

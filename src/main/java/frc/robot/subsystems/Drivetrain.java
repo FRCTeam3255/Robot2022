@@ -23,10 +23,10 @@ import frc.robot.RobotPreferences.*;
 public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
   // Creates Variables for Drivetrain
-  private TalonFX leftLeadMotor;
-  private TalonFX rightLeadMotor;
-  private TalonFX leftFollowMotor;
-  private TalonFX rightFollowMotor;
+  public TalonFX leftLeadMotor;
+  public TalonFX rightLeadMotor;
+  public TalonFX leftFollowMotor;
+  public TalonFX rightFollowMotor;
 
   private TalonFXConfiguration config;
 
@@ -238,5 +238,4 @@ public class Drivetrain extends SubsystemBase {
     rightLeadMotor.setNeutralMode(NeutralMode.Coast);
   }
 
-  }
 }

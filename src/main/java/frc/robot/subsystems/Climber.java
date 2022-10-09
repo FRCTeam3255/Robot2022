@@ -128,5 +128,4 @@ public class Climber extends SubsystemBase {
     return Math.abs(getClimberClosedLoopError()) < ClimberPrefs.climberAcceptableClosedLoopError.getValue();
   }
 
-  }
 }

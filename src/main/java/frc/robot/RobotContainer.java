@@ -49,15 +49,15 @@ public class RobotContainer {
       RobotMap.ControllerMap.SWITCH_BOARD);
 
   // Subsystems
-  private final Drivetrain sub_drivetrain = new Drivetrain();
-  private final Hood sub_hood = new Hood();
-  private final Turret sub_turret = new Turret();
-  private final Intake sub_intake = new Intake();
-  private final Shooter sub_shooter = new Shooter();
-  public final Climber sub_climber = new Climber();
-  private final Transfer sub_transfer = new Transfer();
-  private final NavX sub_navX = new NavX();
-  private final Vision sub_vision = new Vision();
+  public static final Drivetrain sub_drivetrain = new Drivetrain();
+  public static final Hood sub_hood = new Hood();
+  public static final Turret sub_turret = new Turret();
+  public static final Intake sub_intake = new Intake();
+  public static final Shooter sub_shooter = new Shooter();
+  public static final Climber sub_climber = new Climber();
+  public static final Transfer sub_transfer = new Transfer();
+  public static final NavX sub_navX = new NavX();
+  public static final Vision sub_vision = new Vision();
 
   // Drivetrain Commands
   private final Drive com_drive = new Drive(sub_drivetrain);
