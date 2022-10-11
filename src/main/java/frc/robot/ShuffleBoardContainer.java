@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.shuffleboard.*;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import frc.robot.commands.*;
 
 //ShuffleBoard should act similar to RobotContainer but for ShuffleBoard
 //So basically the values of ShuffleBoard Widgets will be declared here
@@ -104,13 +105,13 @@ public class ShuffleBoardContainer {
   private int ClosedLoopErrorWidgetWidth;
   private int ClosedLoopErrorWidgetHeight;
 
-  // Intake
+  // Intake ints
   private int IntakeMotorCountWidgetWidth;
-  // Turret
+  // Turret ints
   private int TurretWidgetWidth;
   private int TurretWidgetHeight;
 
-  // Vision
+  // Vision ints
   private int VisionWidgetWidth;
   private int VisionWidgetHeight;
   {
@@ -153,11 +154,14 @@ public class ShuffleBoardContainer {
     climberBooleanLayout.add("Is Climber At Bottom", RobotContainer.sub_climber.isClimberAtBottom())
         .withSize(BooleanWidgetWidth, BooleanWidgetHeight);
 
-    // Other
+    // Other Climber
     climberOtherLayout.add("Climber Encoder Counts", RobotContainer.sub_climber.getClimberEncoderCount())
         .withSize(ClimberNumWidgetWidth, ClimberNumWidgetHeight);
     climberOtherLayout.add("Climber Closed Loop Error", RobotContainer.sub_climber.getClimberClosedLoopError())
         .withSize(ClimberNumWidgetWidth, ClimberNumWidgetHeight);
+
+    // jfhkjds
+    // climberOtherLayout.add
 
     // Drivetrain Subsystem
 
