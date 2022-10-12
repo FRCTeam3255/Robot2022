@@ -24,11 +24,13 @@ import frc.robot.commands.Intake.*;
 import frc.robot.commands.Shooter.*;
 import frc.robot.commands.Transfer.*;
 import frc.robot.RobotPreferences.AutoPrefs;
+import frc.robot.RobotPreferences.DrivetrainPrefs;
 import frc.robot.RobotPreferences.HoodPrefs;
 import frc.robot.RobotPreferences.ShooterPrefs;
 import frc.robot.RobotPreferences.TurretPrefs;
 import frc.robot.RobotPreferences.AutoPrefs.ThreeCargo;
 import frc.robot.commands.ConfigureSubsystems;
+import frc.robot.commands.Autonomous.OpenLoopTwoBall;
 import frc.robot.commands.Autonomous.New.ThreeCargoA;
 import frc.robot.commands.Autonomous.New.ThreeCargoB;
 import frc.robot.commands.Climber.*;
@@ -310,7 +312,19 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
 
-    return new ThreeCargoB(sub_drivetrain, sub_shooter, sub_turret, sub_hood, sub_transfer, sub_intake, sub_climber);
+    if (switchBoard.btn_1.get()) {
+
+      return new ThreeCargoA(sub_drivetrain, sub_shooter, sub_turret, sub_hood, sub_transfer, sub_intake, sub_climber);
+
+    } else {
+
+      return new InstantCommand(
+          () -> sub_drivetrain.arcadeDrive(0.3, 0),
+          sub_drivetrain)
+              .until(() -> sub_drivetrain.getAverageEncoderCount() > DrivetrainPrefs.driveOpenLoopCounts.getValue())
+              .andThen(() -> sub_drivetrain.arcadeDrive(0, 0));
+
+    }
 
   }
 }
