@@ -153,7 +153,6 @@ public class RobotContainer {
 
   // Climber Commands
   // private final Climb com_climb = new Climb(sub_climber);
-  private final MagicClimb com_magicClimb = new MagicClimb(sub_climber);
   // private final ResetClimber com_resetClimber = new ResetClimber(sub_climber);
   private final InstantCommand com_pivotClimberPerpendicular = new InstantCommand(sub_climber::pivotPerpendicular);
   private final InstantCommand com_pivotClimberAngled = new InstantCommand(sub_climber::pivotAngled);
@@ -171,7 +170,7 @@ public class RobotContainer {
     configureButtonBindings();
     configureDashboardButtons();
     // sub_drivetrain.setDefaultCommand(com_drive);
-    sub_drivetrain.setDefaultCommand(new ClosedLoopDrive(sub_drivetrain));
+    sub_drivetrain.setDefaultCommand(new Drive(sub_drivetrain));
     sub_climber.setDefaultCommand(com_runSpool);
 
     com_setUpperHubGoal.initialize(); // upper hub needs to be set as goal
@@ -195,7 +194,6 @@ public class RobotContainer {
     DriverStick.btn_B.whenPressed(com_pivotClimberPerpendicular);
     DriverStick.btn_X.whenPressed(com_hookClimberDown);
     DriverStick.btn_Y.whenPressed(com_hookClimberUp);
-    DriverStick.btn_Start.whileHeld(com_magicClimb);
     DriverStick.btn_Back.whenPressed(com_prepClimb);
 
     // DriverStick.btn_Y.whileHeld(com_highHub);
@@ -211,12 +209,8 @@ public class RobotContainer {
     coDriverStick.btn_LBump.whileHeld(com_moveTurret);
 
     // Limelight Commands
-
-    coDriverStick.btn_A.whileHeld(com_visionAimTurret);
-    coDriverStick.btn_A.whenPressed(new InstantCommand(sub_hood::hoodMediumTilt, sub_hood));
-    
     switchBoard.btn_9.whileHeld(com_visionAimTurret);
-    
+
     coDriverStick.btn_B.whileHeld(com_reverseTransfer);
     // Just Setting Angle (X Axis)
     coDriverStick.btn_X.whileHeld(com_visionSpinTurret);
