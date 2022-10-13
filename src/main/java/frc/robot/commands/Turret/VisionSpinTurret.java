@@ -5,6 +5,8 @@
 package frc.robot.commands.Turret;
 
 import frc.robot.RobotPreferences;
+import frc.robot.RobotPreferences.TurretPrefs;
+import frc.robot.RobotPreferences.VisionPrefs;
 import frc.robot.subsystems.NavX;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
@@ -48,30 +50,41 @@ public class VisionSpinTurret extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    target = -vision.limelight.getOffsetX() + turret.getTurretAngle();
-    changeInNavx = navX.navx.getYaw() - oldNavXPosition;
-    newTargetPosition = oldTargetPosition + changeInNavx;
-    if (vision.limelight.hasTarget()) {
-      if (vision.isInLimelightDeadzone()) {
-        if (turret.getTurretVelocity() > 0) {
-          turret.setTurretAngle(turret.getTurretAngle() + 5);
-        } else {
-          turret.setTurretAngle(turret.getTurretAngle() - 5);
-        }
+    if (vision.isInLimelightDeadzone()) {
+      if (newTargetPosition < VisionPrefs.climberLeftDeadzoneEnd.getValue()
+          && newTargetPosition > VisionPrefs.climberRightDeadzoneStart.getValue()) {
+        // go to your target?? maybe the old one
+        turret.setTurretAngle(newTargetPosition);
       } else {
-        turret.setTurretAngle(target);
-        oldNavXPosition = navX.navx.getYaw();
-        oldTargetPosition = target;
+        // you either don't have a target OR its behind you
+        turret.setTurretAngle(80);
       }
     } else {
-      if (newTargetPosition < RobotPreferences.TurretPrefs.turretMinAngleDegrees.getValue()) {
-        oppositePosition = RobotPreferences.TurretPrefs.turretMinAngleDegrees.getValue() - newTargetPosition;
-        turret.setTurretAngle(RobotPreferences.TurretPrefs.turretMaxAngleDegrees.getValue() - oppositePosition);
-      } else if (newTargetPosition > RobotPreferences.TurretPrefs.turretMaxAngleDegrees.getValue()) {
-        oppositePosition = newTargetPosition - RobotPreferences.TurretPrefs.turretMaxAngleDegrees.getValue();
-        turret.setTurretAngle(RobotPreferences.TurretPrefs.turretMinAngleDegrees.getValue() + oppositePosition);
+      target = -vision.limelight.getOffsetX() + turret.getTurretAngle();
+      changeInNavx = navX.navx.getYaw() - oldNavXPosition;
+      newTargetPosition = oldTargetPosition + changeInNavx;
+      if (vision.limelight.hasTarget()) {
+        if (vision.isInLimelightDeadzone()) {
+          if (turret.getTurretVelocity() > 0) {
+            turret.setTurretAngle(turret.getTurretAngle() + 5);
+          } else {
+            turret.setTurretAngle(turret.getTurretAngle() - 5);
+          }
+        } else {
+          turret.setTurretAngle(target);
+          oldNavXPosition = navX.navx.getYaw();
+          oldTargetPosition = target;
+        }
       } else {
-        turret.setTurretAngle(newTargetPosition);
+        if (newTargetPosition < TurretPrefs.turretMinAngleDegrees.getValue()) {
+          oppositePosition = TurretPrefs.turretMinAngleDegrees.getValue() - newTargetPosition;
+          turret.setTurretAngle(TurretPrefs.turretMaxAngleDegrees.getValue() - oppositePosition);
+        } else if (newTargetPosition > TurretPrefs.turretMaxAngleDegrees.getValue()) {
+          oppositePosition = newTargetPosition - TurretPrefs.turretMaxAngleDegrees.getValue();
+          turret.setTurretAngle(TurretPrefs.turretMinAngleDegrees.getValue() + oppositePosition);
+        } else {
+          turret.setTurretAngle(newTargetPosition);
+        }
       }
     }
   }

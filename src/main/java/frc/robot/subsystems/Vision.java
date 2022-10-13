@@ -71,15 +71,14 @@ public class Vision extends SubsystemBase {
   }
 
   public boolean isInLimelightDeadzone() {
-    if (turret.getTurretAngle() > VisionPrefs.climberLeftDeadzoneStart.getValue()
-        && turret.getTurretAngle() < VisionPrefs.climberLeftDeadzoneEnd.getValue()) {
+    if (turret.getTurretAngle() < VisionPrefs.climberLeftDeadzoneStart.getValue()
+        && turret.getTurretAngle() > VisionPrefs.climberLeftDeadzoneEnd.getValue()) {
       return true;
     }
     if (turret.getTurretAngle() < VisionPrefs.climberRightDeadzoneStart.getValue()
         && turret.getTurretAngle() > VisionPrefs.climberRightDeadzoneEnd.getValue()) {
       return true;
     }
-
     return false;
   }
 
