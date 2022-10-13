@@ -71,22 +71,12 @@ public class Vision extends SubsystemBase {
   }
 
   public boolean isInLimelightDeadzone() {
-    if (turret.getTurretAngle() > VisionPrefs.hookClimberLeftDeadzoneStart.getValue()
-        && turret.getTurretAngle() < VisionPrefs.hookClimberLeftDeadzoneEnd.getValue()) {
+    if (turret.getTurretAngle() > VisionPrefs.climberLeftDeadzoneStart.getValue()
+        && turret.getTurretAngle() < VisionPrefs.climberLeftDeadzoneEnd.getValue()) {
       return true;
     }
-    if (turret.getTurretAngle() > VisionPrefs.pivotClimberLeftDeadzoneStart.getValue()
-        && turret.getTurretAngle() < VisionPrefs.pivotClimberLeftDeadzoneEnd.getValue()) {
-      return true;
-    }
-
-    if (turret.getTurretAngle() < VisionPrefs.pivotClimberRightDeadzoneStart.getValue()
-        && turret.getTurretAngle() > VisionPrefs.pivotClimberRightDeadzoneEnd.getValue()) {
-      return true;
-    }
-
-    if (turret.getTurretAngle() < VisionPrefs.hookClimberRightDeadzoneStart.getValue()
-        && turret.getTurretAngle() > VisionPrefs.hookClimberRightDeadzoneEnd.getValue()) {
+    if (turret.getTurretAngle() < VisionPrefs.climberRightDeadzoneStart.getValue()
+        && turret.getTurretAngle() > VisionPrefs.climberRightDeadzoneEnd.getValue()) {
       return true;
     }
 
@@ -103,6 +93,7 @@ public class Vision extends SubsystemBase {
     SmartDashboard.putNumber("limelight Ideal Upper Hub RPM", getIdealMediumHoodRPM());
     SmartDashboard.putNumber("limelight Idead Lower Hub RPM", getIdealLowerHubRPM());
     SmartDashboard.putNumber("limelight distance from hub", limelightDistanceFromGoal());
+    SmartDashboard.putBoolean("limelight in deadzone", isInLimelightDeadzone());
 
     if (RobotController.getUserButton()) {
       if (timer > 25) {

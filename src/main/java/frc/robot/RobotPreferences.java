@@ -229,25 +229,15 @@ public final class RobotPreferences {
     public static final SN_DoublePreference limelightMountAngle = new SN_DoublePreference("limelightMountAngle", 35.6);
 
     // TODO: Get deadzone angles (these are inaccurate placeholders)
-    public static final SN_DoublePreference hookClimberLeftDeadzoneStart = new SN_DoublePreference(
-        "hookClimberLeftDeadzoneStart", 40);
-    public static final SN_DoublePreference hookClimberLeftDeadzoneEnd = new SN_DoublePreference(
-        "hookClimberLeftDeadzoneEnd", 50);
+    public static final SN_DoublePreference climberLeftDeadzoneStart = new SN_DoublePreference(
+        "climberLeftDeadzoneStart", 67);
+    public static final SN_DoublePreference climberLeftDeadzoneEnd = new SN_DoublePreference(
+        "climberLeftDeadzoneEnd", -15);
 
-    public static final SN_DoublePreference pivotClimberLeftDeadzoneStart = new SN_DoublePreference(
-        "pivotClimberLeftDeadzoneStart", -5);
-    public static final SN_DoublePreference pivotClimberLeftDeadzoneEnd = new SN_DoublePreference(
-        "pivotClimberLeftDeadzoneEnd", 5);
-
-    public static final SN_DoublePreference pivotClimberRightDeadzoneStart = new SN_DoublePreference(
-        "pivotClimberRightDeadzoneStart", -175);
-    public static final SN_DoublePreference pivotClimberRightDeadzoneEnd = new SN_DoublePreference(
-        "pivotClimberRightDeadzoneEnd", -185);
-
-    public static final SN_DoublePreference hookClimberRightDeadzoneStart = new SN_DoublePreference(
-        "hookClimberRightDeadzoneStart", -220);
-    public static final SN_DoublePreference hookClimberRightDeadzoneEnd = new SN_DoublePreference(
-        "hookClimberRightDeadzoneEnd", -230);
+    public static final SN_DoublePreference climberRightDeadzoneStart = new SN_DoublePreference(
+        "climberRightDeadzoneStart", -220);
+    public static final SN_DoublePreference climberRightDeadzoneEnd = new SN_DoublePreference(
+        "climberRightDeadzoneEnd", -230);
 
   }
 
