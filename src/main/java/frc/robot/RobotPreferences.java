@@ -235,9 +235,9 @@ public final class RobotPreferences {
         "climberLeftDeadzoneEnd", -15);
 
     public static final SN_DoublePreference climberRightDeadzoneStart = new SN_DoublePreference(
-        "climberRightDeadzoneStart", -220);
+        "climberRightDeadzoneStart", -150);
     public static final SN_DoublePreference climberRightDeadzoneEnd = new SN_DoublePreference(
-        "climberRightDeadzoneEnd", -230);
+        "climberRightDeadzoneEnd", -146);
 
   }
 
