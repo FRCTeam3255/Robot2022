@@ -56,13 +56,14 @@ public class ThreeCargoA extends SequentialCommandGroup {
 
         // config for first ball
         parallel(
-            new CollectCargo(intake, transfer).until(() -> transfer.isTopBallCollected()),
+            new CollectCargo(intake, transfer)
+                .until(() -> transfer.isTopBallCollected() && transfer.isBottomBallCollected()),
             new SetShooterRPM(shooter, ThreeCargo.shooterRPM1_6), // set shooter
             new SetTurretAngle(turret, ThreeCargo.turretAngle1_6).withTimeout(.5), // set turret
             new InstantCommand(() -> hood.setHood(ThreeCargo.hoodLevel1_6.getValue()))), // set hood
 
         // shoot first ball
-        new PushCargoSimple(shooter, transfer).withTimeout(1),
+        new PushCargoSimple(shooter, transfer).withTimeout(3),
 
         // drive and configure shooter on the way
         parallel(
