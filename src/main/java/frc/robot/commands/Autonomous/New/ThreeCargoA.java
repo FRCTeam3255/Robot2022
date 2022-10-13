@@ -63,7 +63,7 @@ public class ThreeCargoA extends SequentialCommandGroup {
             new InstantCommand(() -> hood.setHood(ThreeCargo.hoodLevel1_6.getValue()))), // set hood
 
         // shoot first ball
-        new PushCargoSimple(shooter, transfer).withTimeout(1),
+        new PushCargoSimple(shooter, transfer).withTimeout(3),
 
         // drive and configure shooter on the way
         parallel(
