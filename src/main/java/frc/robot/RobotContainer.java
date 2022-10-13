@@ -30,6 +30,7 @@ import frc.robot.RobotPreferences.ShooterPrefs;
 import frc.robot.RobotPreferences.TurretPrefs;
 import frc.robot.RobotPreferences.AutoPrefs.ThreeCargo;
 import frc.robot.commands.ConfigureSubsystems;
+import frc.robot.commands.Autonomous.DriveDistanceOpenLoop;
 import frc.robot.commands.Autonomous.OpenLoopTwoBall;
 import frc.robot.commands.Autonomous.New.ThreeCargoA;
 import frc.robot.commands.Autonomous.New.ThreeCargoB;
@@ -318,13 +319,9 @@ public class RobotContainer {
 
     } else {
 
-      return new InstantCommand(
-          () -> sub_drivetrain.arcadeDrive(0.3, 0),
-          sub_drivetrain)
-              .until(() -> sub_drivetrain.getAverageEncoderCount() > DrivetrainPrefs.driveOpenLoopCounts.getValue())
-              .andThen(() -> sub_drivetrain.arcadeDrive(0, 0));
+      return new DriveDistanceOpenLoop(sub_drivetrain, AutoPrefs.OpenLoopTwoBall.auto4dist1,
+          TurretPrefs.turretOpenLoopSpeed);
 
     }
-
   }
 }
