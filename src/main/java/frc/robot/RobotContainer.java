@@ -208,7 +208,6 @@ public class RobotContainer {
     coDriverStick.btn_LBump.whileHeld(com_moveTurret);
 
     // Limelight Commands
-    switchBoard.btn_9.whileHeld(com_visionAimTurret);
     coDriverStick.btn_B.whileHeld(com_reverseTransfer);
     // Just Setting Angle (X Axis)
     coDriverStick.btn_X.whileHeld(com_visionSpinTurret);

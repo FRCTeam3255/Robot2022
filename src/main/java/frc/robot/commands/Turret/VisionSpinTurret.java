@@ -53,28 +53,21 @@ public class VisionSpinTurret extends CommandBase {
     if (vision.isInLimelightDeadzone()) {
       if (newTargetPosition < VisionPrefs.climberLeftDeadzoneEnd.getValue()
           && newTargetPosition > VisionPrefs.climberRightDeadzoneStart.getValue()) {
-        // go to your target?? maybe the old one
+        // your target is safe in the front of the robot
         turret.setTurretAngle(newTargetPosition);
       } else {
-        // you either don't have a target OR its behind you
-        turret.setTurretAngle(80);
+        // you either don't have a target OR its behind you OR its in your deadzone
+        // (then you just manually aim)
+        turret.setTurretAngle(VisionPrefs.deadzoneTargetAngle.getValue());
       }
     } else {
       target = -vision.limelight.getOffsetX() + turret.getTurretAngle();
       changeInNavx = navX.navx.getYaw() - oldNavXPosition;
       newTargetPosition = oldTargetPosition + changeInNavx;
       if (vision.limelight.hasTarget()) {
-        if (vision.isInLimelightDeadzone()) {
-          if (turret.getTurretVelocity() > 0) {
-            turret.setTurretAngle(turret.getTurretAngle() + 5);
-          } else {
-            turret.setTurretAngle(turret.getTurretAngle() - 5);
-          }
-        } else {
-          turret.setTurretAngle(target);
-          oldNavXPosition = navX.navx.getYaw();
-          oldTargetPosition = target;
-        }
+        turret.setTurretAngle(target);
+        oldNavXPosition = navX.navx.getYaw();
+        oldTargetPosition = target;
       } else {
         if (newTargetPosition < TurretPrefs.turretMinAngleDegrees.getValue()) {
           oppositePosition = TurretPrefs.turretMinAngleDegrees.getValue() - newTargetPosition;
