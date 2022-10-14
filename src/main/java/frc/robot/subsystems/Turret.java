@@ -80,6 +80,10 @@ public class Turret extends SubsystemBase {
     turretMotor.set(ControlMode.PercentOutput, -rotate);
   }
 
+  public double getTurretVelocity() {
+    return turretMotor.getSelectedSensorVelocity();
+  }
+
   // gets the turret angle in degrees
   public double getTurretAngle() {
     return getTurretMotorEncoderCounts() / TurretPrefs.turretEncoderCountsPerDegrees.getValue();

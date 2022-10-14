@@ -12,17 +12,20 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotPreferences.VisionPrefs;
+import frc.robot.RobotContainer;
 
 public class Vision extends SubsystemBase {
 
   public SN_Limelight limelight;
+  public Turret turret;
 
   // timer exists because it would flash on and off cause periodic
   private int timer;
 
   /** Creates a new Vision. */
-  public Vision() {
+  public Vision(Turret sub_turret) {
     limelight = new SN_Limelight();
+    turret = sub_turret;
   }
 
   // public double getIdealUpperHubRPM() {
@@ -83,6 +86,18 @@ public class Vision extends SubsystemBase {
     return calculatedRPM;
   }
 
+  public boolean isInLimelightDeadzone() {
+    if (turret.getTurretAngle() < VisionPrefs.climberLeftDeadzoneStart.getValue()
+        && turret.getTurretAngle() > VisionPrefs.climberLeftDeadzoneEnd.getValue()) {
+      return true;
+    }
+    if (turret.getTurretAngle() < VisionPrefs.climberRightDeadzoneStart.getValue()
+        && turret.getTurretAngle() > VisionPrefs.climberRightDeadzoneEnd.getValue()) {
+      return true;
+    }
+    return false;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -93,6 +108,7 @@ public class Vision extends SubsystemBase {
     SmartDashboard.putNumber("limelight Ideal Upper Hub High Hood RPM", limelightHighDistanceRPM());
     SmartDashboard.putNumber("limelight Idead Lower Hub RPM", getIdealLowerHubRPM());
     SmartDashboard.putNumber("limelight distance from hub", limelightDistanceFromGoal());
+    SmartDashboard.putBoolean("limelight in deadzone", isInLimelightDeadzone());
 
     if (RobotController.getUserButton()) {
       if (timer > 25) {

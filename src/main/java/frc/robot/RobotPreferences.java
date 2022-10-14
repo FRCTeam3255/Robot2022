@@ -250,6 +250,18 @@ public final class RobotPreferences {
         "limelightMountHeight", 42);
     public static final SN_DoublePreference limelightMountAngle = new SN_DoublePreference("limelightMountAngle", 35.6);
 
+    public static final SN_DoublePreference climberLeftDeadzoneStart = new SN_DoublePreference(
+        "climberLeftDeadzoneStart", 72);
+    public static final SN_DoublePreference climberLeftDeadzoneEnd = new SN_DoublePreference(
+        "climberLeftDeadzoneEnd", -25);
+
+    public static final SN_DoublePreference climberRightDeadzoneStart = new SN_DoublePreference(
+        "climberRightDeadzoneStart", -145);
+    public static final SN_DoublePreference climberRightDeadzoneEnd = new SN_DoublePreference(
+        "climberRightDeadzoneEnd", -250);
+
+    public static final SN_DoublePreference deadzoneTargetAngle = new SN_DoublePreference("deadzoneTargetAngle", 90);
+
     // Regression Variables
     public static final SN_DoublePreference lowHoodMaxDistance = new SN_DoublePreference("lowHoodMaxDistance", 50);
     public static final SN_DoublePreference midHoodMaxDistance = new SN_DoublePreference("midHoodMaxDistance", 90);
