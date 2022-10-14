@@ -42,5 +42,9 @@ public class ConfigureSubsystems extends InstantCommand {
     shooter.configure();
     transfer.configure();
     turret.configure();
+
+    System.out.println(
+        "configured all subsystems........................................................................................");
+
   }
 }

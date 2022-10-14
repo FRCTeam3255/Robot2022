@@ -36,15 +36,8 @@ public class Vision extends SubsystemBase {
   // return (a * (x * x)) + (b * x) + c;
   // }
 
-  public double getIdealMediumHoodRPM() {
-    double a = 3338.9172;
-    double b = 0.9929;
-    double x = limelight.getOffsetY();
-    return a * Math.pow(b, x);
-  }
-
   public double getIdealLowerHubRPM() {
-    return /* different regression */ limelight.getOffsetY(); // TODO: find regression
+    return /* different regression */ limelight.getOffsetY(); // we're not doing this
   }
 
   public void turnLimelightOn() {
@@ -64,9 +57,32 @@ public class Vision extends SubsystemBase {
     return limelightDistanceFromGoal;
   }
 
-  public double limelightDistanceRPM() {
-    double limelightDistanceFromGoal = limelightDistanceFromGoal();
-    double calculatedRPM = 0; // TODO: get actual datapoints for this calculation
+  public double limelightLowDistanceRPM() {
+    double x = limelightDistanceFromGoal();
+    double a = VisionPrefs.regLowA.getValue();
+    double b = VisionPrefs.regLowB.getValue();
+
+    double calculatedRPM = a + (b * x);
+    return calculatedRPM;
+  }
+
+  public double limelightMidDistanceRPM() {
+    double x = limelightDistanceFromGoal();
+    double a = VisionPrefs.regMidA.getValue();
+    double b = VisionPrefs.regMidB.getValue();
+    double c = VisionPrefs.regMidC.getValue();
+
+    double calculatedRPM = Math.pow(x, 2) * a + (b * x) + c;
+    return calculatedRPM;
+  }
+
+  public double limelightHighDistanceRPM() {
+    double x = limelightDistanceFromGoal();
+    double a = VisionPrefs.regHighA.getValue();
+    double b = VisionPrefs.regHighB.getValue();
+    double c = VisionPrefs.regHighC.getValue();
+
+    double calculatedRPM = Math.pow(x, 2) * a + (b * x) + c;
     return calculatedRPM;
   }
 
@@ -89,7 +105,7 @@ public class Vision extends SubsystemBase {
     SmartDashboard.putNumber("limelight x error", limelight.getOffsetX());
     SmartDashboard.putNumber("limelight y error", limelight.getOffsetY());
     SmartDashboard.putNumber("limelight target area", limelight.getTargetArea());
-    SmartDashboard.putNumber("limelight Ideal Upper Hub RPM", getIdealMediumHoodRPM());
+    SmartDashboard.putNumber("limelight Ideal Upper Hub High Hood RPM", limelightHighDistanceRPM());
     SmartDashboard.putNumber("limelight Idead Lower Hub RPM", getIdealLowerHubRPM());
     SmartDashboard.putNumber("limelight distance from hub", limelightDistanceFromGoal());
     SmartDashboard.putBoolean("limelight in deadzone", isInLimelightDeadzone());

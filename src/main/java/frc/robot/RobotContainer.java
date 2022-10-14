@@ -9,25 +9,31 @@ import com.frcteam3255.joystick.SN_F310Gamepad;
 import com.frcteam3255.joystick.SN_SwitchboardStick;
 import com.frcteam3255.utils.SN_InstantCommand;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.commands.Drivetrain.*;
 import frc.robot.commands.Turret.*;
 import frc.robot.commands.Vision.SetGoalRPM;
 import frc.robot.commands.Intake.*;
 import frc.robot.commands.Shooter.*;
 import frc.robot.commands.Transfer.*;
-// import frc.robot.RobotPreferences.DrivetrainPrefs;
+import frc.robot.RobotPreferences.AutoPrefs;
+import frc.robot.RobotPreferences.DrivetrainPrefs;
 import frc.robot.RobotPreferences.HoodPrefs;
 import frc.robot.RobotPreferences.ShooterPrefs;
 import frc.robot.RobotPreferences.TurretPrefs;
+import frc.robot.RobotPreferences.AutoPrefs.ThreeCargo;
 import frc.robot.commands.ConfigureSubsystems;
-import frc.robot.commands.Autonomous.AutoThreeCargo;
-// import frc.robot.commands.Autonomous.DriveDistanceOpenLoop;
+import frc.robot.commands.Autonomous.DriveDistanceOpenLoop;
 import frc.robot.commands.Autonomous.OpenLoopTwoBall;
+import frc.robot.commands.Autonomous.New.ThreeCargoA;
+import frc.robot.commands.Autonomous.New.ThreeCargoB;
 import frc.robot.commands.Climber.*;
 import frc.robot.subsystems.*;
 
@@ -61,10 +67,6 @@ public class RobotContainer {
 
   // Drivetrain Commands
   private final Drive com_drive = new Drive(sub_drivetrain);
-  // private final DriveDistanceOpenLoop com_driveOpenLoop = new
-  // DriveDistanceOpenLoop(
-  // sub_drivetrain, DrivetrainPrefs.driveOpenLoopCounts,
-  // DrivetrainPrefs.driveOpenLoopSpeedForward);
 
   // Hood Commands
   private final InstantCommand com_hoodHighTilt = new InstantCommand(sub_hood::hoodHighTilt);
@@ -150,11 +152,10 @@ public class RobotContainer {
   private final DeployIntake com_deployIntake = new DeployIntake(sub_intake);
 
   // Vision Commands
-  private final SetGoalRPM com_setGoalRPM = new SetGoalRPM(sub_shooter, sub_vision);
+  private final SetGoalRPM com_setGoalRPM = new SetGoalRPM(sub_shooter, sub_vision, sub_hood);
 
   // Climber Commands
   // private final Climb com_climb = new Climb(sub_climber);
-  private final MagicClimb com_magicClimb = new MagicClimb(sub_climber);
   // private final ResetClimber com_resetClimber = new ResetClimber(sub_climber);
   private final InstantCommand com_pivotClimberPerpendicular = new InstantCommand(sub_climber::pivotPerpendicular);
   private final InstantCommand com_pivotClimberAngled = new InstantCommand(sub_climber::pivotAngled);
@@ -171,8 +172,10 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     configureDashboardButtons();
-    sub_drivetrain.setDefaultCommand(com_drive);
+    // sub_drivetrain.setDefaultCommand(com_drive);
+    sub_drivetrain.setDefaultCommand(new Drive(sub_drivetrain));
     sub_climber.setDefaultCommand(com_runSpool);
+
     com_setUpperHubGoal.initialize(); // upper hub needs to be set as goal
     com_presetFender.initialize(); // before setting fender as the preset
   }
@@ -184,6 +187,9 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    // TODO: bind this to something on driver or co driver at some point
+    // DriverStick.btn_B.whenPressed(() -> sub_drivetrain.resetOdometry(new
+    // Pose2d(0, 0, new Rotation2d())));
 
     // Driver Stick
 
@@ -191,12 +197,10 @@ public class RobotContainer {
     DriverStick.btn_B.whenPressed(com_pivotClimberPerpendicular);
     DriverStick.btn_X.whenPressed(com_hookClimberDown);
     DriverStick.btn_Y.whenPressed(com_hookClimberUp);
+    DriverStick.btn_Back.whenPressed(com_prepClimb);
 
     // DriverStick.btn_Y.whileHeld(com_highHub);
     // DriverStick.btn_X.whileHeld(com_lowHub);
-
-    DriverStick.btn_Start.whileHeld(com_magicClimb);
-    DriverStick.btn_Back.whenPressed(com_prepClimb);
 
     // coDriver Stick
 
@@ -213,7 +217,6 @@ public class RobotContainer {
     coDriverStick.btn_X.whileHeld(com_visionSpinTurret);
     // Just Setting RPM (Y Axis)
     coDriverStick.btn_Y.whenPressed(com_setGoalRPM);
-    coDriverStick.btn_Y.whenPressed(new InstantCommand(sub_hood::hoodMediumTilt, sub_hood));
 
     coDriverStick.btn_Back.whenPressed(com_retractIntake);
 
@@ -307,13 +310,16 @@ public class RobotContainer {
    */
 
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
+
     if (switchBoard.btn_1.get()) {
-      return new AutoThreeCargo(sub_drivetrain, sub_shooter, sub_turret, sub_hood, sub_transfer, sub_intake,
-          sub_climber);
+
+      return new ThreeCargoA(sub_drivetrain, sub_shooter, sub_turret, sub_hood, sub_transfer, sub_intake, sub_climber);
+
     } else {
-      return new OpenLoopTwoBall(sub_drivetrain, sub_shooter, sub_turret, sub_hood, sub_transfer, sub_intake,
-          sub_climber);
+
+      return new DriveDistanceOpenLoop(sub_drivetrain, AutoPrefs.OpenLoopTwoBall.auto4dist1,
+          TurretPrefs.turretOpenLoopSpeed);
+
     }
   }
 }
