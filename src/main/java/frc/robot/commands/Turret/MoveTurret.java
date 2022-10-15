@@ -31,7 +31,7 @@ public class MoveTurret extends CommandBase {
   @Override
   public void execute() {
 
-    speed = RobotContainer.coDriverStick.getRightStickX();
+    speed = RobotContainer.coDriverStick.getLeftStickX();
 
     // if (speed > 0) {
     // isSpeedPositive = true;
