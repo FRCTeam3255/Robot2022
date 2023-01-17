@@ -12,6 +12,10 @@ import com.frcteam3255.preferences.SN_DoublePreference;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.RobotMap;
@@ -20,6 +24,8 @@ import static frc.robot.RobotPreferences.*;
 
 public class Climber extends SubsystemBase {
 
+  private ShuffleboardTab tab;
+  private ShuffleboardLayout hookPistonLayout;
   /** Creates a new Climber. */
   private TalonFX climbMotor;
   private DigitalInput climberBottomSafetySwitch;
@@ -29,6 +35,9 @@ public class Climber extends SubsystemBase {
   private SN_DoubleSolenoid climberHookPiston;
 
   public Climber() {
+
+    tab = Shuffleboard.getTab("Climber");
+    hookPistonLayout = tab.getLayout("Encoder Counts", BuiltInLayouts.kList).withSize(3, 3).withPosition(2, 2);
 
     climberBottomSafetySwitch = new DigitalInput(ClimberMap.BOTTOM_SAFETY_MAG_SWITCH_DIO);
     climbMotor = new TalonFX(ClimberMap.CLIMBER_MOTOR_CAN);
@@ -128,4 +137,8 @@ public class Climber extends SubsystemBase {
     return Math.abs(getClimberClosedLoopError()) < ClimberPrefs.climberAcceptableClosedLoopError.getValue();
   }
 
+  @Override
+  public void periodic() {
+    hookPistonLayout.add("Climber Piston", climberHookPiston).withSize(1, 1).withPosition(2, 2);
+  }
 }

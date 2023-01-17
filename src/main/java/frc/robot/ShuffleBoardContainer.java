@@ -1,11 +1,10 @@
 //ShuffleBoardContainer.java
 package frc.robot;
 
-import edu.wpi.first.wpilibj.shuffleboard.*;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
-import frc.robot.commands.*;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 //ShuffleBoard should act similar to RobotContainer but for ShuffleBoard
 //So basically the values of ShuffleBoard Widgets will be declared here
@@ -15,8 +14,8 @@ public class ShuffleBoardContainer {
   private ShuffleboardTab climberShuffleBoardTab;
   private ShuffleboardTab drivetrainShuffleBoardTab;
   private ShuffleboardTab intakeShuffleBoardTab;
-  private ShuffleboardTab transferShuffleboardTab;
   private ShuffleboardTab turretShuffleboardTab;
+  private ShuffleboardTab transferShuffleboardTab;
   private ShuffleboardTab visionShuffleboardTab;
 
   // The new Shuffleboard Layouts
@@ -37,6 +36,20 @@ public class ShuffleBoardContainer {
   // Intake Layouts
   private ShuffleboardLayout intakeBooleansLayout;
   {
+    // Tabs get named here :)
+    climberShuffleBoardTab = Shuffleboard.getTab("Climber");
+    drivetrainShuffleBoardTab = Shuffleboard.getTab("Drivetrain");
+    intakeShuffleBoardTab = Shuffleboard.getTab("Intake");
+    turretShuffleboardTab = Shuffleboard.getTab("Turret");
+    transferShuffleboardTab = Shuffleboard.getTab("Transfer");
+    visionShuffleboardTab = Shuffleboard.getTab("Vision");
+
+    Shuffleboard.selectTab("Climber");
+    Shuffleboard.selectTab("Drivetrain");
+    Shuffleboard.selectTab("Intake");
+    Shuffleboard.selectTab("Turret");
+    Shuffleboard.selectTab("Transfer");
+    Shuffleboard.selectTab("Vision");
 
     climberBooleanLayout = climberShuffleBoardTab.getLayout("Booleans", BuiltInLayouts.kList).withSize(8, 1)
         .withPosition(0, 0);
@@ -59,12 +72,6 @@ public class ShuffleBoardContainer {
     // Intake Layouts
     intakeBooleansLayout = intakeShuffleBoardTab.getLayout("Booleans", BuiltInLayouts.kList).withSize(2, 4)
         .withPosition(0, 0);
-
-    // Tabs get named here :)
-    climberShuffleBoardTab = Shuffleboard.getTab("Climber");
-    drivetrainShuffleBoardTab = Shuffleboard.getTab("Drivetrain");
-    intakeShuffleBoardTab = Shuffleboard.getTab("Intake");
-    turretShuffleboardTab = Shuffleboard.getTab("Turret");
 
   }
 
@@ -160,7 +167,7 @@ public class ShuffleBoardContainer {
     climberOtherLayout.add("Climber Closed Loop Error", RobotContainer.sub_climber.getClimberClosedLoopError())
         .withSize(ClimberNumWidgetWidth, ClimberNumWidgetHeight);
 
-    // jfhkjds
+    // jfhkjdsz
     // climberOtherLayout.add
 
     // Drivetrain Subsystem
